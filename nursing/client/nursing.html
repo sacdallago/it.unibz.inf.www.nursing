@@ -32,6 +32,15 @@
 		<!-- Top Menu Items -->
 		<ul class="nav navbar-right top-nav">
 			<li class="dropdown">
+				<a href="#menu-toggle" class="dropdown-toggle" id="menu-toggle"><i class="fa fa-bars"></i>&nbsp;</a>
+			<script>
+				$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+				});
+			</script>
+			</li>
+			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
 				<ul class="dropdown-menu message-dropdown">
 					{{> notifications}}
@@ -50,13 +59,7 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a href="#menu-toggle" class="dropdown-toggle" id="menu-toggle"><i class="fa fa-bars"></i>&nbsp;</a>
-			<script>
-				$("#menu-toggle").click(function(e) {
-					e.preventDefault();
-					$("#wrapper").toggleClass("toggled");
-				});
-			</script>
+				<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i>&nbsp;</a>
 			</li>
 		</ul>
 		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -93,9 +96,6 @@
 				</li>
 				<li class="active">
 					<a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-				</li>
-				<li>
-					 {{> loginButtons}}
 				</li>
 			</ul>
 		</div>

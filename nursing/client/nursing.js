@@ -1,5 +1,3 @@
-var wantstoregister = false;
-
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
@@ -20,14 +18,17 @@ Template.loginform.events({
 	},
 	'click #create-account' : function(e, t) {
 		e.preventDefault();
-		wantstoregister = true;
+		alert("Must implement");
+	}
+});
+
+Template.navigation.events({
+	'click #logout-toggle' : function(e, t) {
+		e.preventDefault();
+		Meteor.logout();
 	}
 });
 
 Template.main.loggedin = function () {
   return Meteor.user();
-};
-
-Template.main.wantstoregister = function () {
-  return wantstoregister;
 };
