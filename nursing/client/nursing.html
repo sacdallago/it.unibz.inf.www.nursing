@@ -1,0 +1,235 @@
+<head>
+	<title>nursing</title>
+</head>
+
+<body>
+	{{> main}}
+</body>
+
+<template name="main">
+	{{#if loggedin}}
+		{{> home}}
+	{{else}}
+		{{> loginform}}
+	{{/if}}
+</template>
+
+<template name="home">
+	<div id="wrapper">
+		{{> navigation}}
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				{{> content}}
+			</div>
+			<!-- /#page-wrapper -->
+		</div>
+	</div>
+</template>
+
+<template name="navigation">
+	<!-- Navigation -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<!-- Top Menu Items -->
+		<ul class="nav navbar-right top-nav">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+				<ul class="dropdown-menu message-dropdown">
+					{{> notifications}}
+					<li class="message-footer">
+						<a href="#">Read All Notifications</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+				<ul class="dropdown-menu alert-dropdown">
+					{{> alerts}}
+					<li>
+						<a href="#">View All Alerts</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a href="#menu-toggle" class="dropdown-toggle" id="menu-toggle"><i class="fa fa-bars"></i>&nbsp;</a>
+			<script>
+				$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+				});
+			</script>
+			</li>
+		</ul>
+		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+		<div>
+			<ul id="sidebar-wrapper" class="nav navbar-nav side-nav" >
+				<li>
+					<a ><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-fw fa-table"></i> Tables</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-fw fa-edit"></i> Forms</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+				</li>
+				<li>
+					<a ><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+				</li>
+				<li>
+					<a data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+					<ul id="demo" class="collapse">
+						<li>
+							<a href="#">Dropdown Item</a>
+						</li>
+						<li>
+							<a href="#">Dropdown Item</a>
+						</li>
+					</ul>
+				</li>
+				<li class="active">
+					<a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+				</li>
+				<li>
+					 {{> loginButtons}}
+				</li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</nav>
+</template>
+
+<template name="content">
+	<!-- Page Heading -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header"> Blank Page <small>Subheading</small></h1>
+			<ol class="breadcrumb">
+				<li>
+					<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
+				</li>
+				<li class="active">
+					<i class="fa fa-file"></i> Blank Page
+				</li>
+			</ol>
+		</div>
+	</div>
+	<!-- /.row -->
+</template>
+
+<template name="notifications">
+	<li class="message-preview">
+		<a href="#">
+		<div class="media">
+			<span class="pull-left"> <img class="media-object" alt=""> </span>
+			<div class="media-body">
+				<h5 class="media-heading"><strong>John Smith</strong></h5>
+				<p class="small text-muted">
+					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur...
+				</p>
+			</div>
+		</div> </a>
+	</li>
+	<li class="message-preview">
+		<a href="#">
+		<div class="media">
+			<span class="pull-left"> <img class="media-object" alt=""> </span>
+			<div class="media-body">
+				<h5 class="media-heading"><strong>John Smith</strong></h5>
+				<p class="small text-muted">
+					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur...
+				</p>
+			</div>
+		</div> </a>
+	</li>
+	<li class="message-preview">
+		<a href="#">
+		<div class="media">
+			<span class="pull-left"> <img class="media-object" alt=""> </span>
+			<div class="media-body">
+				<h5 class="media-heading"><strong>John Smith</strong></h5>
+				<p class="small text-muted">
+					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+				</p>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur...
+				</p>
+			</div>
+		</div> </a>
+	</li>
+</template>
+
+<template name='alerts'>
+	<li>
+		<a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+	</li>
+	<li>
+		<a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+	</li>
+	<li>
+		<a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+	</li>
+	<li>
+		<a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+	</li>
+	<li>
+		<a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+	</li>
+	<li>
+		<a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+	</li>
+	<li class="divider"></li>
+</template>
+
+<template name="loginform">
+	<div class="container">
+		<div class="login-container">
+			<div id="output"></div>
+			<div class="avatar"></div>
+			<div class="form-box">
+				<form id="login-form" action="action">
+					<div>
+						<input type="text" id="login-username" placeholder="Username" />
+						<input type="password" id="login-password" placeholder="password" />
+						<input type="submit" id="login-button" value="Sign in" class="btn btn-info btn-block login" />
+						<input id="create-account" value="Create an Account" class="btn btn-info btn-block login" style="margin-top: 20px;"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div style="margin-left: auto; margin-right: auto; color:gray;">
+		<p style="text-align: center;">&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101</p>
+	</div>
+</template>
+<template name="registrationform">
+	<div class="container">
+		<div class="login-container">
+			<div id="output"></div>
+			<div class="avatar"></div>
+			<div class="form-box">
+				<form id="register-form" action="action">
+					<div>
+						<input type="username" id="account-username" placeholder="username"  />
+						<input type="email" id="account-email" placeholder="email" />
+						<input type="password" id="account-password" placeholder="password" />
+						<input type="submit" id="create-account" value="Create an Account" class="btn btn-info btn-block login" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div style="margin-left: auto; margin-right: auto; color:gray;">
+		<p style="text-align: center;">&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101</p>
+	</div>
+</template>
