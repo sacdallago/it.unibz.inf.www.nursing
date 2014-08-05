@@ -2,6 +2,20 @@ Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
+Router.configure({
+  templateNameConverter: 'upperCamelCase'
+});
+
+Router.map(function() {
+	this.route('main', {
+		path : '/'
+	});
+	this.route('home');
+	this.route('loginform');
+	this.route('registrationform');
+}); 
+
+
 Template.loginform.events({
 	'submit #login-form' : function(e, t) {
 		e.preventDefault();
@@ -18,7 +32,7 @@ Template.loginform.events({
 	},
 	'click #create-account' : function(e, t) {
 		e.preventDefault();
-		alert("Must implement");
+		window.location.href = '/registrationform';
 	}
 });
 
@@ -28,7 +42,3 @@ Template.navigation.events({
 		Meteor.logout();
 	}
 });
-
-Template.main.loggedin = function () {
-  return Meteor.user();
-};

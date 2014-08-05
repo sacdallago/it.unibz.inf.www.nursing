@@ -27,10 +27,16 @@ Accounts.config({
 
 /* Notifications -- {
  * 	id: _id
+ * 	hospitalizationId: _idOfhospitalization
+ * 	nurseId: _CurrentUserId
  * 	message: String
  * 	attachment: File
  * 	time: timestamp
- * 	hospitalizationId: _idOfhospitalization
+ * 	data : [{
+ * 		type: String (eg. t-cells, weight, insuline,...)
+ * 		value: String/Double (Depending on type)
+ * 		unit: String
+ * 	}]
  */
 Notifications = new Meteor.Collection("notifications");
 
@@ -51,6 +57,8 @@ Alerts = new Meteor.Collection("alerts");
  * 	birthcity: String
  * 	birthprovince: String
  * 	sex: boolean (man=true/woman=false)
+ * 	weight: double (in kg)
+ * 	height: double (in meters)
  * 	citizenship: String
  * 	maritalstatus: String (single, married, separated, divorced, vidow, undeclared)
  *  street: String
@@ -65,3 +73,39 @@ Alerts = new Meteor.Collection("alerts");
  * 	hospitalizationIds: _idOfhospitalization1, _idOfhospitalization2,...
  */
 Patients = new Meteor.Collection("patients");
+
+/* Hospitalizations -- {
+ * 	id: _id
+ * 	patientId: _patientID
+ * 	nurseID: _currentUserId
+ * 	ricoverydate: timestamp (Date.now() with possibility to change)
+ * 	department: User.find(:department), allow to change
+ *  source: String (none, familydoc, programmed, transferred from other public, transferred from accredited private, transferred from unaccredited private, transferred from elsewhere, transferred from recovery, other)
+ * 	type: String (programmed non urgent, urgent, TSO, voluntary, programmed with prehospitalization)
+ * 	dateOfReservation: timestamp
+ * 	priority: String (30d,60d,180d,1y as in 30 days, 60 days, 180 days, 1 year)
+ * 	proposingDoctor: String (familydoc, hospitaldoc, agreeddoc, outofprovincedoc)
+ * 	poposingDoctorCode: String
+ * 	injuriesFrom: String (workplace, home, car accident, violence, selfviolence, sport injuries, other)
+ * 	departmentOfStay: User.find(:department), allow to change, is the physical department where the patient stays at
+ * 	bed: String
+ * 	reason: String
+ * 	... (see 5 with marina and some examples)
+ * 	
+ */
+Hospitalizations = new Meteor.Collection("hospitalizations");
+
+/* Notes (as in infermieristic note. Here go copies of all notifications + the infermieristic notes (consegna))-- {
+ * 	id: _id
+ * 	hospitalizationId: _hospitalizationId
+ *	nurseId: _currentUserId
+ * 	message: String
+ * 	attachment: File
+ * 	time: timestamp
+ * 	data : [{
+ * 		type: String (eg. t-cells, weight, insuline, temperature,...)
+ * 		value: String/Double (Depending on type)
+ * 		unit: String
+ * 	}]
+ */
+Notes = new Meteor.Collection("notes");
