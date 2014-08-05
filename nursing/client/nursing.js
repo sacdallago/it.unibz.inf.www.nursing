@@ -2,6 +2,9 @@ Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
+
+
+
 Template.loginform.events({
 	'submit #login-form' : function(e, t) {
 		e.preventDefault();
@@ -18,8 +21,9 @@ Template.loginform.events({
 	},
 	'click #create-account' : function(e, t) {
 		e.preventDefault();
-		alert("Must implement");
+		// 
 	}
+
 });
 
 Template.navigation.events({
@@ -29,6 +33,18 @@ Template.navigation.events({
 	}
 });
 
-Template.main.loggedin = function () {
-  return Meteor.user();
-};
+// Router for Pages
+var NursingRouter = Backbone.Router.extend({
+  routes: {
+    
+    
+  }
+  
+});
+
+
+
+Meteor.startup(function () {
+  Backbone.history.start({pushState: true});
+});
+

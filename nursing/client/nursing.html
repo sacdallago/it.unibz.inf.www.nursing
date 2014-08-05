@@ -7,7 +7,7 @@
 </body>
 
 <template name="main">
-	{{#if loggedin}}
+	{{#if currentUser}}
 		{{> home}}
 	{{else}}
 		{{> loginform}}
@@ -212,6 +212,7 @@
 		<p style="text-align: center;">&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101</p>
 	</div>
 </template>
+
 <template name="registrationform">
 	<div class="container">
 		<div class="login-container">
