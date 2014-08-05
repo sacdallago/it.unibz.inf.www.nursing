@@ -221,16 +221,27 @@
 			<div class="form-box">
 				<form id="register-form" action="action">
 					<div>
-						<input type="username" id="account-username" placeholder="username"  />
+						<input type="text" id="account-first" placeholder="Firstname" />
+						<input type="text" id="account-last" placeholder="Lastname" />
+						<input type="text" id="account-username" placeholder="Username" />
 						<input type="email" id="account-email" placeholder="email" />
-						<input type="password" id="account-password" placeholder="password" />
-						<input type="submit" id="create-account" value="Create an Account" class="btn btn-info btn-block login" />
+						<input type="password" id="account-password" placeholder="Password" />
+						<input type="password" id="account-password-repeat" placeholder="Repeat password" />
+						<input type="password" id="admin-password" placeholder="Authorization code" />
+						<select name="department" id="account-department" class="form-control" style="margin-top: 10px; margin-bottom: 10px;">
+							<option value="cardiology">Cardiology</option>
+							<option value="odontology">Odontology</option>
+							<option value="oncology">Oncology</option>
+						</select>
+						<input type="submit" id="create-account" value="Create Account" class="btn btn-info btn-block login" />
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 	<div style="margin-left: auto; margin-right: auto; color:gray;">
-		<p style="text-align: center;">&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101</p>
+		<p style="text-align: center;">
+			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
+		</p>
 	</div>
 </template>

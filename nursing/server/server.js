@@ -48,8 +48,18 @@ Alerts = new Meteor.Collection("alerts");
  * 	name: String
  * 	surname: String
  * 	birthdate: timestamp
+ * 	birthcity: String
+ * 	birthprovince: String
+ * 	sex: boolean (man=true/woman=false)
+ * 	citizenship: String
+ * 	maritalstatus: String (single, married, separated, divorced, vidow, undeclared)
  *  street: String
  * 	streetnumber: String (could be '7A')
+ * 	city: String
+ * 	province: String
+ * 	country: String
+ * 	taxcode: String
+ * 	studylevel: String (none or elementary, middleschool, highschool, undergraduate, graduate)
  * 	diabetes: boolean
  * 	allergies: [String]
  * 	hospitalizationIds: _idOfhospitalization1, _idOfhospitalization2,...
