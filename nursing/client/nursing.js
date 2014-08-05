@@ -15,7 +15,6 @@ Router.map(function() {
 	this.route('registrationform');
 }); 
 
-
 Template.loginform.events({
 	'submit #login-form' : function(e, t) {
 		e.preventDefault();
@@ -34,6 +33,7 @@ Template.loginform.events({
 		e.preventDefault();
 		window.location.href = '/registrationform';
 	}
+
 });
 
 Template.navigation.events({
