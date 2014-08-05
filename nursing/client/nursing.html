@@ -43,9 +43,9 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
 				<ul class="dropdown-menu message-dropdown">
-					{{> notifications}}
+					{{> miniNotifications}}
 					<li class="message-footer">
-						<a href="#">Read All Notifications</a>
+						<a href="">Read All Notifications</a>
 					</li>
 				</ul>
 			</li>
@@ -121,52 +121,39 @@
 	<!-- /.row -->
 </template>
 
-<template name="notifications">
+<template name="miniNotifications">
+	{{#each notifications}}
 	<li class="message-preview">
-		<a href="#">
+		{{#if attachment}}
+		<a  href="{{attachment}}">
 		<div class="media">
 			<span class="pull-left"> <img class="media-object" alt=""> </span>
 			<div class="media-body">
-				<h5 class="media-heading"><strong>John Smith</strong></h5>
+				<h5 class="media-heading"><strong>{{name}}</strong></h5>
 				<p class="small text-muted">
-					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+					<i class="fa fa-clock-o"></i> {{timestamp}}
 				</p>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur...
+					{{message}}
 				</p>
 			</div>
-		</div> </a>
-	</li>
-	<li class="message-preview">
-		<a href="#">
+		</div></a>
+		{{else}}
 		<div class="media">
 			<span class="pull-left"> <img class="media-object" alt=""> </span>
 			<div class="media-body">
-				<h5 class="media-heading"><strong>John Smith</strong></h5>
+				<h5 class="media-heading"><strong>{{name}}</strong></h5>
 				<p class="small text-muted">
-					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
+					<i class="fa fa-clock-o"></i> {{timestamp}}
 				</p>
 				<p>
-					Lorem ipsum dolor sit amet, consectetur...
+					{{message}}
 				</p>
 			</div>
-		</div> </a>
+		</div>
+		{{/if}}
 	</li>
-	<li class="message-preview">
-		<a href="#">
-		<div class="media">
-			<span class="pull-left"> <img class="media-object" alt=""> </span>
-			<div class="media-body">
-				<h5 class="media-heading"><strong>John Smith</strong></h5>
-				<p class="small text-muted">
-					<i class="fa fa-clock-o"></i> Yesterday at 4:32 PM
-				</p>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur...
-				</p>
-			</div>
-		</div> </a>
-	</li>
+	{{/each}}
 </template>
 
 <template name='alerts'>
@@ -234,6 +221,7 @@
 							<option value="oncology">Oncology</option>
 						</select>
 						<input type="submit" id="create-account" value="Create Account" class="btn btn-info btn-block login" />
+						<input id="account-signin" value="Back to sign in" class="btn btn-info btn-block login" style="margin-top: 30px;"/>
 					</div>
 				</form>
 			</div>

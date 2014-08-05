@@ -56,7 +56,7 @@ Alerts = new Meteor.Collection("alerts");
  * 	birthdate: timestamp
  * 	birthcity: String
  * 	birthprovince: String
- * 	sex: boolean (man=true/woman=false)
+ * 	sex: String (m/f)
  * 	weight: double (in kg)
  * 	height: double (in meters)
  * 	citizenship: String
