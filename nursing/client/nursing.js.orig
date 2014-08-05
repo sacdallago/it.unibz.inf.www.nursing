@@ -10,12 +10,9 @@ Router.map(function() {
 	this.route('main', {
 		path : '/'
 	});
-	this.route('loginform', {
-		path : '/login'
-	});
-	this.route('registrationform', {
-		path : '/signup'
-	});
+	this.route('home');
+	this.route('loginform');
+	this.route('registrationform');
 }); 
 
 Template.loginform.events({
@@ -34,7 +31,7 @@ Template.loginform.events({
 	},
 	'click #create-account' : function(e, t) {
 		e.preventDefault();
-		Router.go('signup');
+		window.location.href = '/registrationform';
 	}
 
 });
