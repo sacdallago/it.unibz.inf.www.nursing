@@ -110,3 +110,25 @@ Template.navigation.events({
 		Meteor.logout();
 	}
 });
+
+Template.miniNotifications.notifications = function(){
+	var notifications = Notifications.find({},{sort: {time: 1}});
+	
+	var result = [];
+	
+	//Only show 3 notifications!
+	for(var i = 0; i<4; i++){
+		console.log(notifications[0].message);
+		
+		/*
+		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : notifications[i].hospitalizationId}).patientId});
+		var element = {
+			attachment: notifications[i].attachment,
+			name: patient.first + " " + patient.last,
+			timestamp: (new Date(notifications[i].time)),
+			message: notifcations[i].substring(0,13) + "..."
+		};
+		console.log(element);
+		*/
+	}
+};

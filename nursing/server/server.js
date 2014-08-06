@@ -51,8 +51,8 @@ Alerts = new Meteor.Collection("alerts");
 
 /* Patients -- {
  * 	id: _id
- * 	name: String
- * 	surname: String
+ * 	first: String
+ * 	last: String
  * 	birthdate: timestamp
  * 	birthcity: String
  * 	birthprovince: String
