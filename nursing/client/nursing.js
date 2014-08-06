@@ -44,8 +44,7 @@ Router.map(function() {
 	this.route('messages', {
 		path : '/messages',
 		onAfterAction: function(){
-			active='messages';
-			alert('hello');
+			//Use Session.set() variable?!?!
 		}
 	});
 });																		;

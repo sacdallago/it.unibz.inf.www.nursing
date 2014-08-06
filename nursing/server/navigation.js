@@ -2,7 +2,6 @@ Meteor.startup(function() {
 	Navigation.remove({});
 	Navigation.insert({
 		language : 'en',
-		active : true,
 		route : 'rooms',
 		name : 'Rooms',
 		fa : 'fa-table'
