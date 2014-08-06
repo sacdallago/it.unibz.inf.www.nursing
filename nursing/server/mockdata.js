@@ -4,7 +4,7 @@ Meteor.startup(function() {
 	Meteor.users.remove({});
 	Patients.remove({});
 	Hospitalizations.remove({});
-	Notifications.remove({});
+	Messages.remove({});
 
 	//Db mockdata
 	Accounts.createUser({
@@ -83,7 +83,7 @@ Meteor.startup(function() {
 	}, {
 		hospitalizationId : hosp,
 		nurseId : user,
-		message : "Patient was wighted somewhere else!",
+		message : "Patient was wighted somewhere else for example in another ward!",
 		time : timestamp+4,
 		data : [{
 			type : "weight",
@@ -93,7 +93,7 @@ Meteor.startup(function() {
 	}];
 	
 	for(var i = 0; i<noti.length; i++){
-		Notifications.insert(noti[i]);
+		Messages.insert(noti[i]);
 	}
 
 	/*

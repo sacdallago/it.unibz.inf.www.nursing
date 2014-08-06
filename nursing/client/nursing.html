@@ -3,23 +3,37 @@
 </head>
 
 <body>
-	
+	{{> notifications}}
 </body>
 
 <template name="main">
 	{{#if currentUser}}
-		{{> home}}
+		{{> rooms}}
 	{{else}}
 		{{> loginform}}
 	{{/if}}
 </template>
 
-<template name="home">
+<template name="rooms">
 	<div id="wrapper">
 		{{> navigation}}
 		<div id="page-wrapper">
 			<div class="container-fluid">
-				{{> content}}
+				<!-- Page Heading -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header"> Blank Page <small>Subheading</small></h1>
+						<ol class="breadcrumb">
+							<li>
+								<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
+							</li>
+							<li class="active">
+								<i class="fa fa-file"></i> Blank Page
+							</li>
+						</ol>
+					</div>
+				</div>
+				<!-- /.row -->
 			</div>
 			<!-- /#page-wrapper -->
 		</div>
@@ -43,9 +57,9 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
 				<ul class="dropdown-menu message-dropdown">
-					{{> miniNotifications}}
+					{{> miniMessages}}
 					<li class="message-footer">
-						<a href="">Read All Notifications</a>
+						<a href="">Read All Messages</a>
 					</li>
 				</ul>
 			</li>
@@ -65,64 +79,51 @@
 		<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 		<div>
 			<ul id="sidebar-wrapper" class="nav navbar-nav side-nav" >
-				<li>
-					<a ><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-				</li>
-				<li>
-					<a ><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-				</li>
-				<li>
-					<a ><i class="fa fa-fw fa-table"></i> Tables</a>
-				</li>
-				<li>
-					<a ><i class="fa fa-fw fa-edit"></i> Forms</a>
-				</li>
-				<li>
-					<a ><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-				</li>
-				<li>
-					<a ><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-				</li>
-				<li>
-					<a data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-					<ul id="demo" class="collapse">
-						<li>
-							<a href="#">Dropdown Item</a>
+				{{#each nav}}
+					{{#if active}}
+						<li class="active">
+							<a href="{{pathFor route}}"><i class="fa fa-fw {{fa}}"></i> {{name}}</a>
 						</li>
-						<li>
-							<a href="#">Dropdown Item</a>
+					{{else}}
+						<li class="{{rooms}}">
+							<a href="{{pathFor route}}"><i class="fa fa-fw {{fa}}"></i> {{name}}</a>
 						</li>
-					</ul>
-				</li>
-				<li class="active">
-					<a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-				</li>
+					{{/if}}
+				{{/each}}
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
 	</nav>
 </template>
 
-<template name="content">
-	<!-- Page Heading -->
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header"> Blank Page <small>Subheading</small></h1>
-			<ol class="breadcrumb">
-				<li>
-					<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
-				</li>
-				<li class="active">
-					<i class="fa fa-file"></i> Blank Page
-				</li>
-			</ol>
+<template name="messages">
+	<div id="wrapper">
+		{{> navigation}}
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<!-- Page Heading -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header"> Messages </h1>
+						<ol class="breadcrumb">
+							<li>
+								<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
+							</li>
+							<li class="active">
+								<i class="fa fa-file"></i> Blank Page
+							</li>
+						</ol>
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /#page-wrapper -->
 		</div>
 	</div>
-	<!-- /.row -->
 </template>
 
-<template name="miniNotifications">
-	{{#each notifications}}
+<template name="miniMessages">
+	{{#each messages}}
 	<li class="message-preview">
 		{{#if attachment}}
 		<a  href="{{attachment}}">
@@ -136,10 +137,13 @@
 				<p>
 					{{message}}
 				</p>
+				<p>
+					<i class="fa fa-file-archive-o"></i>  {{attachment}}
+				</p>
 			</div>
 		</div></a>
 		{{else}}
-		<div class="media">
+		<a><div class="media">
 			<span class="pull-left"> <img class="media-object" alt=""> </span>
 			<div class="media-body">
 				<h5 class="media-heading"><strong>{{name}}</strong></h5>
@@ -150,7 +154,7 @@
 					{{message}}
 				</p>
 			</div>
-		</div>
+		</div></a>
 		{{/if}}
 	</li>
 	{{/each}}

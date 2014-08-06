@@ -21,11 +21,14 @@ Accounts.config({
 	//Activate the following and users will not be able to register!
 	//forbidClientAccountCreation : true,
 	sendVerificationEmail : true
-}); 
+});
+
+//Navigation
+Navigation = new Meteor.Collection("navigation");
 
 //Database stuff:
 
-/* Notifications -- {
+/* Messages -- {
  * 	id: _id
  * 	hospitalizationId: _idOfhospitalization
  * 	nurseId: _CurrentUserId
@@ -38,7 +41,7 @@ Accounts.config({
  * 		unit: String
  * 	}]
  */
-Notifications = new Meteor.Collection("notifications");
+Messages = new Meteor.Collection("messages");
 
 /* Alerts -- {
  * 	id: _id
@@ -95,7 +98,7 @@ Patients = new Meteor.Collection("patients");
  */
 Hospitalizations = new Meteor.Collection("hospitalizations");
 
-/* Notes (as in infermieristic note. Here go copies of all notifications + the infermieristic notes (consegna))-- {
+/* Notes (as in infermieristic note. Here go copies of all messages + the infermieristic notes (consegna))-- {
  * 	id: _id
  * 	hospitalizationId: _hospitalizationId
  *	nurseId: _currentUserId

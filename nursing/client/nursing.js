@@ -1,9 +1,24 @@
 //Minimongo to match server:
-Notifications = new Meteor.Collection("notifications");
+Messages = new Meteor.Collection("messages");
 Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
 Hospitalizations = new Meteor.Collection("hospitalizations");
 Notes = new Meteor.Collection("notes");
+
+//Navigation
+var language = window.navigator.userLanguage || window.navigator.language;
+Navigation = new Meteor.Collection("navigation");
+
+Template.navigation.nav = function(){
+	return Navigation.find({'language': { $regex:'^'+language.substr(0,2)}});
+}
+
+//Set notifications to last 3seconds
+Meteor.startup(function () {
+    _.extend(Notifications.defaultOptions, {
+        timeout: 3000
+    });
+});
 
 Accounts.ui.config({
 	passwordSignupFields : 'USERNAME_AND_EMAIL'
@@ -20,14 +35,20 @@ Router.map(function() {
 	this.route('loginform', {
 		path : '/login'
 	});
+	this.route('rooms', {
+		path : '/rooms'
+	});
 	this.route('registrationform', {
 		path : '/signup'
 	});
-	this.route('notifications', {
-		path : '/notifications'
+	this.route('messages', {
+		path : '/messages',
+		onAfterAction: function(){
+			active='messages';
+			alert('hello');
+		}
 	});
-});
-
+});																		;
 
 Template.loginform.events({
 	'submit #login-form' : function(e, t) {
@@ -37,7 +58,7 @@ Template.loginform.events({
 
 		Meteor.loginWithPassword(username, password, function(err) {
 			if (err) {
-				alert('Please check your credentials.');
+				Notifications.warn('Could not login!', 'Please check your credentials.');
 			} else {
 				//autoroute
 			}
@@ -74,7 +95,7 @@ Template.registrationform.events({
 							password : password
 						}, function(err) {
 							if (err) {
-								alert('Failed to create user. Please contact administrators.');
+								Notifications.error('Error!', 'Failed to create user. Please contact administrators.');
 							} else {
 								Router.go('main');
 							}
@@ -82,19 +103,19 @@ Template.registrationform.events({
 
 						return false;
 					} else {
-						alert('Username must have at least 3 characters and not more than 15!');
+						Notifications.warn('Warning:', 'Username must have at least 3 characters and not more than 15!');
 						throw new Meteor.Error(403, "Username must have at least 3 characters and not more than 15!");
 					}
 				} else {
-					alert('Sorry, you are not authorized to register!');
+					Notifications.warn('Warning:', 'Sorry, you are not authorized to register!');
 					throw new Meteor.Error(403, "Sorry, you are not authorized to register!");
 				}
 			} else {
-				alert('The password and its check do not match!');
+				Notifications.warn('Warning:', 'The password and its check do not match!');
 				throw new Meteor.Error(403, "The password and its check do not match!");
 			}
 		} else {
-			alert('Please fill out all fields');
+			Notifications.warn('Warning:', 'Please fill out all fields');
 			throw new Meteor.Error(403, "Please fill out all fields");
 		}
 	},
@@ -111,24 +132,30 @@ Template.navigation.events({
 	}
 });
 
-Template.miniNotifications.notifications = function(){
-	var notifications = Notifications.find({},{sort: {time: 1}});
+Meteor.subscribe('tasks', function onReady() {
+  Session.set('tasksLoaded', true);
+});
+
+Template.miniMessages.messages = function(){
+	var messages = Messages.find({},{sort: {time: 1}}).fetch();
 	
 	var result = [];
 	
-	//Only show 3 notifications!
-	for(var i = 0; i<4; i++){
-		console.log(notifications[0].message);
-		
-		/*
-		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : notifications[i].hospitalizationId}).patientId});
+	//Only show 3 messages!
+	for(var i = 0; i<4 && i<messages.length; i++){
+		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : messages[i].hospitalizationId}).patientId});
+		var date = new Date(messages[i].time);
+		var trim = 30;
+		while(messages[i].message.charAt(trim) != " " && messages[i].message.length > trim){
+			trim++;
+		}
 		var element = {
-			attachment: notifications[i].attachment,
-			name: patient.first + " " + patient.last,
-			timestamp: (new Date(notifications[i].time)),
-			message: notifcations[i].substring(0,13) + "..."
+			attachment: messages[i].attachment,
+			name: patient.first.capitalize() + " " + patient.last.capitalize(),
+			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes(),
+			message: messages[i].message.substring(0,trim) + "..."
 		};
-		console.log(element);
-		*/
+		result.push(element);
 	}
+	return result;
 };
