@@ -47,7 +47,7 @@ Meteor.startup(function() {
 
 	var myhosp = {
 		patientId : pid,
-		nurseID : user,
+		nurseId : user,
 		ricoverydate : timestamp,
 		department : user.profile.department,
 		source : "programmed",

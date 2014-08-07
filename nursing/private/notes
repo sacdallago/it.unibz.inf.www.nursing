@@ -1,0 +1,12 @@
+// Fake data to simulate working environment while app is running:
+
+Messages.insert({
+		hospitalizationId : Hospitalizations.findOne()._id,
+		nurseId : Meteor.user(),
+		message : "Patient was wighted somewhere else for example in another ward!",
+		time : (new Date()).getTime(),
+		data : [{
+			type : "weight",
+			value : 42,
+			unit : "kg"
+		}]});

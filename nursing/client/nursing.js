@@ -4,13 +4,48 @@ Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
 Hospitalizations = new Meteor.Collection("hospitalizations");
 Notes = new Meteor.Collection("notes");
+Navigation = new Meteor.Collection("navigation");
+
+Meteor.subscribe("messages", function onReady() {
+  Session.set('messagesLoaded', true);
+});
+Meteor.subscribe("alerts", function onReady() {
+  Session.set('alertsLoaded', true);
+});
+Meteor.subscribe("patients", function onReady() {
+  Session.set('patientsLoaded', true);
+});
+Meteor.subscribe("hospitalizations", function onReady() {
+  Session.set('hospitalizationsLoaded', true);
+});
+Meteor.subscribe("notes", function onReady() {
+  Session.set('notesLoaded', true);
+});
+
+//Client pushed notifications
+Warnings = new Meteor.Collection("warnings");
+Meteor.subscribe("warnings");
+Meteor.call("removeWarnings",function(){}); //This will remove all warnings every time a user connects or every time a user refreshes the app. Its sub-optimal
+Deps.autorun(function() {
+  	Warnings.find({}).observe({
+    added: function(item){
+    	 if(this.isSimulation){
+    	 	Notifications.info(item.title,item.message);
+    	 }
+      console.log(item.title, item.message);
+    }
+  });
+});
 
 //Navigation
 var language = window.navigator.userLanguage || window.navigator.language;
-Navigation = new Meteor.Collection("navigation");
+
+Meteor.subscribe("navigation", language.substr(0,2), function onReady() {
+  Session.set('navigationLoaded', true);
+});
 
 Template.navigation.nav = function(){
-	return Navigation.find({'language': { $regex:'^'+language.substr(0,2)}});
+	return Navigation.find({});
 }
 
 //Set notifications to last 3seconds
@@ -20,32 +55,77 @@ Meteor.startup(function () {
     });
 });
 
-Accounts.ui.config({
-	passwordSignupFields : 'USERNAME_AND_EMAIL'
-});
-
 Router.configure({
+	layoutTemplate: 'main',
 	templateNameConverter : 'upperCamelCase'
 });
 
 Router.map(function() {
-	this.route('main', {
-		path : '/'
+	this.route('registrationform', {
+		path : '/signup',
+		onBeforeAction: function() {
+      		if (Meteor.user())
+        	this.redirect('beds');
+   		},
+   		onAfterAction: function() {
+      		if (Meteor.user())
+        	this.redirect('beds');
+   		}
 	});
 	this.route('loginform', {
-		path : '/login'
+		path: '/',
+		onBeforeAction: function() {
+      		if (Meteor.user())
+        	this.redirect('beds');
+   		},
+   		onAfterAction: function() {
+      		if (Meteor.user())
+        	this.redirect('beds');
+   		}
 	});
-	this.route('rooms', {
-		path : '/rooms'
+	this.route('goodbye', {
+		path : '/goodbye',
+		onBeforeAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		},
+   		onAfterAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		}
 	});
-	this.route('registrationform', {
-		path : '/signup'
+	this.route('beds', {
+		path : '/beds',
+		onBeforeAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		},
+   		onAfterAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		}
 	});
 	this.route('messages', {
 		path : '/messages',
-		onAfterAction: function(){
-			//Use Session.set() variable?!?!
-		}
+		onBeforeAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		},
+   		onAfterAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		}
+	});
+	this.route('alerts', {
+		path : '/alerts',
+		onBeforeAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		},
+   		onAfterAction: function() {
+      		if (!Meteor.user())
+        	this.redirect('loginform');
+   		}
 	});
 });																		;
 
@@ -59,7 +139,7 @@ Template.loginform.events({
 			if (err) {
 				Notifications.warn('Could not login!', 'Please check your credentials.');
 			} else {
-				//autoroute
+				Router.go('registrationform');
 			}
 		});
 		return false;
@@ -96,7 +176,7 @@ Template.registrationform.events({
 							if (err) {
 								Notifications.error('Error!', 'Failed to create user. Please contact administrators.');
 							} else {
-								Router.go('main');
+								//autoroute
 							}
 						});
 
@@ -120,23 +200,46 @@ Template.registrationform.events({
 	},
 	'click #account-signin' : function(e, t) {
 		e.preventDefault();
-		Router.go('main');
+		Router.go('loginform');
 	}
 });
 
 Template.navigation.events({
 	'click #logout-toggle' : function(e, t) {
-		e.preventDefault();
 		Meteor.logout();
+		e.preventDefault();
+		var name = Meteor.user().profile.first;
+		Notifications.success('','Bye bye '+name.capitalize()+'.');
+		Router.go('goodbye');
 	}
 });
 
-Meteor.subscribe('tasks', function onReady() {
-  Session.set('tasksLoaded', true);
-});
+Template.messages.messages = function(){
+	var messages = Messages.find({},{sort: {time: -1}}).fetch();
+	var result = [];
+	
+	//Only show 3 messages!
+	for(var i = 0; i<messages.length; i++){
+		var hospitalization = Hospitalizations.findOne({'_id' : messages[i].hospitalizationId});
+		var patient = Patients.findOne({'_id' : hospitalization.patientId});
+		var nurse = messages[i].nurseId;
+		var date = new Date(messages[i].time);
+		var element = {
+			attachment: messages[i].attachment,
+			name: patient.first.capitalize() + " " + patient.last.capitalize(),
+			bed: hospitalization.bed,
+			nurse: nurse.profile.first + " " + nurse.profile.last,
+			department: nurse.profile.department,
+			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes(),
+			message: messages[i].message
+		};
+		result.push(element);
+	}
+	return result;
+};
 
-Template.miniMessages.messages = function(){
-	var messages = Messages.find({},{sort: {time: 1}}).fetch();
+Template.minimessages.messages = function(){
+	var messages = Messages.find({},{sort: {time: -1}, limit: 4}).fetch();
 	
 	var result = [];
 	

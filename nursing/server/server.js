@@ -23,8 +23,43 @@ Accounts.config({
 	sendVerificationEmail : true
 });
 
-//Navigation
+//Helper collections
 Navigation = new Meteor.Collection("navigation");
+
+Meteor.publish('navigation', function(language) {
+	if(this.userId){
+		return Navigation.find({'language': { $regex:'^'+language}}); 
+	} else {
+		return null;
+	}
+});
+
+Warnings = new Meteor.Collection("warnings");
+
+Meteor.publish('warnings', function() {
+	if(this.userId){
+		return Warnings.find({});
+	} else {
+		return null;
+	}
+});
+
+//Have a look at this!
+Warnings.allow({
+  insert: function (userId, party) {
+    return false;
+  }
+});
+
+Warnings.remove({});
+
+Meteor.methods({
+	removeWarnings: function(){
+		Warnings.remove({});
+		console.log("Removed warnings...");
+		return true;
+	}
+});
 
 //Database stuff:
 
@@ -112,3 +147,41 @@ Hospitalizations = new Meteor.Collection("hospitalizations");
  * 	}]
  */
 Notes = new Meteor.Collection("notes");
+
+//Security first
+Meteor.publish('notes', function() {
+  if(this.userId){
+		return Notes.find(); 
+	} else {
+		return null;
+	} 
+});
+Meteor.publish('messages', function() {
+  if(this.userId){
+		return Messages.find(); 
+	} else {
+		return null;
+	}
+});
+Meteor.publish('hospitalizations', function() {
+  if(this.userId){
+		return Hospitalizations.find(); 
+	} else {
+		return null;
+	}
+});
+Meteor.publish('patients', function() {
+  if(this.userId){
+		return Patients.find(); 
+	} else {
+		return null;
+	} 
+});
+Meteor.publish('alerts', function() {
+  if(this.userId){
+		return Alerts.find(); 
+	} else {
+		return null;
+	} 
+});
+
