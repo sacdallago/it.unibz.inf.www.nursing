@@ -4,7 +4,36 @@ Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
 Hospitalizations = new Meteor.Collection("hospitalizations");
 Notes = new Meteor.Collection("notes");
-Navigation = new Meteor.Collection("navigation");
+
+
+Session.setDefault('unreadMessages', 0); // Gets augmented when a new message for the given ward gets inserted!
+Session.setDefault('deadlineAlerts', 0); // Which are going to end today. Gets calculated when loggingin
+
+Template.navigation.helpers({
+  unreadMessages: function () {
+  	var unreadMessages = Session.get("unreadMessages");
+  	if(unreadMessages == 0){
+  		return null;
+  	}
+    return unreadMessages;
+  },
+  deadlineAlerts: function () {
+  	var deadlineAlerts = Session.get("deadlineAlerts");
+  	if(deadlineAlerts == 0){
+  		return null;
+  	}
+    return deadlineAlerts;
+  },
+  first: function () {
+  	if(Meteor.user()){
+  		var name = Meteor.user().profile.first;
+  		return name.capitalize();
+  	}
+    return "Guest";
+  }
+});
+//Session.set('unreadMessages', Session.get('unreadMessages')+1);
+//Session.set('deadlineAlerts', Session.get('deadlineAlerts')+1);
 
 Meteor.subscribe("messages", function onReady() {
   Session.set('messagesLoaded', true);
@@ -25,28 +54,18 @@ Meteor.subscribe("notes", function onReady() {
 //Client pushed notifications
 Warnings = new Meteor.Collection("warnings");
 Meteor.subscribe("warnings");
-Meteor.call("removeWarnings",function(){}); //This will remove all warnings every time a user connects or every time a user refreshes the app. Its sub-optimal
+Meteor.call("removeWarnings");
+/*	To insert warnings use the function below
+ *  Meteor.call("newNotification", title, message, department);
+ */
+
 Deps.autorun(function() {
-  	Warnings.find({}).observe({
+  	Warnings.find({}).observeChanges({
     added: function(item){
-    	 if(this.isSimulation){
-    	 	Notifications.info(item.title,item.message);
-    	 }
-      console.log(item.title, item.message);
+		console.log(item.title, item.message);
     }
   });
 });
-
-//Navigation
-var language = window.navigator.userLanguage || window.navigator.language;
-
-Meteor.subscribe("navigation", language.substr(0,2), function onReady() {
-  Session.set('navigationLoaded', true);
-});
-
-Template.navigation.nav = function(){
-	return Navigation.find({});
-}
 
 //Set notifications to last 3seconds
 Meteor.startup(function () {
@@ -59,6 +78,32 @@ Router.configure({
 	layoutTemplate: 'main',
 	templateNameConverter : 'upperCamelCase'
 });
+
+Template.minimessages.messages = function(){
+	var messages = Messages.find({},{sort: {time: -1}, limit: 4}).fetch();
+	
+	var result = [];
+	
+	//Only show 3 messages!
+	for(var i = 0; i<4 && i<messages.length; i++){
+		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : messages[i].hospitalizationId}).patientId});
+		var date = new Date(messages[i].time);
+		var trim = 30;
+		while(messages[i].message.charAt(trim) != " " && messages[i].message.length > trim){
+			trim++;
+		}
+		var element = {
+			attachment: messages[i].attachment,
+			name: patient.first.capitalize() + " " + patient.last.capitalize(),
+			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes(),
+			message: messages[i].message.substring(0,trim) + "..."
+		};
+		result.push(element);
+	}
+	return result;
+};
+
+Router.onBeforeAction('loading');
 
 Router.map(function() {
 	this.route('registrationform', {
@@ -232,30 +277,6 @@ Template.messages.messages = function(){
 			department: nurse.profile.department,
 			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes(),
 			message: messages[i].message
-		};
-		result.push(element);
-	}
-	return result;
-};
-
-Template.minimessages.messages = function(){
-	var messages = Messages.find({},{sort: {time: -1}, limit: 4}).fetch();
-	
-	var result = [];
-	
-	//Only show 3 messages!
-	for(var i = 0; i<4 && i<messages.length; i++){
-		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : messages[i].hospitalizationId}).patientId});
-		var date = new Date(messages[i].time);
-		var trim = 30;
-		while(messages[i].message.charAt(trim) != " " && messages[i].message.length > trim){
-			trim++;
-		}
-		var element = {
-			attachment: messages[i].attachment,
-			name: patient.first.capitalize() + " " + patient.last.capitalize(),
-			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + date.getMinutes(),
-			message: messages[i].message.substring(0,trim) + "..."
 		};
 		result.push(element);
 	}
