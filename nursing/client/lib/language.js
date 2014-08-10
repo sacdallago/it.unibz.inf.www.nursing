@@ -1,16 +1,40 @@
-Meteor.autosubscribe(function() {
-	var userLanguage = window.navigator.userLanguage || window.navigator.language;
-	Language = new Meteor.Collection("language");
+Session.setDefault("language",(window.navigator.userLanguage || window.navigator.language));
+var Language = new Meteor.Collection("language");
 
-	//Meteor.subscribe("language");
-
-	Session.setDefault("language", Language.findOne({
-		'language' : userLanguage.substr(0, 2)
-	}));
-});
+Meteor.subscribe("language");
 
 Template.navigation.helpers({
-		languages : function() {
-			return Session.get('language');
-		}
-	});
+	language : function() {
+		return Language.findOne({
+			'target' : 'navigation',
+			'language' : Session.get('language').toString().substr(0, 2)
+		});
+	}
+}); 
+
+Template.beds.helpers({
+	language : function() {
+		return Language.findOne({
+			'target' : 'beds',
+			'language' : Session.get('language').toString().substr(0, 2)
+		});
+	}
+});
+
+Template.messages.helpers({
+	language : function() {
+		return Language.findOne({
+			'target' : 'messages',
+			'language' : Session.get('language').toString().substr(0, 2)
+		});
+	}
+});
+
+Template.registrationform.helpers({
+	language : function() {
+		return Language.findOne({
+			'target' : 'registration',
+			'language' : Session.get('language').toString().substr(0, 2)
+		});
+	}
+}); 

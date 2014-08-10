@@ -16,11 +16,11 @@ Meteor.startup(function() {
 		},
 		password : 'password'
 	});
-	
+
 	var c = {
 		first : "hanna",
 		last : "montana",
-		birthdate : (new Date(1982, 11, 7).getTime()),
+		birthdate : dateFormatter((new Date(1982, 11, 7).getTime())),
 		birthcity : "Bolzano",
 		birthprovince : "BZ",
 		sex : "m",
@@ -40,6 +40,7 @@ Meteor.startup(function() {
 	};
 
 	var pid = Patients.insert(c);
+	var patient = Patients.findOne(pid);
 	var user = Meteor.users.findOne({
 		"username" : "test"
 	});
@@ -60,39 +61,40 @@ Meteor.startup(function() {
 		departmentOfStay : user.profile.department,
 		bed : "7B",
 		reason : "Cardio-ventricular failure"
-	}
+	};
 
 	var hosp = Hospitalizations.insert(myhosp);
-	Patients.update({'_id' : pid}, { $set: {hospitalizationIds: [hosp] }});
-	
-	var noti = [{
-		hospitalizationId : hosp,
-		nurseId : user,
-		message : "Blood samples are ready",
-		attachment : "/archive/Hzk43m.jpg",
-		time : timestamp+2,
-		data : [{
-			type : "glucose",
-			value : 1.0,
-			unit : "mmol/L"
-		}, {
-			type : "creatinine",
-			value : 0.9,
-			unit : "mg/dL"
-		}]
+	Patients.update({
+		'_id' : pid
 	}, {
-		hospitalizationId : hosp,
-		nurseId : user,
-		message : "Patient was wighted somewhere else for example in another ward!",
-		time : timestamp+4,
-		data : [{
-			type : "weight",
-			value : 45,
-			unit : "kg"
-		}]
-	}];
+		$set : {
+			hospitalizationIds : [hosp]
+		}
+	});
 	
-	for(var i = 0; i<noti.length; i++){
-		Messages.insert(noti[i]);
+	for (var i = 0; i < 50; i++) {
+		var noti = {
+			hospitalizationId : hosp,
+			patientId : pid,
+			bed : myhosp.bed,
+			patientName : niceName(patient.first, patient.last),
+			nurseId : user,
+			nurseName : niceName(user.profile.first, user.profile.last),
+			target : 'cardiology',
+			message : "Blood samples are ready",
+			attachment : "/archive/Hzk43m.jpg",
+			timestamp : (new Date(2014, 8, 7+i).getTime()),
+			date: dateFormatter(new Date(2014, 8, 7+i%9).getTime()),
+			data : [{
+				type : "glucose",
+				value : 1.0,
+				unit : "mmol/L"
+			}, {
+				type : "creatinine",
+				value : 0.9,
+				unit : "mg/dL"
+			}]
+		};
+		Messages.insert(noti);
 	}
 });

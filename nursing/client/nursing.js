@@ -35,9 +35,7 @@ Template.navigation.helpers({
 //Session.set('unreadMessages', Session.get('unreadMessages')+1);
 //Session.set('deadlineAlerts', Session.get('deadlineAlerts')+1);
 
-Meteor.subscribe("messages", function onReady() {
-  Session.set('messagesLoaded', true);
-});
+/*
 Meteor.subscribe("alerts", function onReady() {
   Session.set('alertsLoaded', true);
 });
@@ -50,6 +48,7 @@ Meteor.subscribe("hospitalizations", function onReady() {
 Meteor.subscribe("notes", function onReady() {
   Session.set('notesLoaded', true);
 });
+*/
 
 //Client pushed notifications
 Warnings = new Meteor.Collection("warnings");
@@ -75,16 +74,15 @@ Meteor.startup(function () {
 });
 
 Router.configure({
-	layoutTemplate: 'main',
 	templateNameConverter : 'upperCamelCase'
 });
 
 Template.minimessages.messages = function(){
+	var handle = Meteor.subscribe;
 	var messages = Messages.find({},{sort: {time: -1}, limit: 4}).fetch();
 	
 	var result = [];
 	
-	//Only show 3 messages!
 	for(var i = 0; i<4 && i<messages.length; i++){
 		var patient = Patients.findOne({'_id' : Hospitalizations.findOne({'_id' : messages[i].hospitalizationId}).patientId});
 		var date = new Date(messages[i].time);
@@ -195,6 +193,7 @@ Template.loginform.events({
 	}
 }); 
 
+Template.registrationform.departments = Departments;
 
 Template.registrationform.events({
 	'submit #register-form' : function(e, t) {
@@ -259,26 +258,19 @@ Template.navigation.events({
 	}
 });
 
-Template.messages.messages = function(){
-	var messages = Messages.find({},{sort: {time: -1}}).fetch();
-	var result = [];
-	
-	//Only show 3 messages!
-	for(var i = 0; i<messages.length; i++){
-		var hospitalization = Hospitalizations.findOne({'_id' : messages[i].hospitalizationId});
-		var patient = Patients.findOne({'_id' : hospitalization.patientId});
-		var nurse = messages[i].nurseId;
-		var date = new Date(messages[i].time);
-		var element = {
-			attachment: messages[i].attachment,
-			name: patient.first.capitalize() + " " + patient.last.capitalize(),
-			bed: hospitalization.bed,
-			nurse: nurse.profile.first + " " + nurse.profile.last,
-			department: nurse.profile.department,
-			timestamp: date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes(),
-			message: messages[i].message
-		};
-		result.push(element);
+var messagesHandle = null;
+
+Template.messages.events({
+	'submit #more' : function(e, t) {
+		e.preventDefault();
+		Notifications.success('Loading next 5 messages');
+		messagesHandle.loadNextPage();
 	}
-	return result;
+});
+
+Template.messages.messages = function(){
+	messagesHandle = Meteor.subscribeWithPagination("messages",5, function onReady() {
+		Session.set('messagesLoaded', true);
+	});
+	return Messages.find({},{sort: {time: -1}}).fetch();
 };

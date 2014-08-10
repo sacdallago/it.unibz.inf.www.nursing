@@ -14,9 +14,9 @@ Meteor.publish('notes', function() {
 		return null;
 	} 
 });
-Meteor.publish('messages', function() {
+Meteor.publish('messages', function(limit) {
   if(this.userId){
-		return Messages.find(); 
+		return Messages.find({}, {limit: limit}); 
 	} else {
 		return null;
 	}

@@ -30,7 +30,7 @@
 					<a href="{{pathFor 'messages'}}"><i class="fa fa-fw fa-envelope"></i> {{language.messages}}&nbsp;&nbsp;<span class="badge alert-info">{{unreadMessages}}</span></a>
 				</li>
 				<li>
-					<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> Sign Out</a>
+					<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> {{language.signout}}</a>
 				</li>
 			</ul>
 			</div>
@@ -99,19 +99,15 @@
 </template>
 
 <template name="beds">
-	{{#contentFor "logged"}}
 		<div id="page-wrapper">
 			<div class="container-fluid">
 				<!-- Page Heading -->
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header"> Blank Page <small>Subheading</small></h1>
+						<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
-							</li>
-							<li class="active">
-								<i class="fa fa-file"></i> Blank Page
+								<i class="fa fa-dashboard"></i>Tags
 							</li>
 						</ol>
 					</div>
@@ -120,76 +116,63 @@
 			</div>
 			<!-- /#page-wrapper -->
 		</div>
-		{{/contentFor}}
 </template>
 
 <template name="alerts">
-	{{#contentFor "logged"}}
 	<div id="page-wrapper">
 		<div class="container-fluid">
 			
 		</div>
 	</div>
-	{{/contentFor}}
 </template>
 
 <template name="messages">
-	{{#contentFor "logged"}}
-		<div id="page-wrapper">
-			<div class="container-fluid">
-				<!-- Page Heading -->
-				<div class="row">
-					<div class="col-lg-12">
-						<h1 class="page-header"> Messages </h1>
-						<ol class="breadcrumb">
-							<li>
-								<i class="fa fa-dashboard"></i><a href="index.html">Dashboard</a>
-							</li>
-							<li class="active">
-								<i class="fa fa-file"></i> Blank Page
-							</li>
-						</ol>
-					</div>
-				</div>
-				{{#each messages}}
-				<div class="row">
-					<div class="col-lg-12">
-					{{#if attachment}}
-					<h4 class="media-heading"><strong>{{name}}</strong>, {{bed}}</h4>
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<!-- Page Heading -->
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
 					<ol class="breadcrumb">
 						<li>
-							<i class="fa fa-clock-o"></i> {{timestamp}}
+							<i class="fa fa-dashboard"></i>Tags
+						</li>
+					</ol>
+				</div>
+			</div>
+			{{#each messages}}
+			<div class="row">
+				<div class="col-lg-12">
+
+					<h4 class="media-heading"><strong>{{patientName}}</strong>, {{bed}}</h4>
+					<ol class="breadcrumb">
+						<li>
+							<i class="fa fa-clock-o"></i> {{date}}
 						</li>
 						<li>
-							<i class="fa fa-plus-square"></i> {{nurse}}, {{department}}
+							<i class="fa fa-plus-square"></i> {{nurseName}}
 						</li>
+						{{#if attachment}}
 						<li>
 							<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i> {{attachment}}</a>
 						</li>
+						{{/if}}
 					</ol>
 					<p>
 						{{message}}
 					</p>
-					{{else}}
-					<h4 class="media-heading"><strong>{{name}}</strong>, {{bed}}</h4>
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-clock-o"></i> {{timestamp}}
-						</li>
-						<li>
-							<i class="fa fa-plus-square"></i> {{nurse}}, {{department}}
-						</li>
-					</ol>
-					<p>
-						{{message}}
-					</p>
-					{{/if}}
-					</div>
 				</div>
-				{{/each}}
 			</div>
+			{{/each}}
 		</div>
-		{{/contentFor}}
+		<form id="more">
+			<input type="submit" value="Next" class="btn btn-block" />
+		</form>
+	</div>
+</template>
+
+<template name="next">
+	
 </template>
 
 <template name="goodbye">
@@ -202,7 +185,7 @@
 			<div id="output"></div>
 			<div class="avatar"></div>
 			<div class="form-box">
-				<form id="login-form" action="action">
+				<form id="login-form">
 					<div>
 						<input type="text" id="login-username" placeholder="Username" />
 						<input type="password" id="login-password" placeholder="password" />
@@ -224,22 +207,22 @@
 			<div id="output"></div>
 			<div class="avatar"></div>
 			<div class="form-box">
-				<form id="register-form" action="action">
+				<form id="register-form">
 					<div>
-						<input type="text" id="account-first" placeholder="Firstname" />
-						<input type="text" id="account-last" placeholder="Lastname" />
+						<input type="text" id="account-first" placeholder="{{language.firstname}}" />
+						<input type="text" id="account-last" placeholder="{{language.lastname}}" />
 						<input type="text" id="account-username" placeholder="Username" />
 						<input type="email" id="account-email" placeholder="email" />
 						<input type="password" id="account-password" placeholder="Password" />
-						<input type="password" id="account-password-repeat" placeholder="Repeat password" />
-						<input type="password" id="admin-password" placeholder="Authorization code" />
+						<input type="password" id="account-password-repeat" placeholder="Password" />
+						<input type="password" id="admin-password" placeholder="Admin Password" />
 						<select name="department" id="account-department" class="form-control" style="margin-top: 10px; margin-bottom: 10px;">
-							<option value="cardiology">Cardiology</option>
-							<option value="odontology">Odontology</option>
-							<option value="oncology">Oncology</option>
+							{{#each departments}}
+								<option value="{{this}}">{{this}}</option>
+							{{/each}}
 						</select>
-						<input type="submit" id="create-account" value="Create Account" class="btn btn-info btn-block login" />
-						<input id="account-signin" value="Back to sign in" class="btn btn-info btn-block login" style="margin-top: 30px;"/>
+						<input type="submit" id="create-account" value="{{language.createaccount}}" class="btn btn-info btn-block login" />
+						<input id="account-signin" value="{{language.backtosignin}}" class="btn btn-info btn-block login" style="margin-top: 30px;"/>
 					</div>
 				</form>
 			</div>
@@ -252,11 +235,9 @@
 	</div>
 </template>
 
-<template name="main">
+<body>
 	{{> notifications}}
-	{{> yield}}
-	<div id="wrapper">
+	{{#if currentUser}}
 		{{> navigation}}
-		{{> yield "logged"}}
-	</div>
-</template>
+	{{/if}}
+</body>

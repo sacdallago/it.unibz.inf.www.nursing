@@ -3,7 +3,8 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {},
-      "notifications": {}
+      "notifications": {},
+      "paginated-subscription": {}
     },
     "packages": {
       "iron-router": {
@@ -15,6 +16,11 @@
         "git": "https://github.com/gfk-ba/meteor-notifications.git",
         "tag": "v0.5.5",
         "commit": "dd780d4416d339aafd81c2695db9d3f58f3e011e"
+      },
+      "paginated-subscription": {
+        "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
+        "tag": "v0.2.2",
+        "commit": "2133a2163575f569f90253f81314f21b2bf08d20"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

@@ -1,6 +1,7 @@
 {
   "packages": {
     "iron-router": {},
-    "notifications": {}
+    "notifications": {},
+    "paginated-subscription": {}
   }
 }
