@@ -37,9 +37,11 @@
 			</div>
 			{{/each}}
 		</div>
-		<form id="more">
-			<input type="submit" value="Next" class="btn btn-block" />
-		</form>
+		{{#if moreResults}}
+		<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">
+			<span class="loading"></span>
+		</div>
+		{{/if}}
 	</div>
 </template>
 

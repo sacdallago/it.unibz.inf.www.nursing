@@ -2,20 +2,11 @@ Messages = new Meteor.Collection("messages");
 
 Session.setDefault('unreadMessages', 0);
 // Gets augmented when a new message for the given ward gets inserted!
-
 //This is what the template displays
 var messagesHandle = null;
 
-Template.messages.events({
-	'submit #more' : function(e, t) {
-		e.preventDefault();
-		Notifications.success('Loading next 5 messages');
-		messagesHandle.loadNextPage();
-	}
-});
-
 Template.messages.messages = function() {
-	messagesHandle = Meteor.subscribeWithPagination("messages", 5, function onReady() {
+	messagesHandle = Meteor.subscribeWithPagination("messages", 10, function onReady() {
 		Session.set('messagesLoaded', true);
 	});
 	return Messages.find({}, {
@@ -24,6 +15,39 @@ Template.messages.messages = function() {
 		}
 	});
 };
+
+Template.messages.moreResults = function() {
+    // If, once the subscription is ready, we have less rows than we
+    // asked for, we've got all the rows in the collection.
+    if(messagesHandle && messagesHandle.ready() && Messages.find().count() < messagesHandle.limit()){
+    	return false;
+    }
+    return true;
+};
+
+function moreMessages() {
+    var threshold, target = $("#moreMessages");
+    if (!target.length) return;
+ 
+    threshold = $(window).scrollTop() + $(window).height() - target.height();
+ 
+    if (target.offset().top < threshold) {
+        if (!target.data("visible")) {
+            // console.log("target became visible (inside viewable area)");
+            target.data("visible", true);
+            messagesHandle.loadNextPage();
+            Notifications.info('Loading next messages');
+        }
+    } else {
+        if (target.data("visible")) {
+            // console.log("target became invisible (below viewable arae)");
+            target.data("visible", false);
+        }
+    }        
+}
+ 
+// run the above func every time the user scrolls
+$(window).scroll(moreMessages);
 /////////////////////////////////////
 
 //This is what the template minimessages displays -- currently not loaded in html
