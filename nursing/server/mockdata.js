@@ -81,10 +81,10 @@ Meteor.startup(function() {
 			nurseId : user,
 			nurseName : niceName(user.profile.first, user.profile.last),
 			target : 'cardiology',
-			message : "Blood samples are ready",
+			message : "Message n."+i+": Blood samples are ready",
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i).getTime()),
-			date: dateFormatter(new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			date: dateFormatter(new Date(2014, 8, 7+i).getTime()),
 			data : [{
 				type : "glucose",
 				value : 1.0,

@@ -272,5 +272,5 @@ Template.messages.messages = function(){
 	messagesHandle = Meteor.subscribeWithPagination("messages",5, function onReady() {
 		Session.set('messagesLoaded', true);
 	});
-	return Messages.find({},{sort: {time: -1}}).fetch();
+	return Messages.find({},{sort: {time: -1}});
 };
