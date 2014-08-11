@@ -6,14 +6,12 @@ nav{
 	background: url('images/star.jpg');
 	opacity: 0.8;
 	filter: alpha(opacity=80); /* For IE8 and earlier */
-	-webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
-    transition: width 2s;
+	-webkit-transition: opacity 2s; /* For Safari 3.1 to 6.0 */
+    transition: opacity 2s;
 }
 nav:hover {
     opacity: 1.0;
     filter: alpha(opacity=100); /* For IE8 and earlier */
-   -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
-    transition: width 2s;
 }
 
 .row{

@@ -1,0 +1,84 @@
+<template name="messages">
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<!-- Page Heading -->
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
+					<ol class="breadcrumb">
+						<li>
+							<i class="fa fa-dashboard"></i>Tags
+						</li>
+					</ol>
+				</div>
+			</div>
+			{{#each messages}}
+			<div class="row">
+				<div class="col-lg-12">
+
+					<h4 class="media-heading"><strong>{{patientName}}</strong>, {{bed}}</h4>
+					<ol class="breadcrumb">
+						<li>
+							<i class="fa fa-clock-o"></i> {{date}}
+						</li>
+						<li>
+							<i class="fa fa-plus-square"></i> {{nurseName}}
+						</li>
+						{{#if attachment}}
+						<li>
+							<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i> {{attachment}}</a>
+						</li>
+						{{/if}}
+					</ol>
+					<p>
+						{{message}}
+					</p>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+		<form id="more">
+			<input type="submit" value="Next" class="btn btn-block" />
+		</form>
+	</div>
+</template>
+
+<!-- Deprecated -->
+<template name="minimessages">
+	{{#each messages}}
+	<li class="message-preview">
+		{{#if attachment}}
+		<a  href="{{attachment}}">
+		<div class="media">
+			<span class="pull-left"> <img class="media-object" alt=""> </span>
+			<div class="media-body">
+				<h5 class="media-heading"><strong>{{name}}</strong></h5>
+				<p class="small text-muted">
+					<i class="fa fa-clock-o"></i> {{timestamp}}
+				</p>
+				<p>
+					{{message}}
+				</p>
+				<p>
+					<i class="fa fa-file-archive-o"></i> {{attachment}}
+				</p>
+			</div>
+		</div></a>
+		{{else}}
+		<a>
+		<div class="media">
+			<span class="pull-left"> <img class="media-object" alt=""> </span>
+			<div class="media-body">
+				<h5 class="media-heading"><strong>{{name}}</strong></h5>
+				<p class="small text-muted">
+					<i class="fa fa-clock-o"></i> {{timestamp}}
+				</p>
+				<p>
+					{{message}}
+				</p>
+			</div>
+		</div></a>
+		{{/if}}
+	</li>
+	{{/each}}
+</template>
