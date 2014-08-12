@@ -1,6 +1,7 @@
 Messages = new Meteor.Collection("messages");
 
 Session.setDefault('unreadMessages', 0);
+Session.setDefault('tags',[]);
 // Gets augmented when a new message for the given ward gets inserted!
 //This is what the template displays
 var messagesHandle = null;
@@ -11,25 +12,29 @@ Template.messages.events({
 			if(error){
 				Notifications.error("Error","An error occoured. Please try again");
 			} else {
-				Notifications.success("Yeah","You read it! :)");
+				Notifications.success("","You read it! :)");
 			}
 		});
 	},
 	'click .delete': function(event){
-		Messages.update({_id:this._id},{$inc: { readBy: 1 }}, function(error){
+		Messages.remove({_id:this._id}, function(error){
 			if(error){
 				Notifications.error("Error","An error occoured. Please try again");
 			} else {
-				Notifications.success("Yeah","You deleted it! :)");
 			}
 		});
 	},
+	'click .tag': function(event){
+		if(this.type){
+			var tags = Session.get('tags');
+			tags.push(this.type);
+			Session.set('tags',tags);
+		}
+	}
 });
 
 Template.messages.messages = function() {
-	messagesHandle = Meteor.subscribeWithPagination("messages", 10, function onReady() {
-		Session.set('messagesLoaded', true);
-	});
+	messagesHandle = Meteor.subscribeWithPagination("messages", 10);
 	return Messages.find({}, {
 		$orderby : {
 			timestamp : 1

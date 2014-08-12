@@ -2,6 +2,7 @@
   "packages": {
     "iron-router": {},
     "notifications": {},
-    "paginated-subscription": {}
+    "paginated-subscription": {},
+    "animation-helper-velocity": {}
   }
 }

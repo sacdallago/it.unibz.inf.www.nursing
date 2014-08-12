@@ -4,7 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "notifications": {},
-      "paginated-subscription": {}
+      "paginated-subscription": {},
+      "animation-helper-velocity": {}
     },
     "packages": {
       "iron-router": {
@@ -22,6 +23,11 @@
         "tag": "v0.2.2",
         "commit": "2133a2163575f569f90253f81314f21b2bf08d20"
       },
+      "animation-helper-velocity": {
+        "git": "https://github.com/frozeman/meteor-animation-helper-velocity.git",
+        "tag": "v0.0.7",
+        "commit": "7ca3391de481c9af1d9e3bc3e0d819bc767b0946"
+      },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
         "tag": "v0.2.0",
@@ -31,6 +37,16 @@
         "git": "https://github.com/spacejamio/meteor-munit.git",
         "tag": "v0.2.0",
         "commit": "9fbf742c3ea863d9d37f608d58f8fda646c01b2c"
+      },
+      "velocityjs": {
+        "git": "https://github.com/Sewdn/meteor-velocityjs.git",
+        "tag": "v0.8.0",
+        "commit": "5e96099e2cf8f99dbc7ed61225e96b0ba833ff08"
+      },
+      "underscore-string-latest": {
+        "git": "https://github.com/TimHeckel/meteor-underscore-string.git",
+        "tag": "v2.3.3",
+        "commit": "4a5d70eee48fbd90a6e6fc78747250d704a0b3bb"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
