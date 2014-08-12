@@ -4,14 +4,13 @@
 ul.notifications {
     z-index: 10001 !important;
     position: fixed;
-    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top:0;
     right: 10px;
+    width: 300px;
     list-style-type: none;
     padding: 0;
-    width: 300px;
-    @media(max-width: @screen-sm) {
-        width: 60%;
-    }
 }
 
 li.notification {
@@ -27,15 +26,19 @@ li.notification {
     }
     &.error {
         background-color: #F0342B;
+        opacity: 0.7;
     }
     &.warning {
         background-color: #f5a93a;
+        opacity: 0.7;
     }
     &.info {
         background-color: #A6C5D0;
+        opacity: 0.7;
     }
     &.success {
         background-color: #A5DD8C;
+        opacity: 0.7;
     }
     & div.title {
         top: 0;
@@ -50,9 +53,8 @@ li.notification {
         }
     }
     & div.closeButton {
-      top: 0px;
-      right: 10px;
       position:absolute;
+      margin: auto;
       font-weight: bold;
       font-size: 20px;
     }

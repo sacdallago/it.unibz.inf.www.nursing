@@ -5,13 +5,34 @@ Session.setDefault('unreadMessages', 0);
 //This is what the template displays
 var messagesHandle = null;
 
+Template.messages.events({
+	'click .read': function(event){
+		Messages.update({_id:this._id},{$inc: { readBy: 1 }}, function(error){
+			if(error){
+				Notifications.error("Error","An error occoured. Please try again");
+			} else {
+				Notifications.success("Yeah","You read it! :)");
+			}
+		});
+	},
+	'click .delete': function(event){
+		Messages.update({_id:this._id},{$inc: { readBy: 1 }}, function(error){
+			if(error){
+				Notifications.error("Error","An error occoured. Please try again");
+			} else {
+				Notifications.success("Yeah","You deleted it! :)");
+			}
+		});
+	},
+});
+
 Template.messages.messages = function() {
 	messagesHandle = Meteor.subscribeWithPagination("messages", 10, function onReady() {
 		Session.set('messagesLoaded', true);
 	});
 	return Messages.find({}, {
-		sort : {
-			time : -1
+		$orderby : {
+			timestamp : 1
 		}
 	});
 };

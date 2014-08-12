@@ -1,5 +1,6 @@
 <template name="messages">
 	<div class="container-fluid">
+		<div class="row">
 		<div class="span12">
 			<div class="hero-unit">
 				<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
@@ -8,11 +9,20 @@
 				</p>
 			</div>
 		</div>
+		</div>
+		<div class="row">
 		{{#each messages}}
 		<!--  <div class="row-fluid">  -->
 		<div class="span4">
 			<div class="card">
-				<h2 class="card-heading simple"><strong>{{patientName}}</strong>, {{bed}}</h2>
+				 <div class="card-heading image">
+				 	<button class="btn btn-success read"><i class="fa fa-check"></i></button>
+				 	<button class="btn btn-danger delete"><i class="fa fa-times"></i></button>
+				 	<div class="card-heading-header">
+				 		<h3 ><strong>{{patientName}}</strong>, {{bed}}</h3>
+				 		<span>Read by: {{readBy}}</span>
+				 	</div>
+				 </div>
 				<div class="card-body">
 					{{#each data}}
 					<span class="label label-inactive">{{type}}</span>
@@ -21,15 +31,17 @@
 						{{message}}
 					</p>
 					<p>
-						<small> <i class="fa fa-clock-o"></i> {{date}} - <i class="fa fa-plus-square"></i> {{nurseName}}
-							{{#if attachment}}
-							- <a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a> {{/if}} </small>
+						<small> <i class="fa fa-clock-o"></i> {{date}} - <i class="fa fa-plus-square"></i> {{nurseName}}</small>
+						{{#if attachment}}
+							<br /><small><a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a></small>
+						{{/if}}
 					</p>
 				</div>
 			</div>
 		</div>
 		<!--   </div>  -->
 		{{/each}}
+		</div>
 	</div>
 	{{#if moreResults}}
 	<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">

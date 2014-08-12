@@ -80,6 +80,7 @@ Meteor.startup(function() {
 			patientName : niceName(patient.first, patient.last),
 			nurseId : user,
 			nurseName : niceName(user.profile.first, user.profile.last),
+			readBy: 0,
 			target : 'cardiology',
 			message : "Message n."+i+": Blood samples are ready",
 			attachment : "/archive/Hzk43m.jpg",
