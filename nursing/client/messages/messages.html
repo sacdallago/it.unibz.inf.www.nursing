@@ -1,48 +1,41 @@
 <template name="messages">
-	<div id="page-wrapper">
-		<div class="container-fluid">
-			<!-- Page Heading -->
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-dashboard"></i>Tags
-						</li>
-					</ol>
-				</div>
+	<div class="container-fluid">
+		<div class="span12">
+			<div class="hero-unit">
+				<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
+				<p>
+					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+				</p>
 			</div>
-			{{#each messages}}
-			<div class="row">
-				<div class="col-lg-12">
-
-					<h4 class="media-heading"><strong>{{patientName}}</strong>, {{bed}}</h4>
-					<ol class="breadcrumb">
-						<li>
-							<i class="fa fa-clock-o"></i> {{date}}
-						</li>
-						<li>
-							<i class="fa fa-plus-square"></i> {{nurseName}}
-						</li>
-						{{#if attachment}}
-						<li>
-							<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i> {{attachment}}</a>
-						</li>
-						{{/if}}
-					</ol>
-					<p>
+		</div>
+		{{#each messages}}
+		<!--  <div class="row-fluid">  -->
+		<div class="span4">
+			<div class="card">
+				<h2 class="card-heading simple"><strong>{{patientName}}</strong>, {{bed}}</h2>
+				<div class="card-body">
+					{{#each data}}
+					<span class="label label-inactive">{{type}}</span>
+					{{/each}}
+					<p >
 						{{message}}
+					</p>
+					<p>
+						<small> <i class="fa fa-clock-o"></i> {{date}} - <i class="fa fa-plus-square"></i> {{nurseName}}
+							{{#if attachment}}
+							- <a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a> {{/if}} </small>
 					</p>
 				</div>
 			</div>
-			{{/each}}
 		</div>
-		{{#if moreResults}}
-		<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">
-			<span class="loading"></span>
-		</div>
-		{{/if}}
+		<!--   </div>  -->
+		{{/each}}
 	</div>
+	{{#if moreResults}}
+	<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">
+		<span class="loading"></span>
+	</div>
+	{{/if}}
 </template>
 
 <!-- Deprecated -->

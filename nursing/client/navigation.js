@@ -1,3 +1,5 @@
+Session.setDefault('pageName','Login');
+
 Template.navigation.helpers({
 	unreadMessages : function() {
 		var unreadMessages = Session.get("unreadMessages");
@@ -12,13 +14,6 @@ Template.navigation.helpers({
 			return null;
 		}
 		return deadlineAlerts;
-	},
-	first : function() {
-		if (Meteor.user()) {
-			var name = Meteor.user().profile.first;
-			return name.capitalize();
-		}
-		return "Guest";
 	}
 });
 
