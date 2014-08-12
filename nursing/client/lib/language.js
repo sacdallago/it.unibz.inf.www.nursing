@@ -38,3 +38,12 @@ Template.registrationform.helpers({
 		});
 	}
 }); 
+
+Template.rooms.helpers({
+	language : function() {
+		return Language.findOne({
+			'target' : 'rooms',
+			'language' : Session.get('language').toString().substr(0,2)
+		});
+	}
+});

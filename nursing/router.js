@@ -1,4 +1,4 @@
-Router.configure({
+(function(){Router.configure({
 	templateNameConverter : 'upperCamelCase'
 });
 
@@ -71,4 +71,18 @@ Router.map(function() {
         	this.redirect('loginform');
    		}
 	});
+
+  this.route('rooms', {
+    path : '/rooms',
+    onBeforeAction: function() {
+          if (!Meteor.user())
+          this.redirect('loginform');
+      },
+      onAfterAction: function() {
+          if (!Meteor.user())
+          this.redirect('loginform');
+      }
+  });
 });
+
+})();

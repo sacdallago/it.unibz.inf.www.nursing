@@ -6,6 +6,8 @@ Patients = new Meteor.Collection("patients");
 Hospitalizations = new Meteor.Collection("hospitalizations");
 Notes = new Meteor.Collection("notes");
 
+Rooms = new Meteor.Collection("rooms");
+
 //Security first
 Meteor.publish('notes', function() {
   if(this.userId){
@@ -41,4 +43,12 @@ Meteor.publish('alerts', function() {
 	} else {
 		return null;
 	} 
+});
+
+Meteor.publish('rooms', function(){
+	if(this.userId){
+		return Rooms.find();
+	} else{
+		return null;
+	}
 });

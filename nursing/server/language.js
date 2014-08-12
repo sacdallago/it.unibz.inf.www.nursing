@@ -13,7 +13,8 @@ Meteor.startup(function() {
 		beds : 'Beds',
 		alerts: 'Alerts',
 		messages: 'Messages',
-		signout: 'Sign out'
+		signout: 'Sign out',
+		rooms: 'Rooms'
 	});
 	Language.insert({
 		language : 'en',
@@ -34,6 +35,13 @@ Meteor.startup(function() {
 		lastname: 'Last Name',
 		createaccount: 'Create Account',
 		backtosignin: 'Back to Sign in'
+	});
+
+	Language.insert({
+		language: 'en',
+		target: 'rooms',
+		heading: 'Rooms',
+		subheading: ''
 	});
 	//IT
 	Language.insert({
@@ -64,6 +72,13 @@ Meteor.startup(function() {
 		createaccount: 'Creare Utente',
 		backtosignin: 'Login'
 	});
+
+	Language.insert({
+		language: 'it',
+		target: 'rooms',
+		heading: 'Stanze',
+		subheading: ''
+	});
 	//DE
 	Language.insert({
 		language : 'de',
@@ -92,5 +107,12 @@ Meteor.startup(function() {
 		lastname: 'Nachname',
 		createaccount: 'Benutzer erstellen',
 		backtosignin: 'Login'
+	});
+
+	Language.insert({
+		language: 'de',
+		target: 'rooms',
+		heading: 'Zimmer',
+		subheading: ''
 	});
 });
