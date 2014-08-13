@@ -52,12 +52,18 @@ Router.map(function() {
 	this.route('messages', {
 		path : '/messages',
 		onBeforeAction: function() {
-      		if (!Meteor.user())
-        	this.redirect('loginform');
+      		if (!Meteor.user()){
+      			this.redirect('loginform');
+      		} else {
+      			messagesHandle = Meteor.subscribeWithPagination("messages", 10);
+      		}
    		},
    		onAfterAction: function() {
-      		if (!Meteor.user())
-        	this.redirect('loginform');
+      		if (!Meteor.user()){
+      			this.redirect('loginform');
+      		} else {
+      			Session.set('unreadMessages', 0);
+      		}
    		}
 	});
 	this.route('alerts', {

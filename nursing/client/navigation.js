@@ -1,5 +1,3 @@
-Session.setDefault('pageName','Login');
-
 Template.navigation.helpers({
 	unreadMessages : function() {
 		var unreadMessages = Session.get("unreadMessages");

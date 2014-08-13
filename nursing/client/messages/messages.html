@@ -1,56 +1,28 @@
 <template name="messages">
-	<div class="container-fluid">
+	{{> loading}}
+		<div class="container-fluid">
 		<div class="row">
 			<div class="span12">
 				<div class="hero-unit">
 					<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
 					<ol class="breadcrumb">
 						{{#each tags}}
-							<li>{{tag}}</li>
+						{{#if type}}
+							<li><span class="label label-success tag {{active}}"><strong>{{type}}</strong> ({{count}})</span></li>
+						{{else}}
+						{{#if patientId}}
+							<li><span class="label label-warning tag {{active}}"><strong>{{patientName}}</strong> ({{count}})</span></li>
+						{{else}}
+							<li><span class="label tag {{active}}"><strong>All</strong> ({{count}})</span></li>
+						{{/if}}
+						{{/if}}
 						{{/each}}
 					</ol>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			{{#each messages}}
-			{{#AnimateWithVelocity}}
-			<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-				<div class="span4">
-					<div class="card">
-						<div class="card-heading image">
-							<button class="btn btn-success read">
-								<i class="fa fa-check"></i>
-							</button>
-							<button class="btn btn-danger delete">
-								<i class="fa fa-times"></i>
-							</button>
-							<div class="card-heading-header">
-								<h3 ><strong>{{patientName}}</strong>, {{bed}}</h3>
-								<span>Read by: {{readBy}}</span>
-							</div>
-						</div>
-						<div class="card-body">
-							{{#each data}}
-							<span class="label label-inactive tag">{{type}}</span>
-							{{/each}}
-							<span class="label label-inactive tag">{{patientName}}</span>
-							<p >
-								{{message}}
-							</p>
-							<p>
-								<small> <i class="fa fa-clock-o"></i> {{date}} - <i class="fa fa-plus-square"></i> {{nurseName}}</small>
-								{{#if attachment}}
-								<br />
-								<small><a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a></small>
-								{{/if}}
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/AnimateWithVelocity}}
-			{{/each}}
+			{{> messageitems}}
 		</div>
 	</div>
 	{{#if moreResults}}
@@ -58,6 +30,48 @@
 		<span class="loading"></span>
 	</div>
 	{{/if}}
+</template>
+
+<template name="messageitems">
+	{{#each messages}}
+	{{#AnimateWithVelocity}}
+	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="span4">
+			<div class="card">
+				<div class="card-heading image">
+					
+					<div class="card-heading-header">
+						<h3><span class="label label-warning" style="color: white; font-size: 20px;"><strong>{{patientName}}</strong></span>, {{bed}}</h3>
+						<span><i class="fa fa-clock-o"></i> {{date}} - Check ins: {{readBy}}</span><br />
+						{{#each data}}
+						<span class="label label-success" style="color: white; font-size: 10px;">{{type}}</span>
+						{{/each}}
+					</div>
+				</div>
+				<div class="card-body">
+					<p >
+						{{message}}
+					</p>
+					<p>
+						<small><i class="fa fa-plus-square"></i> {{nurseName}}</small> - 
+						{{#if attachment}}
+						<small><a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a></small>
+						{{/if}}
+					</p>
+				</div>
+				<div class="card-bottom" style="text-align: center;">
+					<button class="btn btn-success read">
+						<i class="fa fa-check"></i> Checkin
+					</button>
+					<button class="btn btn-danger delete">
+						<i class="fa fa-times"></i> Delete
+					</button>
+   				</div>
+			</div>
+		</div>
+	</div>
+	{{/AnimateWithVelocity}}
+	{{/each}}
 </template>
 
 <!-- Deprecated -->

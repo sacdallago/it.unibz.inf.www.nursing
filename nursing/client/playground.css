@@ -9,3 +9,7 @@
 		padding-right: 5px;
 	}
 }
+
+.tag :hover{
+	cursor:pointer;
+}

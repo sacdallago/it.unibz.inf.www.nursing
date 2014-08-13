@@ -18,7 +18,8 @@ Meteor.publish('notes', function() {
 });
 Meteor.publish('messages', function(limit) {
   if(this.userId){
-		return Messages.find({}, {limit: limit}); 
+  	var user = Meteor.users.findOne(this.userId);
+		return Messages.find({target:user.profile.department}, {limit: limit}); 
 	} else {
 		return null;
 	}

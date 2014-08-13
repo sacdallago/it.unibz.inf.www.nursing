@@ -1,12 +1,10 @@
 Messages = new Meteor.Collection("messages");
-
-Session.setDefault('unreadMessages', 0);
-Session.setDefault('tags',[]);
 // Gets augmented when a new message for the given ward gets inserted!
 //This is what the template displays
-var messagesHandle = null;
 
-Template.messages.events({
+messagesHandle = null; // Initiated in router beforeAction!!
+
+Template.messageitems.events({
 	'click .read': function(event){
 		Messages.update({_id:this._id},{$inc: { readBy: 1 }}, function(error){
 			if(error){
@@ -23,23 +21,121 @@ Template.messages.events({
 			} else {
 			}
 		});
-	},
+	}
+});
+
+Template.messages.events({
 	'click .tag': function(event){
 		if(this.type){
-			var tags = Session.get('tags');
-			tags.push(this.type);
-			Session.set('tags',tags);
+			var now = Session.get('tagTypeFilter');
+			if(now == this.type){
+				Session.set('tagTypeFilter',null);
+			} else {
+				Session.set('tagTypeFilter',this.type);
+			}
+		} else if(this.patientId){
+			var now = Session.get('patientTagFilter');
+			if(now == this.patientId){
+				Session.set('patientTagFilter',null);
+			} else {
+				Session.set('patientTagFilter',this.patientId);
+			}
+		} if (this.type == null && this.patientId == null){
+			Session.set('tagTypeFilter',null);
+			Session.set('patientTagFilter',null);
 		}
 	}
 });
 
-Template.messages.messages = function() {
-	messagesHandle = Meteor.subscribeWithPagination("messages", 10);
-	return Messages.find({}, {
-		$orderby : {
-			timestamp : 1
-		}
+Template.messages.helpers({
+	notReady : function(){
+		return !(messagesHandle && messagesHandle.ready());
+	}
+});
+
+Template.messageitems.messages = function() {
+	var tagTypeFilter = Session.get('tagTypeFilter');
+	var patientTagFilter = Session.get('patientTagFilter');
+	if (tagTypeFilter && patientTagFilter) {
+		return Messages.find({
+			'data.type' : tagTypeFilter,
+			patientId: patientTagFilter
+		}, {
+			$orderby : {
+				timestamp : 1
+			}
+		});
+	} else if(tagTypeFilter) {
+		return Messages.find({
+			'data.type' : tagTypeFilter
+		}, {
+			$orderBy : {
+				timestamp : 1
+			}
+		});
+	} else if(patientTagFilter) {
+		return Messages.find({
+			patientId: patientTagFilter
+		}, {
+			$orderBy : {
+				timestamp : 1
+			}
+		});
+	} else {
+		return Messages.find({}, {
+			$orderBy : {
+				timestamp : 1
+			}
+		});
+	}
+}; 
+
+Template.messages.tags = function() {
+	var tag_infos = [];
+	var total_count = 0;
+
+	Messages.find().forEach(function(message) {
+		_.each(message.data, function(data) {
+			var tag_info = _.find(tag_infos, function(element) {
+				return element.type === data.type;
+			});
+			if (!tag_info)
+				tag_infos.push({
+					type : data.type,
+					count : 1
+				});
+			else
+				tag_info.count++;
+		});
+		var tag_info = _.find(tag_infos, function(element) {
+			return element.patientId === message.patientId;
+		});
+		if (!tag_info)
+			tag_infos.push({
+				patientId : message.patientId,
+				patientName: message.patientName,
+				count : 1
+			});
+		else
+			tag_info.count++;
+
+		total_count++;
 	});
+
+	tag_infos = _.sortBy(tag_infos, function(x) {
+		return x.type;
+	});
+
+	tag_infos.unshift({
+		type : null,
+		count : total_count
+	});
+
+	return tag_infos;
+}; 
+
+Template.messages.active = function() {
+	return (Session.equals('tagTypeFilter',this.type) || Session.equals('patientTagFilter',this.patientId)) ? 'label-info' : '';
 };
 
 Template.messages.moreResults = function() {
@@ -62,7 +158,7 @@ function moreMessages() {
             // console.log("target became visible (inside viewable area)");
             target.data("visible", true);
             messagesHandle.loadNextPage();
-            Notifications.info('Loading next messages');
+            //Notifications.info('Loading next messages');
         }
     } else {
         if (target.data("visible")) {
