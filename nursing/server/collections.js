@@ -3,8 +3,8 @@
 Messages = new Meteor.Collection("messages");
 Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
-Hospitalizations = new Meteor.Collection("hospitalizations");
 Notes = new Meteor.Collection("notes");
+Anagraphics = new Meteor.Collection("anagraphics");
 
 Rooms = new Meteor.Collection("rooms");
 
@@ -24,16 +24,17 @@ Meteor.publish('messages', function(limit) {
 		return null;
 	}
 });
-Meteor.publish('hospitalizations', function() {
+Meteor.publish('anagraphics', function(limit) {
   if(this.userId){
-		return Hospitalizations.find(); 
+		return Anagraphics.find({},{limit: limit}); 
 	} else {
 		return null;
-	}
+	} 
 });
 Meteor.publish('patients', function() {
   if(this.userId){
-		return Patients.find(); 
+  	var user = Meteor.users.findOne(this.userId);
+		return Patients.find({'currentHospitalization.departmentOfStay':user.profile.department}); 
 	} else {
 		return null;
 	} 

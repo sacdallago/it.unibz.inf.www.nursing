@@ -13,3 +13,66 @@
 .tag :hover{
 	cursor:pointer;
 }
+
+.cardleftbutton {
+	margin-left:15px;
+	margin-top:15px;
+	margin-bottom:15px;
+}
+
+.cardrightbutton {
+	margin-right:15px;
+	margin-top:15px;
+	margin-bottom:15px;
+}
+
+.card-heading {
+	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 10px !important;
+}
+
+.card-body{
+	text-align: justify;
+}
+
+.label {
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	text-shadow: none;
+}
+
+.label-sea{
+	background-color: white;
+	color: #16a085;
+	border: 1px solid #16a085;
+}
+
+.label-belize{
+	background-color: white;
+	color: #2980b9;
+	border: 1px solid #2980b9;
+}
+
+.btn{
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	background-image: none;
+}
+
+.alizarin{
+	color: #e74c3c;
+}
+
+.emerald{
+	color: #28be68;
+}
+
+.label-info{
+	background-color: #5bc0de !important;
+	border: 1px solid #5bc0de !important;
+	color: white !important;
+	border: none !important;
+}
+

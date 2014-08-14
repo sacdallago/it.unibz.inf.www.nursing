@@ -8,10 +8,10 @@
 					<ol class="breadcrumb">
 						{{#each tags}}
 						{{#if type}}
-							<li><span class="label label-success tag {{active}}"><strong>{{type}}</strong> ({{count}})</span></li>
+							<li><span class="label label-sea tag {{active}}"><strong>{{type}}</strong> ({{count}})</span></li>
 						{{else}}
 						{{#if patientId}}
-							<li><span class="label label-warning tag {{active}}"><strong>{{patientName}}</strong> ({{count}})</span></li>
+							<li><span class="label label-belize tag {{active}}"><strong>{{patientName}}</strong> ({{count}})</span></li>
 						{{else}}
 							<li><span class="label tag {{active}}"><strong>All</strong> ({{count}})</span></li>
 						{{/if}}
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	{{#if moreResults}}
-	<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">
+	<div id="moreMessages" style="padding-top: 200px;">
 		<span class="loading"></span>
 	</div>
 	{{/if}}
@@ -38,33 +38,39 @@
 	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<div class="span4">
 			<div class="card">
-				<div class="card-heading image">
+				<div class="card-heading">
 					
 					<div class="card-heading-header">
-						<h3><span class="label label-warning" style="color: white; font-size: 20px;"><strong>{{patientName}}</strong></span>, {{bed}}</h3>
-						<span><i class="fa fa-clock-o"></i> {{date}} - Check ins: {{readBy}}</span><br />
-						{{#each data}}
-						<span class="label label-success" style="color: white; font-size: 10px;">{{type}}</span>
+						<p style="font-size: 22.75px;">
+						<strong>{{patientName}}</strong>, {{bed}}<br />
+							{{#each data}}
+						<span class="label label-sea" style=" font-size: 10px;">{{type}}</span>
 						{{/each}}
+						</p>
+						<span>
+						<P>
+							<i class="fa fa-clock-o"></i> {{date}} - Check ins: {{readBy}} <br />
+							<i class="fa fa-plus-square"></i> {{nurseName}} - 
+						{{#if attachment}}
+						<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a>
+						{{/if}}
+						<br />
+						</p>
+						</span>
+						
 					</div>
 				</div>
 				<div class="card-body">
 					<p >
 						{{message}}
 					</p>
-					<p>
-						<small><i class="fa fa-plus-square"></i> {{nurseName}}</small> - 
-						{{#if attachment}}
-						<small><a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a></small>
-						{{/if}}
-					</p>
 				</div>
 				<div class="card-bottom" style="text-align: center;">
-					<button class="btn btn-success read">
-						<i class="fa fa-check"></i> Checkin
+					<button class="btn read cardleftbutton">
+						<i class="fa fa-check emerald"></i> Checkin
 					</button>
-					<button class="btn btn-danger delete">
-						<i class="fa fa-times"></i> Delete
+					<button class="btn delete cardrightbutton">
+						<i class="fa fa-times alizarin"></i> Delete
 					</button>
    				</div>
 			</div>

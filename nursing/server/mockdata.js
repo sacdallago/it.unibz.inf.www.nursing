@@ -11,7 +11,6 @@ Meteor.startup(function() {
 	//Db reset
 	Meteor.users.remove({});
 	Patients.remove({});
-	Hospitalizations.remove({});
 	Messages.remove({});
 
 	//Db mockdata
@@ -24,7 +23,9 @@ Meteor.startup(function() {
 		},
 		password : 'password'
 	});
-	
+	var user = Meteor.users.findOne({
+		"username" : "test"
+	});
 	Accounts.createUser({
 		username : 'test1',
 		profile : {
@@ -45,7 +46,7 @@ Meteor.startup(function() {
 		password : 'password'
 	});
 
-	var c = {
+	var patientData = {
 		first : "hanna",
 		last : "montana",
 		birthdate : dateFormatter((new Date(1982, 11, 7).getTime())),
@@ -67,15 +68,7 @@ Meteor.startup(function() {
 		allergies : ["paracetamol", "penicillin"]
 	};
 
-	var pid = Patients.insert(c);
-	var patient = Patients.findOne(pid);
-	var user = Meteor.users.findOne({
-		"username" : "test"
-	});
-	var timestamp = (new Date()).getTime();
-
-	var myhosp = {
-		patientId : pid,
+	var hospitalization = {
 		nurseId : user,
 		ricoverydate : timestamp,
 		department : user.profile.department,
@@ -90,21 +83,18 @@ Meteor.startup(function() {
 		bed : "7B",
 		reason : "Cardio-ventricular failure"
 	};
-
-	var hosp = Hospitalizations.insert(myhosp);
-	Patients.update({
-		'_id' : pid
-	}, {
-		$set : {
-			hospitalizationIds : [hosp]
-		}
-	});
+	
+	patientData.currentHospitalization = hospitalization;
+	
+	var pid = Patients.insert(patientData);
+	var patient = Patients.findOne(pid);
+	
+	var timestamp = (new Date()).getTime();
 	
 	for (var i = 0; i < 50; i++) {
 		var noti = {
-			hospitalizationId : hosp,
 			patientId : pid,
-			bed : myhosp.bed,
+			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
 			nurseId : user,
 			nurseName : niceName(user.profile.first, user.profile.last),
@@ -128,9 +118,8 @@ Meteor.startup(function() {
 	}
 	for (var i = 0; i < 50; i++) {
 		var noti = {
-			hospitalizationId : hosp,
 			patientId : pid,
-			bed : myhosp.bed,
+			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
 			nurseId : user,
 			nurseName : niceName(user.profile.first, user.profile.last),
@@ -154,9 +143,8 @@ Meteor.startup(function() {
 	}
 	for (var i = 0; i < 50; i++) {
 		var noti = {
-			hospitalizationId : hosp,
 			patientId : pid,
-			bed : myhosp.bed,
+			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
 			nurseId : user,
 			nurseName : niceName(user.profile.first, user.profile.last),
