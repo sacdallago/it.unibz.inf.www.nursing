@@ -11,29 +11,33 @@
 		</div>
 		</div>
 
-		<div class="row">
+		<!--<div class="row"> -->
+		
 		{{#each rooms}}
-		<!--  <div class="row-fluid">  -->
-		<div class="span4">
+		
+		<div class="row-fluid">  
+		<div class="span8">
 			<div class="card">
 				<h2 class="card-heading simple"><strong>{{roomNumber}}</strong></h2>
 				<div class="card-body">
 					{{#each beds}}
 					<span class="label label-inactive"></span>
 						<p>
-							Id: {{bed}} status: {{status}}
+							{{id}}  {{status}}
 						</p>
 					{{/each}}					
 				</div>
 			</div>
 		</div>
-		<!--   </div>  -->
+		</div>  
+		
 		{{/each}}
+		
 		</div>
-	</div>
-	{{#if moreResults}}
+	
+	<!--{{#if moreResults}}
 	<div id="moreMessages" style="margin-left: 25px; padding-top: 200px;">
 		<span class="loading"></span>
 	</div>
-	{{/if}}
+	{{/if}}-->
 </template>
