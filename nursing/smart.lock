@@ -5,7 +5,9 @@
       "iron-router": {},
       "notifications": {},
       "paginated-subscription": {},
-      "animation-helper-velocity": {}
+      "animation-helper-velocity": {},
+      "autocomplete": {},
+      "npm": {}
     },
     "packages": {
       "iron-router": {
@@ -15,8 +17,8 @@
       },
       "notifications": {
         "git": "https://github.com/gfk-ba/meteor-notifications.git",
-        "tag": "v0.5.5",
-        "commit": "dd780d4416d339aafd81c2695db9d3f58f3e011e"
+        "tag": "v0.6.0",
+        "commit": "9b15974266b6e36d87e98b164c429872f7db885e"
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
@@ -25,8 +27,18 @@
       },
       "animation-helper-velocity": {
         "git": "https://github.com/frozeman/meteor-animation-helper-velocity.git",
-        "tag": "v0.0.7",
-        "commit": "7ca3391de481c9af1d9e3bc3e0d819bc767b0946"
+        "tag": "v0.0.8",
+        "commit": "52beaaeb5a9031fbcb99ba6197f3a257084f9e5d"
+      },
+      "autocomplete": {
+        "git": "https://github.com/mizzao/meteor-autocomplete.git",
+        "tag": "v0.4.6",
+        "commit": "6db34b563a833eee4b9a04f16f2f420e2eac7fb3"
+      },
+      "npm": {
+        "git": "https://github.com/arunoda/meteor-npm.git",
+        "tag": "v0.2.6",
+        "commit": "177ab6118de5bf8cffb19481343d5762ff7a2aaf"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
@@ -47,6 +59,11 @@
         "git": "https://github.com/TimHeckel/meteor-underscore-string.git",
         "tag": "v2.3.3",
         "commit": "4a5d70eee48fbd90a6e6fc78747250d704a0b3bb"
+      },
+      "caret-position": {
+        "git": "https://github.com/StockBase/meteor-caret-position.git",
+        "tag": "v2.1.0-3",
+        "commit": "6028cf980f62cbf72cb2ea527091a3a31f87b8a7"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

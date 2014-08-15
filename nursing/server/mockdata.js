@@ -35,7 +35,6 @@ Meteor.startup(function() {
 		},
 		password : 'password'
 	});
-	
 	Accounts.createUser({
 		username : 'test2',
 		profile : {
@@ -44,6 +43,9 @@ Meteor.startup(function() {
 			last : "imcool"
 		},
 		password : 'password'
+	});
+	var user1 = Meteor.users.findOne({
+		"username" : "test2"
 	});
 
 	var patientData = {
@@ -69,7 +71,7 @@ Meteor.startup(function() {
 	};
 
 	var hospitalization = {
-		nurseId : user,
+		nurseId : user._id,
 		ricoverydate : timestamp,
 		department : user.profile.department,
 		source : "programmed",
@@ -94,16 +96,14 @@ Meteor.startup(function() {
 	for (var i = 0; i < 50; i++) {
 		var noti = {
 			patientId : pid,
-			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
-			nurseId : user,
+			nurseId : user._id,
 			nurseName : niceName(user.profile.first, user.profile.last),
 			readBy: 0,
 			target : 'cardiology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
 			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
-			date: dateFormatter(new Date(2014, 8, 7+i).getTime()),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -119,16 +119,14 @@ Meteor.startup(function() {
 	for (var i = 0; i < 50; i++) {
 		var noti = {
 			patientId : pid,
-			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
-			nurseId : user,
+			nurseId : user._id,
 			nurseName : niceName(user.profile.first, user.profile.last),
 			readBy: 0,
 			target : 'odontology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
 			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
-			date: dateFormatter(new Date(2014, 8, 7+i).getTime()),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -144,16 +142,127 @@ Meteor.startup(function() {
 	for (var i = 0; i < 50; i++) {
 		var noti = {
 			patientId : pid,
-			bed : patient.currentHospitalization.bed,
 			patientName : niceName(patient.first, patient.last),
-			nurseId : user,
+			nurseId : user._id,
 			nurseName : niceName(user.profile.first, user.profile.last),
 			readBy: 0,
 			target : 'oncology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
 			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
-			date: dateFormatter(new Date(2014, 8, 7+i).getTime()),
+			data : [{
+				type : "glucose" + i % 5,
+				value : 1.0,
+				unit : "mmol/L"
+			}, {
+				type : "creatinine",
+				value : 0.9,
+				unit : "mg/dL"
+			}]
+		};
+		Messages.insert(noti);
+	}
+	
+	///
+	
+	var hospitalization1 = {
+		nurseId : user1._id,
+		ricoverydate : timestamp,
+		department : user1.profile.department,
+		source : "programmed",
+		type : "urgent",
+		dateOfReservation : timestamp - 24,
+		priority : "30d",
+		proposingDoctor : "hospitaldoc",
+		poposingDoctorCode : "TB",
+		injuriesFrom : "other",
+		departmentOfStay : user1.profile.department,
+		bed : "7B",
+		reason : "Cardio-ventricular failure"
+	};
+	
+	var patientData1 = {
+		first : "some",
+		last : "gal",
+		birthdate : dateFormatter((new Date(1982, 11, 7).getTime())),
+		birthcity : "Bolzano",
+		birthprovince : "BZ",
+		sex : "m",
+		weight : 75.3,
+		height : 1.75,
+		citizenship : "italian",
+		maritalstatus : "married",
+		street : "via something",
+		streetnumber : "69/c",
+		city : "tornoto",
+		province : "BZ",
+		country : "italy",
+		taxcode : "CRDHDJ345JFDS",
+		studylevel : "highschool",
+		diabetes : false,
+		allergies : ["paracetamol", "penicillin"],
+		currentHospitalization: hospitalization1
+	};
+	var pid1 = Patients.insert(patientData1);
+	var patient1 = Patients.findOne(pid1);
+	
+	for (var i = 0; i < 50; i++) {
+		var noti = {
+			patientId : pid1,
+			patientName : niceName(patient1.first, patient1.last),
+			nurseId : user._id,
+			nurseName : niceName(user1.profile.first, user1.profile.last),
+			readBy: 0,
+			target : 'cardiology',
+			message : "Message n."+i+": "+msg[i%6],
+			attachment : "/archive/Hzk43m.jpg",
+			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			data : [{
+				type : "glucose" + i % 5,
+				value : 1.0,
+				unit : "mmol/L"
+			}, {
+				type : "creatinine",
+				value : 0.9,
+				unit : "mg/dL"
+			}]
+		};
+		Messages.insert(noti);
+	}
+	for (var i = 0; i < 50; i++) {
+		var noti = {
+			patientId : pid1,
+			patientName : niceName(patient1.first, patient1.last),
+			nurseId : user1._id,
+			nurseName : niceName(user1.profile.first, user1.profile.last),
+			readBy: 0,
+			target : 'odontology',
+			message : "Message n."+i+": "+msg[i%6],
+			attachment : "/archive/Hzk43m.jpg",
+			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			data : [{
+				type : "glucose" + i % 5,
+				value : 1.0,
+				unit : "mmol/L"
+			}, {
+				type : "creatinine",
+				value : 0.9,
+				unit : "mg/dL"
+			}]
+		};
+		Messages.insert(noti);
+	}
+	for (var i = 0; i < 50; i++) {
+		var noti = {
+			patientId : pid1,
+			patientName : niceName(patient1.first, patient1.last),
+			nurseId : user1._id,
+			nurseName : niceName(user1.profile.first, user1.profile.last),
+			readBy: 0,
+			target : 'oncology',
+			message : "Message n."+i+": "+msg[i%6],
+			attachment : "/archive/Hzk43m.jpg",
+			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,

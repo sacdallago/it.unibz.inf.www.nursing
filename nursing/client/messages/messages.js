@@ -2,93 +2,164 @@ Messages = new Meteor.Collection("messages");
 // Gets augmented when a new message for the given ward gets inserted!
 //This is what the template displays
 
-messagesHandle = null; // Initiated in router beforeAction!!
+messagesHandle = null;
+// Initiated in router beforeAction!!
+var inputfields = null;
+
+Template.messageitems.rendered = function(){
+	inputfields = 1;
+};
+
+Template.messageitems.destroyed = function() {
+	delete Session.keys['fileSelected'];
+	if (Session.get('loadedAll')) {
+		patientsHandle = Meteor.subscribe('patients', function(error) {
+			console.log('resubscribed');
+			if (error) {
+				Notifications.error('Error', 'There was an error loading the patients. Please contact the administrators.');
+			}
+		});
+		delete Session.keys['loadedAll'];
+	}
+};
 
 Template.messageitems.events({
-	'click .read': function(event){
-		Messages.update({_id:this._id},{$inc: { readBy: 1 }}, function(error){
-			if(error){
-				Notifications.error("Error","An error occoured. Please try again");
+	'click .read' : function(event) {
+		Messages.update({
+			_id : this._id
+		}, {
+			$inc : {
+				readBy : 1
+			}
+		}, function(error) {
+			if (error) {
+				Notifications.error("Error", "An error occoured. Please try again");
 			} else {
-				Notifications.success("","You read it! :)");
+				Notifications.success("", "You read it! :)");
 			}
 		});
 	},
-	'click .delete': function(event){
-		Messages.remove({_id:this._id}, function(error){
-			if(error){
-				Notifications.error("Error","An error occoured. Please try again");
+	'click .delete' : function(event) {
+		Messages.remove({
+			_id : this._id
+		}, function(error) {
+			if (error) {
+				Notifications.error("Error", "An error occoured. Please try again");
 			} else {
 			}
 		});
 	}
 });
 
-Template.messages.events({
-	'click .tag': function(event){
-		if(this.type){
-			var now = Session.get('tagTypeFilter');
-			if(now == this.type){
-				Session.set('tagTypeFilter',null);
-			} else {
-				Session.set('tagTypeFilter',this.type);
+Template.addmessage.events({
+	'click #all' : function(event) {
+		event.preventDefault();
+		Session.set('loadedAll',true);
+		patientsHandle = Meteor.subscribe('patients',{},{fields: {first:1,last:1,'currentHospitalization.departmentOfStay':1}},function(error){
+			if(error){
+				Notifications.error('Error','There was an error loading the patients. Please contact the administrators.');
 			}
-		} else if(this.patientId){
-			var now = Session.get('patientTagFilter');
-			if(now == this.patientId){
-				Session.set('patientTagFilter',null);
-			} else {
-				Session.set('patientTagFilter',this.patientId);
-			}
-		} if (this.type == null && this.patientId == null){
-			Session.set('tagTypeFilter',null);
-			Session.set('patientTagFilter',null);
-		}
+		});
+		var e = document.getElementById('all');
+		e.disabled = true;
+	},
+	'submit' : function(event) {
+		event.preventDefault();
+		console.log(document.getElementById('patientId'));
+	},
+	'change #file' : function(event){
+		document.getElementById('file').value != "" ? Session.set('fileSelected', true) : Session.set('fileSelected', null);
 	}
 });
 
-Template.messages.helpers({
-	notReady : function(){
-		return !(messagesHandle && messagesHandle.ready());
+Template.addmessage.helpers({
+	fileSelected: function(){
+		return Session.get('fileSelected') ? 'river' : '';
+	}
+});
+
+Template.addmessage.settings = function() {
+  return {
+   position: "bottom",
+   limit: 5,
+   rules: [
+     {
+       collection: Patients,
+       field: "first",
+       template: Template.userPill,
+       selector: function(match){
+  			var regex = new RegExp("^"+match, 'i');
+  			return {$or: [{'first': regex}, {'last': regex}]};},
+  		callback : function(doc,element){
+  			document.getElementById('patientId').value = doc._id;
+  		}
+     },
+   ]
+  };
+};
+
+Template.addmessage.departments = Departments; 
+
+Template.messages.events({
+	'click .tag' : function(event) {
+		if (this.type) {
+			var now = Session.get('tagTypeFilter');
+			if (now == this.type) {
+				Session.set('tagTypeFilter', null);
+			} else {
+				Session.set('tagTypeFilter', this.type);
+			}
+		} else if (this.patientId) {
+			var now = Session.get('patientTagFilter');
+			if (now == this.patientId) {
+				Session.set('patientTagFilter', null);
+			} else {
+				Session.set('patientTagFilter', this.patientId);
+			}
+		}
+		if (this.type == null && this.patientId == null) {
+			Session.set('tagTypeFilter', null);
+			Session.set('patientTagFilter', null);
+		}
 	}
 });
 
 Template.messageitems.messages = function() {
 	var tagTypeFilter = Session.get('tagTypeFilter');
 	var patientTagFilter = Session.get('patientTagFilter');
+	var messages;
 	if (tagTypeFilter && patientTagFilter) {
-		return Messages.find({
+		messages = Messages.find({
 			'data.type' : tagTypeFilter,
-			patientId: patientTagFilter
-		}, {
-			$orderby : {
-				timestamp : 1
-			}
+			patientId : patientTagFilter
 		});
-	} else if(tagTypeFilter) {
-		return Messages.find({
+	} else if (tagTypeFilter) {
+		messages = Messages.find({
 			'data.type' : tagTypeFilter
-		}, {
-			$orderBy : {
-				timestamp : 1
-			}
 		});
-	} else if(patientTagFilter) {
-		return Messages.find({
-			patientId: patientTagFilter
-		}, {
-			$orderBy : {
-				timestamp : 1
-			}
+	} else if (patientTagFilter) {
+		messages = Messages.find({
+			patientId : patientTagFilter
 		});
 	} else {
-		return Messages.find({}, {
-			$orderBy : {
-				timestamp : 1
-			}
-		});
+		messages = Messages.find();
 	}
+	
+	var tempHandle = null;
+	return messages.map(function(element) {
+		var patient = Patients.findOne({
+			_id : element.patientId
+		});
+		if (patient) {
+			//This adds beds to patient names, if the patient is in the ward the message is sent to
+			element.bed = patient.currentHospitalization.bed;
+		}
+		//This adds a nice formatting of the date the message was written / modified
+		element.date = dateFormatter(element.timestamp);
+		return element;
+	});
 }; 
+
 
 Template.messages.tags = function() {
 	var tag_infos = [];
@@ -113,7 +184,7 @@ Template.messages.tags = function() {
 		if (!tag_info)
 			tag_infos.push({
 				patientId : message.patientId,
-				patientName: message.patientName,
+				patientName : message.patientName,
 				count : 1
 			});
 		else
@@ -132,44 +203,20 @@ Template.messages.tags = function() {
 	});
 
 	return tag_infos;
-}; 
+};
 
 Template.messages.active = function() {
-	return (Session.equals('tagTypeFilter',this.type) || Session.equals('patientTagFilter',this.patientId)) ? 'label-info' : '';
+	return (Session.equals('tagTypeFilter', this.type) || Session.equals('patientTagFilter', this.patientId)) ? 'label-info' : '';
 };
 
 Template.messages.moreResults = function() {
-    // If, once the subscription is ready, we have less rows than we
-    // asked for, we've got all the rows in the collection.
-    if(messagesHandle && messagesHandle.ready() && Messages.find().count() < messagesHandle.limit()){
-    	return false;
-    }
-    return true;
+	// If, once the subscription is ready, we have less rows than we
+	// asked for, we've got all the rows in the collection.
+	if (messagesHandle && messagesHandle.ready() && Messages.find().count() < messagesHandle.limit()) {
+		return false;
+	}
+	return true;
 };
-
-function moreMessages() {
-    var threshold, target = $("#moreMessages");
-    if (!target.length) return;
- 
-    threshold = $(window).scrollTop() + $(window).height() - target.height();
- 
-    if (target.offset().top < threshold) {
-        if (!target.data("visible")) {
-            // console.log("target became visible (inside viewable area)");
-            target.data("visible", true);
-            messagesHandle.loadNextPage();
-            //Notifications.info('Loading next messages');
-        }
-    } else {
-        if (target.data("visible")) {
-            // console.log("target became invisible (below viewable arae)");
-            target.data("visible", false);
-        }
-    }        
-}
- 
-// run the above func every time the user scrolls
-$(window).scroll(moreMessages);
 /////////////////////////////////////
 
 //This is what the template minimessages displays -- currently not loaded in html
@@ -204,4 +251,4 @@ Template.minimessages.messages = function() {
 		result.push(element);
 	}
 	return result;
-}; 
+};

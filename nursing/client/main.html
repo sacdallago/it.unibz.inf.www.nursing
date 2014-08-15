@@ -9,16 +9,16 @@
 				</button>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li id="beds-navigation">
+						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Beds' }}">
 							<a href="{{pathFor 'beds'}}"><i class="fa fa-fw fa-table"></i> {{language.beds}}</a>
 						</li>
-						<li id="beds-navigation">
+						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Alerts' }}">
 							<a href="{{pathFor 'alerts'}}"><i class="fa fa-fw fa-warning"></i> {{language.alerts}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineAlerts}}</span></a>
 						</li>
-						<li id="beds-navigation">
+						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Messages' }}">
 							<a href="{{pathFor 'messages'}}"><i class="fa fa-fw fa-envelope"></i> {{language.messages}}&nbsp;&nbsp;<span class="badge alert-info">{{unreadMessages}}</span></a>
 						</li>
-						<li id="rooms-navigation">
+						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Rooms' }}">
 							<a href="{{pathFor 'rooms'}}"><i class="fa fa-fw fa-table"></i> {{language.rooms}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
 						<li>

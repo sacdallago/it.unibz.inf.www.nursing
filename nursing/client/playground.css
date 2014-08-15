@@ -10,20 +10,8 @@
 	}
 }
 
-.tag :hover{
-	cursor:pointer;
-}
-
-.cardleftbutton {
-	margin-left:15px;
-	margin-top:15px;
-	margin-bottom:15px;
-}
-
-.cardrightbutton {
-	margin-right:15px;
-	margin-top:15px;
-	margin-bottom:15px;
+.tag :hover {
+	cursor: pointer;
 }
 
 .card-heading {
@@ -31,8 +19,14 @@
 	padding-bottom: 10px !important;
 }
 
-.card-body{
+.card-body {
 	text-align: justify;
+	margin-bottom: 20px;
+}
+
+.card-bottom {
+	text-align: center;
+	margin-bottom: 20px;
 }
 
 .label {
@@ -42,37 +36,66 @@
 	text-shadow: none;
 }
 
-.label-sea{
+.label-sea {
 	background-color: white;
 	color: #16a085;
 	border: 1px solid #16a085;
 }
 
-.label-belize{
+.label-belize {
 	background-color: white;
 	color: #2980b9;
 	border: 1px solid #2980b9;
 }
 
-.btn{
+.btn {
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
 	background-image: none;
 }
 
-.alizarin{
+.alizarin {
 	color: #e74c3c;
 }
 
-.emerald{
+.emerald {
 	color: #28be68;
 }
 
-.label-info{
+.river {
+	color: #3498db;
+}
+
+.label-info {
 	background-color: #5bc0de !important;
 	border: 1px solid #5bc0de !important;
 	color: white !important;
 	border: none !important;
 }
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+.input-group input {
+	margin: 0;
+}
 
+.input-group {
+	margin-bottom: 10px;
+}

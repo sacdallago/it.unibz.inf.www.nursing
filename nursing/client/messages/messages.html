@@ -1,78 +1,127 @@
 <template name="messages">
 	{{> loading}}
-		<div class="container-fluid">
-		<div class="row">
-			<div class="span12">
-				<div class="hero-unit">
-					<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
-					<ol class="breadcrumb">
-						{{#each tags}}
-						{{#if type}}
-							<li><span class="label label-sea tag {{active}}"><strong>{{type}}</strong> ({{count}})</span></li>
-						{{else}}
-						{{#if patientId}}
-							<li><span class="label label-belize tag {{active}}"><strong>{{patientName}}</strong> ({{count}})</span></li>
-						{{else}}
-							<li><span class="label tag {{active}}"><strong>All</strong> ({{count}})</span></li>
-						{{/if}}
-						{{/if}}
-						{{/each}}
-					</ol>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span4">
+				<div class="card">
+					<div class="card-heading">
+						<div class="card-heading-header">
+							<p style="font-size: 22.75px;">
+								<strong>Tags</strong>
+							</p>
+						</div>
+					</div>
+					<div class="card-body" style="text-align: left;">
+						<div class="list-group">
+							{{#each tags}}
+							{{#if type}}
+							<span class="label label-sea tag {{active}}"><strong>{{type}}</strong> ({{count}})</span>
+							{{else}}
+							{{#if patientId}}
+							<span class="label label-belize tag {{active}}"><strong>{{patientName}}</strong> ({{count}})</span>
+							{{else}}
+							<span class="label tag {{active}}"><strong>All</strong> ({{count}})</span>
+							{{/if}}
+							{{/if}}
+							{{/each}}
+						</div>
+					</div>
 				</div>
+				{{> addmessage}}
 			</div>
-		</div>
-		<div class="row">
-			{{> messageitems}}
+			<div class="span8">
+				{{> messageitems}}
+			</div>
 		</div>
 	</div>
 	{{#if moreResults}}
-	<div id="moreMessages" style="padding-top: 200px;">
+	<div id="more" style="padding-top: 200px;">
 		<span class="loading"></span>
 	</div>
 	{{/if}}
+</template>
+
+<template name="addmessage">
+	<div class="card">
+		<div class="card-heading">
+			<div class="card-heading-header">
+				<p style="font-size: 22.75px;">
+					<strong>New message</strong>
+				</p>
+			</div>
+		</div>
+		<form>
+			<div class="card-body" style="text-align: left;">
+				<input id="patientId" disabled="true" style="width: 0;height: 0; margin:0; padding:0; border:0; display: none;" />
+				<div class="input-group">
+					{{> inputAutocomplete settings=settings id="autopatient" class="input" placeholder="Patient"}}
+					<button class="btn" id="all">
+						<i class="fa fa-refresh"></i> Load All
+					</button>
+				</div>
+
+				<input class="input-block-level" type="text">
+				<select name="department" id="target">
+					{{#each departments}}
+					<option value="{{this}}">{{this}}</option>
+					{{/each}}
+				</select>
+				<button class="btn btn-default btn-file">
+					<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
+					<input id="file" type="file">
+				</button>
+			</div>
+			<div class="card-bottom">
+				<button type="submit" class="btn send">
+					<strong><i class="fa fa-circle-o river"></i></strong> Send
+				</button>
+			</div>
+		</form>
+	</div>
+</template>
+
+<template name="userPill">
+	<span><strong>{{last}}, {{first}}</strong> {{currentHospitalization.departmentOfStay}}</span>
 </template>
 
 <template name="messageitems">
 	{{#each messages}}
 	{{#AnimateWithVelocity}}
 	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div class="span4">
-			<div class="card">
-				<div class="card-heading">
-					
-					<div class="card-heading-header">
-						<p style="font-size: 22.75px;">
-						<strong>{{patientName}}</strong>, {{bed}}<br />
-							{{#each data}}
+		<div class="card">
+			<div class="card-heading">
+				<div class="card-heading-header">
+					<p style="font-size: 22.75px;">
+						<strong>{{patientName}}</strong> {{bed}}
+						<br />
+						{{#each data}}
 						<span class="label label-sea" style=" font-size: 10px;">{{type}}</span>
 						{{/each}}
-						</p>
-						<span>
-						<P>
-							<i class="fa fa-clock-o"></i> {{date}} - Check ins: {{readBy}} <br />
-							<i class="fa fa-plus-square"></i> {{nurseName}} - 
-						{{#if attachment}}
-						<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a>
-						{{/if}}
-						<br />
-						</p>
-						</span>
-						
-					</div>
-				</div>
-				<div class="card-body">
-					<p >
-						{{message}}
 					</p>
+					<span>
+						<P>
+							<i class="fa fa-clock-o"></i> {{date}} - Check ins: {{readBy}}
+							<br />
+							<i class="fa fa-plus-square"></i> {{nurseName}} -
+							{{#if attachment}}
+							<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a>
+							{{/if}}
+							<br />
+						</p> </span>
 				</div>
-				<div class="card-bottom" style="text-align: center;">
-					<button class="btn read cardleftbutton">
-						<i class="fa fa-check emerald"></i> Checkin
-					</button>
-					<button class="btn delete cardrightbutton">
-						<i class="fa fa-times alizarin"></i> Delete
-					</button>
-   				</div>
+			</div>
+			<div class="card-body">
+				<p >
+					{{message}}
+				</p>
+			</div>
+			<div class="card-bottom">
+				<button class="btn read cardleftbutton">
+					<i class="fa fa-check emerald"></i> Checkin
+				</button>
+				<button class="btn delete cardrightbutton">
+					<i class="fa fa-times alizarin"></i> Delete
+				</button>
 			</div>
 		</div>
 	</div>

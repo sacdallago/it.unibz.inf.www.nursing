@@ -1,3 +1,7 @@
+//Subscribe to the nurses, so you know the nurses of the hospital
+//To subscribe you must also activate the publication in the server part (server/collections.js)
+//Meteor.subscribe("nurses");
+
 //Login
 Template.loginform.events({
 	'submit #login-form' : function(e, t) {

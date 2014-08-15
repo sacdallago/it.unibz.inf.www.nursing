@@ -12,7 +12,11 @@ Template.navigation.helpers({
 			return null;
 		}
 		return deadlineAlerts;
-	}
+	},
+	activeIfTemplateIs: function (template) {
+      var currentRoute = Router.current();
+      return currentRoute && template === currentRoute.lookupTemplate() ? 'active' : '';
+    }
 });
 
 Template.navigation.events({
