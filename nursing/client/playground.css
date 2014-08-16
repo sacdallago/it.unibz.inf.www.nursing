@@ -14,6 +14,21 @@
 	cursor: pointer;
 }
 
+.pointer :hover {
+	cursor: pointer;
+}
+
+@media (min-width: 768px) {
+	.fixed {
+		position: fixed;
+	}
+	/*
+	::-webkit-scrollbar { 
+    display: none; 
+    }
+    */
+}
+
 .card-heading {
 	border-bottom: 1px solid #e5e5e5;
 	padding-bottom: 10px !important;
@@ -98,4 +113,23 @@
 
 .input-group {
 	margin-bottom: 10px;
+}
+
+.addmessage input {
+	width: 201px;
+}
+
+.addmessage select {
+	width: 220px;
+}
+
+.addmessage textarea {
+	resize: none;
+	height: 30px;
+	-webkit-transition: height 0.7s; /* For Safari 3.1 to 6.0 */
+	transition: height 0.7s;
+}
+
+.addmessage textarea:focus {
+	height: 103px;
 }

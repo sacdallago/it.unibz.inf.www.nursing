@@ -103,7 +103,7 @@ Meteor.startup(function() {
 			target : 'cardiology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -126,7 +126,7 @@ Meteor.startup(function() {
 			target : 'odontology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -149,7 +149,7 @@ Meteor.startup(function() {
 			target : 'oncology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -216,7 +216,7 @@ Meteor.startup(function() {
 			target : 'cardiology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -239,7 +239,7 @@ Meteor.startup(function() {
 			target : 'odontology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -262,7 +262,7 @@ Meteor.startup(function() {
 			target : 'oncology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9).getTime()),
+			timestamp : (new Date(2014, 8, 7+i%9)),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,

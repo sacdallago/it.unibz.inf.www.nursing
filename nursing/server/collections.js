@@ -1,6 +1,7 @@
 // see https://github.com/sacdallago/it.unibz.inf.www.nursing/wiki/Collections
 
 Messages = new Meteor.Collection("messages");
+Messages._ensureIndex({ "timestamp": 1 }, { expireAfterSeconds: 3600 }); //Ensures messages get deleted after one hour!
 Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
 Notes = new Meteor.Collection("notes");

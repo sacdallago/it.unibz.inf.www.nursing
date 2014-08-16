@@ -3,23 +3,33 @@ Messages = new Meteor.Collection("messages");
 //This is what the template displays
 
 messagesHandle = null;
+patientsNameHandle = null;
 // Initiated in router beforeAction!!
 var inputfields = null;
 
 Template.messageitems.rendered = function(){
 	inputfields = 1;
+	if(!patientsNameHandle){
+		patientsNameHandle = Meteor.subscribe('patients',{},{fields: {first:1,last:1,'currentHospitalization.departmentOfStay':1}},function(error){
+			if(error){
+				Notifications.error('Error','There was an error loading the patients. Please contact the administrators.');
+			}
+		});
+	}
+};
+	
+
+Template.messages.destroyed = function(){
+	Session.set('tagTypeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
+	Session.set('patientTagFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
 };
 
 Template.messageitems.destroyed = function() {
 	delete Session.keys['fileSelected'];
-	if (Session.get('loadedAll')) {
-		patientsHandle = Meteor.subscribe('patients', function(error) {
-			console.log('resubscribed');
-			if (error) {
-				Notifications.error('Error', 'There was an error loading the patients. Please contact the administrators.');
-			}
-		});
-		delete Session.keys['loadedAll'];
+	if (patientsNameHandle) {
+		patientsNameHandle.stop();
+		delete patientsNameHandle;
+		patientsNameHandle = null;
 	}
 };
 
@@ -52,17 +62,6 @@ Template.messageitems.events({
 });
 
 Template.addmessage.events({
-	'click #all' : function(event) {
-		event.preventDefault();
-		Session.set('loadedAll',true);
-		patientsHandle = Meteor.subscribe('patients',{},{fields: {first:1,last:1,'currentHospitalization.departmentOfStay':1}},function(error){
-			if(error){
-				Notifications.error('Error','There was an error loading the patients. Please contact the administrators.');
-			}
-		});
-		var e = document.getElementById('all');
-		e.disabled = true;
-	},
 	'submit' : function(event) {
 		event.preventDefault();
 		console.log(document.getElementById('patientId'));
@@ -86,7 +85,7 @@ Template.addmessage.settings = function() {
      {
        collection: Patients,
        field: "first",
-       template: Template.userPill,
+       template: Template.patientPill,
        selector: function(match){
   			var regex = new RegExp("^"+match, 'i');
   			return {$or: [{'first': regex}, {'last': regex}]};},
