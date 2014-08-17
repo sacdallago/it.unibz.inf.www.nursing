@@ -19,7 +19,17 @@ Meteor.startup(function() {
 		profile : {
 			department : "cardiology",
 			first : "mily",
-			last : "serious"
+			last : "serious",
+			message: {
+									patientId: "",
+									patientFirst: "",
+									message: "",
+									data:[{
+										type:"",
+										value:"",
+										unit:""
+									}]
+								}
 		},
 		password : 'password'
 	});
@@ -31,7 +41,17 @@ Meteor.startup(function() {
 		profile : {
 			department : "oncology",
 			first : "some",
-			last : "dude"
+			last : "dude",
+			message: {
+									patientId: "",
+									patientFirst: "",
+									message: "",
+									data:[{
+										type:"",
+										value:"",
+										unit:""
+									}]
+								}
 		},
 		password : 'password'
 	});
@@ -40,7 +60,17 @@ Meteor.startup(function() {
 		profile : {
 			department : "odontology",
 			first : "hey",
-			last : "imcool"
+			last : "imcool",
+			message: {
+									patientId: "",
+									patientFirst: "",
+									message: "",
+									data:[{
+										type:"",
+										value:"",
+										unit:""
+									}]
+								}
 		},
 		password : 'password'
 	});

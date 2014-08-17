@@ -2,7 +2,7 @@
 	templateNameConverter : 'upperCamelCase'
 });
 
-Router.onBeforeAction('loading');
+//Router.onBeforeAction('loading');
 
 Router.map(function() {
 	this.route('registrationform', {

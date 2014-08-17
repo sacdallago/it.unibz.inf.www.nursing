@@ -4,11 +4,10 @@ Messages = new Meteor.Collection("messages");
 
 messagesHandle = null;
 patientsNameHandle = null;
-// Initiated in router beforeAction!!
-var inputfields = null;
 
-Template.messageitems.rendered = function(){
-	inputfields = 1;
+//Array of {index:0,type:"",value:"",unit:""}
+
+Template.addmessage.created = function(){
 	if(!patientsNameHandle){
 		patientsNameHandle = Meteor.subscribe('patients',{},{fields: {first:1,last:1,'currentHospitalization.departmentOfStay':1}},function(error){
 			if(error){
@@ -17,20 +16,18 @@ Template.messageitems.rendered = function(){
 		});
 	}
 };
-	
-
-Template.messages.destroyed = function(){
-	Session.set('tagTypeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
-	Session.set('patientTagFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
-};
-
-Template.messageitems.destroyed = function() {
+Template.addmessage.destroyed = function() {
 	delete Session.keys['fileSelected'];
 	if (patientsNameHandle) {
 		patientsNameHandle.stop();
 		delete patientsNameHandle;
 		patientsNameHandle = null;
 	}
+};
+
+Template.messages.destroyed = function(){
+	Session.set('tagTypeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
+	Session.set('patientTagFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
 };
 
 Template.messageitems.events({
@@ -68,12 +65,23 @@ Template.addmessage.events({
 	},
 	'change #file' : function(event){
 		document.getElementById('file').value != "" ? Session.set('fileSelected', true) : Session.set('fileSelected', null);
+	},
+	'focusout #messageText' : function(event){
+		var text = document.getElementById('messageText').value;
+		//Implement regex to filter bad stuff ?
+		Meteor.users.update(Meteor.user()._id,{$set: {'profile.message.message':text}});
 	}
 });
 
 Template.addmessage.helpers({
 	fileSelected: function(){
 		return Session.get('fileSelected') ? 'river' : '';
+	},
+	inputfields : function(){
+		return Session.get('inputfields');
+	},
+	messageData : function(){
+		return Meteor.user().profile.message;
 	}
 });
 

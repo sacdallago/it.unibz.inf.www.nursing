@@ -43,7 +43,17 @@ Template.registrationform.events({
 							profile : {
 								first : first,
 								last : last,
-								department : department
+								department : department,
+								message: {
+									patientId: "",
+									patientFirst: "",
+									message: "",
+									data:[{
+										type:"",
+										value:"",
+										unit:""
+									}]
+								}
 							},
 							username : username,
 							email : email,

@@ -67,7 +67,14 @@
 				</div>
 				<div class="input-group addmessage">
 					<strong>Message:&nbsp;</strong><br>
-					<textarea class="input input-block-level" maxlength="180"></textarea>
+					<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
+				</div>
+				<div class="input-group addmessage">
+					{{#each messageData.data}}
+					<textarea>{{type}}</textarea>
+					<textarea>{{value}}</textarea>
+					<textarea>{{unit}}</textarea>
+					{{/each}}
 				</div>
 				<div class="input-group addmessage">
 				<button class="btn btn-default btn-file">
