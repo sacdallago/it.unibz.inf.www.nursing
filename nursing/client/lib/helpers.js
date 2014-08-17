@@ -10,7 +10,7 @@ niceName = function(first, last) {
 
 dateFormatter = function(timestamp) {
 	var date = new Date(timestamp);
-	return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+	return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 };
 
 ///INFINITE SCROLL

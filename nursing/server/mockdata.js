@@ -72,11 +72,11 @@ Meteor.startup(function() {
 
 	var hospitalization = {
 		nurseId : user._id,
-		ricoverydate : timestamp,
+		ricoverydate : new Date(),
 		department : user.profile.department,
 		source : "programmed",
 		type : "urgent",
-		dateOfReservation : timestamp - 24,
+		dateOfReservation : dateFormatter(new Date()),
 		priority : "30d",
 		proposingDoctor : "hospitaldoc",
 		poposingDoctorCode : "TB",
@@ -91,8 +91,6 @@ Meteor.startup(function() {
 	var pid = Patients.insert(patientData);
 	var patient = Patients.findOne(pid);
 	
-	var timestamp = (new Date()).getTime();
-	
 	for (var i = 0; i < 50; i++) {
 		var noti = {
 			patientId : pid,
@@ -103,7 +101,7 @@ Meteor.startup(function() {
 			target : 'cardiology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -126,7 +124,7 @@ Meteor.startup(function() {
 			target : 'odontology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -149,7 +147,7 @@ Meteor.startup(function() {
 			target : 'oncology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -167,11 +165,11 @@ Meteor.startup(function() {
 	
 	var hospitalization1 = {
 		nurseId : user1._id,
-		ricoverydate : timestamp,
+		ricoverydate : dateFormatter(new Date()),
 		department : user1.profile.department,
 		source : "programmed",
 		type : "urgent",
-		dateOfReservation : timestamp - 24,
+		dateOfReservation : dateFormatter(new Date()),
 		priority : "30d",
 		proposingDoctor : "hospitaldoc",
 		poposingDoctorCode : "TB",
@@ -216,7 +214,7 @@ Meteor.startup(function() {
 			target : 'cardiology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -239,7 +237,7 @@ Meteor.startup(function() {
 			target : 'odontology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,
@@ -262,7 +260,7 @@ Meteor.startup(function() {
 			target : 'oncology',
 			message : "Message n."+i+": "+msg[i%6],
 			attachment : "/archive/Hzk43m.jpg",
-			timestamp : (new Date(2014, 8, 7+i%9)),
+			timestamp : Date.now(),
 			data : [{
 				type : "glucose" + i % 5,
 				value : 1.0,

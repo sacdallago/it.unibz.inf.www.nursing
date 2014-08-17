@@ -1,7 +1,7 @@
 // see https://github.com/sacdallago/it.unibz.inf.www.nursing/wiki/Collections
 
 Messages = new Meteor.Collection("messages");
-Messages._ensureIndex({ "timestamp": 1 }, { expireAfterSeconds: 3600 }); //Ensures messages get deleted after one hour!
+Messages._ensureIndex({ "timestamp": 1 }, { expireAfterSeconds: 86400 }); //Ensures messages get deleted after one day
 Alerts = new Meteor.Collection("alerts");
 Patients = new Meteor.Collection("patients");
 Notes = new Meteor.Collection("notes");
@@ -16,21 +16,27 @@ Meteor.publish('notes', function() {
 		return null;
 	}
 });
-Meteor.publish('messages', function(limit) {
+Meteor.publish('messages', function(limit, criteria, projection) {
 	if (this.userId) {
 		var user = Meteor.users.findOne(this.userId);
-		return Messages.find({
-			target : user.profile.department
-		}, {
-			sort : {
-				timestamp : -1
-			},
-			limit : limit
-		});
+		if (criteria && projection) {
+			criteria.target = user.profile.department;
+			return Messages.find(criteria, projection);
+		} else {
+			return Messages.find({
+				target : user.profile.department
+			}, {
+				sort : {
+					timestamp : -1
+				},
+				limit : limit
+			});
+		}
+
 	} else {
 		return null;
 	}
-});
+}); 
 Meteor.publish('anagraphics', function(limit) {
 	if (this.userId) {
 		return Anagraphics.find({}, {
