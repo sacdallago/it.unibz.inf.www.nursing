@@ -55,8 +55,7 @@ Router.map(function() {
       		if (!Meteor.user()){
       			this.redirect('loginform');
       		} else {
-      			messagesHandle = Meteor.subscribeWithPagination("messages", 10);
-      			handle = messagesHandle;
+      			messagesHandle = Meteor.subscribe("messages");
       		}
    		},
    		onAfterAction: function() {

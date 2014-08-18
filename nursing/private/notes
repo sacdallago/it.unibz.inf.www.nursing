@@ -1,12 +1,20 @@
-// Fake data to simulate working environment while app is running:
+// Infinite scroll:
 
-Messages.insert({
-		hospitalizationId : Hospitalizations.findOne()._id,
-		nurseId : Meteor.user(),
-		message : "Patient was wighted somewhere else for example in another ward!",
-		time : (new Date()).getTime(),
-		data : [{
-			type : "weight",
-			value : 42,
-			unit : "kg"
-		}]});
+Put at the end of element, where once reached you want to trigger the infinite scroll:
+
+{{#if moreResults}}
+	<div id="more" style="padding-top: 200px;">
+		<span class="loading"></span>
+	</div>
+{{/if}}
+
+Then define the following in the template:
+
+Template.messages.moreResults = function() {
+	// If, once the subscription is ready, we have less rows than we
+	// asked for, we've got all the rows in the collection.
+	if (messagesHandle && messagesHandle.ready() && Messages.find().count() < messagesHandle.limit()) {
+		return false;
+	}
+	return true;
+};

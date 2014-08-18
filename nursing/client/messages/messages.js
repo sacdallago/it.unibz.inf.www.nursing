@@ -3,32 +3,19 @@ Messages = new Meteor.Collection("messages");
 //This is what the template displays
 
 messagesHandle = null;
-patientsNameHandle = null;
 
 //Array of {index:0,type:"",value:"",unit:""}
 
-Template.addmessage.created = function(){
-	if(!patientsNameHandle){
-		patientsNameHandle = Meteor.subscribe('patients',{},{fields: {first:1,last:1,'currentHospitalization.departmentOfStay':1}},function(error){
-			if(error){
-				Notifications.error('Error','There was an error loading the patients. Please contact the administrators.');
-			}
-		});
-	}
-};
 Template.addmessage.destroyed = function() {
 	delete Session.keys['fileSelected'];
-	if (patientsNameHandle) {
-		patientsNameHandle.stop();
-		delete patientsNameHandle;
-		patientsNameHandle = null;
-	}
 };
 
+/*
 Template.messages.destroyed = function(){
 	Session.set('tagTypeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
 	Session.set('patientTagFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
 };
+*/
 
 Template.messageitems.events({
 	'click .read' : function(event) {
@@ -70,9 +57,6 @@ Template.addmessage.events({
 		var text = document.getElementById('messageText').value;
 		//Implement regex to filter bad stuff ?
 		Meteor.users.update(Meteor.user()._id,{$set: {'profile.message.message':text}});
-	},
-	'click .deleteField' : function(event){
-		console.log(this);
 	}
 });
 
@@ -217,15 +201,6 @@ Template.messages.tags = function() {
 
 Template.messages.active = function() {
 	return (Session.equals('tagTypeFilter', this.type) || Session.equals('patientTagFilter', this.patientId)) ? 'label-info' : '';
-};
-
-Template.messages.moreResults = function() {
-	// If, once the subscription is ready, we have less rows than we
-	// asked for, we've got all the rows in the collection.
-	if (messagesHandle && messagesHandle.ready() && Messages.find().count() < messagesHandle.limit()) {
-		return false;
-	}
-	return true;
 };
 /////////////////////////////////////
 

@@ -16,7 +16,7 @@ Meteor.publish('notes', function() {
 		return null;
 	}
 });
-Meteor.publish('messages', function(limit, criteria, projection) {
+Meteor.publish('messages', function(criteria, projection) {
 	if (this.userId) {
 		var user = Meteor.users.findOne(this.userId);
 		if (criteria && projection) {
@@ -28,8 +28,7 @@ Meteor.publish('messages', function(limit, criteria, projection) {
 			}, {
 				sort : {
 					timestamp : -1
-				},
-				limit : limit
+				}
 			});
 		}
 

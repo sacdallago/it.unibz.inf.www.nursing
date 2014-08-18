@@ -15,6 +15,10 @@ dateFormatter = function(timestamp) {
 
 ///INFINITE SCROLL
 //Set the 'handle' variable equal to the actual paginated subscription handle on page load! (use iron-router onBeforeAction)
+/* Eg.:
+ * messagesHandle = Meteor.subscribeWithPagination("messages", 10);
+ * handle = messagesHandle;
+ */
 handle = null;
 /////////////////
 $(window).scroll(function() {
