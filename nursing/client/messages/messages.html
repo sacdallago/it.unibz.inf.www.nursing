@@ -69,12 +69,25 @@
 					<strong>Message:&nbsp;</strong><br>
 					<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
 				</div>
-				<div class="input-group addmessage">
-					{{#each messageData.data}}
-					<textarea>{{type}}</textarea>
-					<textarea>{{value}}</textarea>
-					<textarea>{{unit}}</textarea>
-					{{/each}}
+				<div class="input-group">
+				<table class="table table-condensed addmessagetable">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Value</th>
+							<th>Unit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						{{#each messageData.data}}
+							<td><textarea>{{type}}</textarea></td>
+							<td><textarea>{{value}}</textarea></td>
+							<td><textarea>{{unit}}</textarea></td>
+						{{/each}}
+						</tr>
+					</tbody>
+				</table>
 				</div>
 				<div class="input-group addmessage">
 				<button class="btn btn-default btn-file">

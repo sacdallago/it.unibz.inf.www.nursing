@@ -133,3 +133,11 @@
 .addmessage textarea:focus {
 	height: 103px;
 }
+
+.addmessagetable textarea {
+	resize: none;
+	height: 20px;
+	font-size: 12px;
+	width: 100%;
+	padding: 0;
+}

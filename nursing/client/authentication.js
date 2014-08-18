@@ -25,7 +25,8 @@ Template.loginform.events({
 });
 
 //Registration
-Template.registrationform.departments = Departments; //See client/lib/helpers.js
+Template.registrationform.departments = Departments;
+//See client/lib/helpers.js
 
 Template.registrationform.events({
 	'submit #register-form' : function(e, t) {
@@ -44,14 +45,12 @@ Template.registrationform.events({
 								first : first,
 								last : last,
 								department : department,
-								message: {
-									patientId: "",
-									patientFirst: "",
-									message: "",
-									data:[{
-										type:"",
-										value:"",
-										unit:""
+								message : {
+									message : "",
+									data : [{
+										type : "",
+										value : "",
+										unit : ""
 									}]
 								}
 							},
@@ -88,4 +87,4 @@ Template.registrationform.events({
 		e.preventDefault();
 		Router.go('loginform');
 	}
-});
+}); 

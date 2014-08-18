@@ -70,6 +70,9 @@ Template.addmessage.events({
 		var text = document.getElementById('messageText').value;
 		//Implement regex to filter bad stuff ?
 		Meteor.users.update(Meteor.user()._id,{$set: {'profile.message.message':text}});
+	},
+	'click .deleteField' : function(event){
+		console.log(this);
 	}
 });
 
