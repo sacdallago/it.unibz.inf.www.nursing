@@ -2,7 +2,7 @@ Messages = new Meteor.Collection("messages");
 // Gets augmented when a new message for the given ward gets inserted!
 //This is what the template displays
 
-messagesHandle = null;
+messagesHandle = Meteor.subscribe("messages");
 
 //Array of {index:0,type:"",value:"",unit:""}
 
@@ -12,8 +12,8 @@ Template.addmessage.destroyed = function() {
 
 /*
 Template.messages.destroyed = function(){
-	Session.set('tagTypeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
-	Session.set('patientTagFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
+	Session.set('typeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
+	Session.set('patientFilter',null); // Filter that stores patient attribute. Can be used wherever patientId is used.
 };
 */
 
@@ -94,52 +94,51 @@ Template.addmessage.settings = function() {
 
 Template.addmessage.departments = Departments; 
 
-Template.messages.events({
+Template.messagetags.events({
 	'click .tag' : function(event) {
 		if (this.type) {
-			var now = Session.get('tagTypeFilter');
+			var now = Session.get('typeFilter');
 			if (now == this.type) {
-				Session.set('tagTypeFilter', null);
+				Session.set('typeFilter', null);
 			} else {
-				Session.set('tagTypeFilter', this.type);
+				Session.set('typeFilter', this.type);
 			}
 		} else if (this.patientId) {
-			var now = Session.get('patientTagFilter');
+			var now = Session.get('patientFilter');
 			if (now == this.patientId) {
-				Session.set('patientTagFilter', null);
+				Session.set('patientFilter', null);
 			} else {
-				Session.set('patientTagFilter', this.patientId);
+				Session.set('patientFilter', this.patientId);
 			}
 		}
 		if (this.type == null && this.patientId == null) {
-			Session.set('tagTypeFilter', null);
-			Session.set('patientTagFilter', null);
+			Session.set('typeFilter', null);
+			Session.set('patientFilter', null);
 		}
 	}
 });
 
 Template.messageitems.messages = function() {
-	var tagTypeFilter = Session.get('tagTypeFilter');
-	var patientTagFilter = Session.get('patientTagFilter');
+	var typeFilter = Session.get('typeFilter');
+	var patientFilter = Session.get('patientFilter');
 	var messages;
-	if (tagTypeFilter && patientTagFilter) {
+	if (typeFilter && patientFilter) {
 		messages = Messages.find({
-			'data.type' : tagTypeFilter,
-			patientId : patientTagFilter
+			'data.type' : typeFilter,
+			patientId : patientFilter
 		});
-	} else if (tagTypeFilter) {
+	} else if (typeFilter) {
 		messages = Messages.find({
-			'data.type' : tagTypeFilter
+			'data.type' : typeFilter
 		});
-	} else if (patientTagFilter) {
+	} else if (patientFilter) {
 		messages = Messages.find({
-			patientId : patientTagFilter
+			patientId : patientFilter
 		});
 	} else {
 		messages = Messages.find();
 	}
 	
-	var tempHandle = null;
 	return messages.map(function(element) {
 		var patient = Patients.findOne({
 			_id : element.patientId
@@ -155,7 +154,7 @@ Template.messageitems.messages = function() {
 }; 
 
 
-Template.messages.tags = function() {
+Template.messagetags.tags = function() {
 	var tag_infos = [];
 	var total_count = 0;
 
@@ -199,8 +198,8 @@ Template.messages.tags = function() {
 	return tag_infos;
 };
 
-Template.messages.active = function() {
-	return (Session.equals('tagTypeFilter', this.type) || Session.equals('patientTagFilter', this.patientId)) ? 'label-info' : '';
+Template.messagetags.active = function() {
+	return (Session.equals('typeFilter', this.type) || Session.equals('patientFilter', this.patientId)) ? 'label-info' : '';
 };
 /////////////////////////////////////
 
