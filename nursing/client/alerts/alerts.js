@@ -10,13 +10,7 @@ Session.setDefault('editing_listname', null);
 // When editing alert text, ID of the alert
 Session.setDefault('editing_alertname', null);
 
-var listsHandle = Meteor.subscribe('lists', function () {
-  if (!Session.get('list_id')) {
-    var list = Lists.findOne({}, {sort: {name: 1}});
-    if (list)
-      Session.set('list_id', list._id);
-  }
-});
+var listsHandle = Meteor.subscribe('lists');
 
 
 var alertsHandle = null;
@@ -26,7 +20,7 @@ Deps.autorun(function () {
   if (list_id)
     alertsHandle = Meteor.subscribe('alerts', list_id);
   else
-    alertsHandle = null;
+    alertsHandle = Meteor.subscribe('alerts');
 });
 
 ////////// Helpers for in-place editing //////////
@@ -78,13 +72,19 @@ Template.alerts.events(okCancelEvents(
   '#new-alert',
   {
     ok: function (text, evt) {
-    
+    var tmplist_id = Session.get('list_id');
+
+    if (Lists.findOne({_id : tmplist_id})) {
+      console.log("creating new alert for list " + tmplist_id);
       Alerts.insert({
         message: text,
-        list_id: Session.get('list_id'),
+        list_id: tmplist_id,
         done: false,
         timestamp: (new Date()).getTime()
       });
+    } else {
+      Notifications.error("Error", "Pick a Category");
+    }
       evt.target.value = '';
     }
   }));
@@ -102,6 +102,7 @@ Template.alerts.alerts = function () {
   if(patientFilter) {
 	sel.patientId = patientFilter;
   }
+  console.log(sel);
 
   alerts = Alerts.find(sel, {sort: {time:1}});
 	
@@ -123,9 +124,13 @@ Template.alerts.alerts = function () {
 Template.alert_item.done_class = function () {
   return this.done ? 'done' : '';
 };
-
-Template.alert_item.done_checkbox = function () {
+Template.alert_item.isChecked = function(){
   return this.done ? 'checked="checked"' : '';
+};
+
+Template.alert_item.done = function () {
+  console.log(this);
+  return this.done;
 };
 
 Template.alert_item.editing = function () {
@@ -134,11 +139,11 @@ Template.alert_item.editing = function () {
 
 Template.alert_item.events({
   'click .check': function () {
-    alerts.update(this._id, {$set: {done: !this.done}});
+    Alerts.update(this._id, {$set: {done: !this.done}});
   },
 
   'click .destroy': function () {
-    alerts.remove(this._id);
+    Alerts.remove(this._id);
   },
 
   'dblclick .display .alert-text': function (evt, tmpl) {
@@ -153,7 +158,7 @@ Template.alert_item.events({
     evt.target.parentNode.style.opacity = 0;
     // wait for CSS animation to finish
     Meteor.setTimeout(function () {
-      alerts.update({_id: id});
+      Alerts.update({_id: id});
     }, 300);
   }
 });
@@ -162,7 +167,7 @@ Template.alert_item.events(okCancelEvents(
   '#alert-input',
   {
     ok: function (value) {
-      alerts.update(this._id, {$set: {text: value}});
+      Alerts.update(this._id, {$set: {text: value}});
       Session.set('editing_itemname', null);
     },
     cancel: function () {
@@ -182,11 +187,14 @@ Template.lists.lists = function () {
 
 Template.lists.events({
   'mousedown .list': function (evt) { // select list
+    console.log(this._id + 'mousedown');
     Session.set('list_id', this._id);
   },
   'click .list': function (evt) {
     // prevent clicks on <a> from refreshing the page.
     evt.preventDefault();
+    console.log(this._id + "onclick");
+    Session.set('list_id', this._id);
   },
   'dblclick .list': function (evt, tmpl) { // start editing list name
     Session.set('editing_listname', this._id);
