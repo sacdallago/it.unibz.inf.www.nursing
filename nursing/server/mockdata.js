@@ -72,6 +72,22 @@ Meteor.startup(function() {
 		"username" : "test2"
 	});
 
+	var hospitalization = {
+		nurseId : user._id,
+		ricoverydate : new Date(),
+		department : user.profile.department,
+		source : "programmed",
+		type : "urgent",
+		dateOfReservation : dateFormatter(new Date()),
+		priority : "30d",
+		proposingDoctor : "hospitaldoc",
+		poposingDoctorCode : "TB",
+		injuriesFrom : "other",
+		departmentOfStay : user.profile.department,
+		bed : "7B",
+		reason : "Cardio-ventricular failure"
+	};
+	
 	var patientData = {
 		first : "hanna",
 		last : "montana",
@@ -91,106 +107,21 @@ Meteor.startup(function() {
 		taxcode : "CRDHDJ345JFDS",
 		studylevel : "highschool",
 		diabetes : false,
-		allergies : ["paracetamol", "penicillin"]
+		allergies : ["paracetamol", "penicillin"],
+		currentHospitalization : hospitalization
 	};
 
-	var hospitalization = {
-		nurseId : user._id,
-		ricoverydate : new Date(),
-		department : user.profile.department,
-		source : "programmed",
-		type : "urgent",
-		dateOfReservation : dateFormatter(new Date()),
-		priority : "30d",
-		proposingDoctor : "hospitaldoc",
-		poposingDoctorCode : "TB",
-		injuriesFrom : "other",
-		departmentOfStay : user.profile.department,
-		bed : "7B",
-		reason : "Cardio-ventricular failure"
-	};
-
-	patientData.currentHospitalization = hospitalization;
+	
 
 	var pid = Patients.insert(patientData);
 	var patient = Patients.findOne(pid);
-
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid,
-			patientName : niceName(patient.first, patient.last),
-			nurseId : user._id,
-			nurseName : niceName(user.profile.first, user.profile.last),
-			readBy : 0,
-			target : 'cardiology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid,
-			patientName : niceName(patient.first, patient.last),
-			nurseId : user._id,
-			nurseName : niceName(user.profile.first, user.profile.last),
-			readBy : 0,
-			target : 'odontology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid,
-			patientName : niceName(patient.first, patient.last),
-			nurseId : user._id,
-			nurseName : niceName(user.profile.first, user.profile.last),
-			readBy : 0,
-			target : 'oncology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
 
 	///
 
 	var hospitalization1 = {
 		nurseId : user1._id,
 		ricoverydate : dateFormatter(new Date()),
-		department : user1.profile.department,
+		department : user.profile.department,
 		source : "programmed",
 		type : "urgent",
 		dateOfReservation : dateFormatter(new Date()),
@@ -227,74 +158,12 @@ Meteor.startup(function() {
 	};
 	var pid1 = Patients.insert(patientData1);
 	var patient1 = Patients.findOne(pid1);
-
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid1,
-			patientName : niceName(patient1.first, patient1.last),
-			nurseId : user._id,
-			nurseName : niceName(user1.profile.first, user1.profile.last),
-			readBy : 0,
-			target : 'cardiology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid1,
-			patientName : niceName(patient1.first, patient1.last),
-			nurseId : user1._id,
-			nurseName : niceName(user1.profile.first, user1.profile.last),
-			readBy : 0,
-			target : 'odontology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
-	for (var i = 0; i < 50; i++) {
-		var noti = {
-			patientId : pid1,
-			patientName : niceName(patient1.first, patient1.last),
-			nurseId : user1._id,
-			nurseName : niceName(user1.profile.first, user1.profile.last),
-			readBy : 0,
-			target : 'oncology',
-			message : "Message n." + i + ": " + msg[i % 6],
-			attachment : "/archive/Hzk43m.jpg",
-			timestamp : new Date(),
-			data : [{
-				type : "glucose" + i % 5,
-				value : 1.0,
-				unit : "mmol/L"
-			}, {
-				type : "creatinine",
-				value : 0.9,
-				unit : "mg/dL"
-			}]
-		};
-		Messages.insert(noti);
-	}
+	
+	
+	//Populate units
+	Units.remove({});
+	Units.insert({type: 'weight', unit:'kg'});
+	Units.insert({type: 'height', unit:'m'});
+	Units.insert({type: 'pressure', unit:'mm Hg'});
+	Units.insert({type: 'glucose', unit:'mg/dL'});
 });

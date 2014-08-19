@@ -144,8 +144,8 @@
 .addmessage textarea:focus {
 	height: 103px;
 }
-
-.addmessagetable textarea {
+	
+.table-condensed textarea {
 	resize: none;
 	height: 20px;
 	font-size: 12px;
@@ -165,4 +165,8 @@
 	position: absolute;
 	right: 20px;
 	top: 0;
+}
+
+.modal-backdrop {
+	background-color: gray;
 }

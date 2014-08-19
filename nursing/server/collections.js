@@ -8,6 +8,7 @@ Notes = new Meteor.Collection("notes");
 Anagraphics = new Meteor.Collection("anagraphics");
 Rooms = new Meteor.Collection("rooms");
 Lists = new Meteor.Collection("lists");
+Units = new Meteor.Collection("units");
 //Security first
 Meteor.publish('notes', function() {
 	if (this.userId) {
@@ -77,6 +78,13 @@ Meteor.publish('rooms', function() {
 Meteor.publish('lists', function(){
 	if (this.userId) {
 		return Lists.find();
+	} else {
+		return null;
+	}
+});
+Meteor.publish('units', function(){
+	if (this.userId) {
+		return Units.find();
 	} else {
 		return null;
 	}
