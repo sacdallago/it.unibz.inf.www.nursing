@@ -7,7 +7,7 @@ Patients = new Meteor.Collection("patients");
 Notes = new Meteor.Collection("notes");
 Anagraphics = new Meteor.Collection("anagraphics");
 Rooms = new Meteor.Collection("rooms");
-
+Lists = new Meteor.Collection("lists");
 //Security first
 Meteor.publish('notes', function() {
 	if (this.userId) {
@@ -70,6 +70,13 @@ Meteor.publish('alerts', function() {
 Meteor.publish('rooms', function() {
 	if (this.userId) {
 		return Rooms.find();
+	} else {
+		return null;
+	}
+});
+Meteor.publish('lists', function(){
+	if (this.userId) {
+		return Lists.find();
 	} else {
 		return null;
 	}
