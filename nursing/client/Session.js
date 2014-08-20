@@ -18,10 +18,13 @@ Session.setDefault('patientFilter',null); // Filter that stores patient attribut
  * Added: loading cubes while patients are not yet loaded
  * Missing: reminders, oldpatients, 
  */
+
+ //How to structure return statement for dynamically called handles:
+//( messagesHandle ? !messagesHandle.ready() : false)
 Template.loading.helpers({
 	notReady : function() {
 		if(Meteor.user()){
-			return ( messagesHandle ? !messagesHandle.ready() : false) ||  !patientsHandle.ready();
+			return  !patientsHandle.ready();
 		}
 		return false;
 	}

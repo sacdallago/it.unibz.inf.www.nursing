@@ -53,15 +53,17 @@
 		this.route('reminders', {
 			path : '/reminders',
 			onBeforeAction : function() {
-				if (!Meteor.user())
+				if (!Meteor.user()){
 					this.redirect('loginform');
+				} else {
+					remindersHandle = Meteor.subscribe('reminders');
+				}
 			},
 			onAfterAction : function() {
 				if (!Meteor.user())
 					this.redirect('loginform');
 			}
 		});
-
 		this.route('journal', {
 			path : '/journal',
 			onBeforeAction : function() {
@@ -69,6 +71,20 @@
 					this.redirect('loginform');
 				} else {
 					journalHandle = Meteor.subscribe('journal');
+				}
+			},
+			onAfterAction : function() {
+				if (!Meteor.user())
+					this.redirect('loginform');
+			}
+		});
+		this.route('measures', {
+			path : '/measures',
+			onBeforeAction : function() {
+				if (!Meteor.user()){
+					this.redirect('loginform');
+				} else {
+					measureslHandle = Meteor.subscribe('measures');
 				}
 			},
 			onAfterAction : function() {
