@@ -9,86 +9,86 @@
 		this.route('registrationform', {
 			path : '/signup',
 			onBeforeAction : function() {
-				if (Meteor.user())
-					this.redirect('home');
 			},
 			onAfterAction : function() {
-				if (Meteor.user())
+			},
+			onRun: function(){
+				if (Meteor.userId())
 					this.redirect('home');
 			}
 		});
 		this.route('loginform', {
-			path : '/',
+			path : '/signin',
 			onBeforeAction : function() {
-				if (Meteor.user())
-					this.redirect('home');
 			},
 			onAfterAction : function() {
-				if (Meteor.user())
+			},
+			onRun: function(){
+				if (Meteor.userId())
 					this.redirect('home');
 			}
 		});
 		this.route('goodbye', {
 			path : '/goodbye',
 			onBeforeAction : function() {
-				if (!Meteor.user())
-					this.redirect('loginform');
 			},
 			onAfterAction : function() {
-				if (!Meteor.user())
+			},
+			onRun: function(){
+				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
 		this.route('home', {
-			path : '/home',
+			path : '/',
 			onBeforeAction : function() {
-				if (!Meteor.user())
-					this.redirect('loginform');
 			},
 			onAfterAction : function() {
-				if (!Meteor.user())
+			},
+			onRun: function(){
+				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
 		this.route('reminders', {
 			path : '/reminders',
 			onBeforeAction : function() {
-				if (!Meteor.user()){
-					this.redirect('loginform');
-				} else {
+				if (Meteor.userId()){
 					remindersHandle = Meteor.subscribe('reminders');
 				}
 			},
 			onAfterAction : function() {
-				if (!Meteor.user())
+			},
+			onRun: function(){
+				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
 		this.route('journal', {
 			path : '/journal',
 			onBeforeAction : function() {
-				if (!Meteor.user()){
-					this.redirect('loginform');
-				} else {
+				if (Meteor.userId()){
 					journalHandle = Meteor.subscribe('journal');
 				}
 			},
 			onAfterAction : function() {
-				if (!Meteor.user())
+			},
+			onRun: function(){
+				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
 		this.route('measures', {
 			path : '/measures',
 			onBeforeAction : function() {
-				if (!Meteor.user()){
-					this.redirect('loginform');
-				} else {
+				if (Meteor.userId()){
 					measureslHandle = Meteor.subscribe('measures');
 				}
 			},
 			onAfterAction : function() {
-				if (!Meteor.user())
+			},
+			onRun: function(){
+				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
