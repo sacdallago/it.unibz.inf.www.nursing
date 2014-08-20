@@ -10,22 +10,40 @@ Meteor.startup(function() {
 	Language.insert({
 		language : 'en',
 		target: 'navigation',
-		beds : 'Beds',
-		alerts: 'Alerts',
-		messages: 'Messages',
+		home : 'Home',
+		reminders: 'Reminders',
+		journal: 'Journal',
 		signout: 'Sign out',
-		rooms: 'Rooms'
+		measures: "Measures"
 	});
 	Language.insert({
 		language : 'en',
-		target: 'beds',
-		heading : 'Beds',
+		target: 'home',
+		heading : 'Home',
 		subheading: '',
 	});
 	Language.insert({
 		language : 'en',
-		target: 'messages',
-		heading : 'Messages',
+		target: 'reminders',
+		heading : 'Reminders',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'en',
+		target: 'journal',
+		heading : 'Journal',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'en',
+		target: 'measures',
+		heading : 'Measures',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'en',
+		target: 'journal',
+		heading : 'Journal',
 		subheading: '',
 	});
 	Language.insert({
@@ -36,83 +54,52 @@ Meteor.startup(function() {
 		createaccount: 'Create Account',
 		backtosignin: 'Back to Sign in'
 	});
-
-	Language.insert({
-		language: 'en',
-		target: 'rooms',
-		heading: 'Rooms',
-		subheading: ''
-	});
 	//IT
 	Language.insert({
 		language : 'it',
 		target: 'navigation',
-		beds : 'Letti',
-		alerts: 'Avvisi',
-		messages: 'Messaggi',
-		signout: 'Scollegati'
+		home : 'Home',
+		reminders: 'Reminders',
+		journal: 'Journal',
+		signout: 'Sign out',
+		measures: "Measures"
 	});
 	Language.insert({
 		language : 'it',
-		target: 'beds',
-		heading : 'Letti',
+		target: 'home',
+		heading : 'Home',
 		subheading: '',
 	});
 	Language.insert({
 		language : 'it',
-		target: 'messages',
-		heading : 'Messaggi',
+		target: 'reminders',
+		heading : 'Reminders',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'it',
+		target: 'journal',
+		heading : 'Journal',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'it',
+		target: 'measures',
+		heading : 'Measures',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'it',
+		target: 'journal',
+		heading : 'Journal',
 		subheading: '',
 	});
 	Language.insert({
 		language : 'it',
 		target: 'registration',
-		firstname : 'Nome',
-		lastname: 'Cognome',
-		createaccount: 'Creare Utente',
-		backtosignin: 'Login'
-	});
-
-	Language.insert({
-		language: 'it',
-		target: 'rooms',
-		heading: 'Stanze',
-		subheading: ''
-	});
-	//DE
-	Language.insert({
-		language : 'de',
-		target: 'navigation',
-		beds : 'Zimmer',
-		alerts: 'Warnungen',
-		messages: 'Nachrichten',
-		signout: 'Verlassen'
-	});
-	Language.insert({
-		language : 'de',
-		target: 'beds',
-		heading : 'Zimmer',
-		subheading: '',
-	});
-	Language.insert({
-		language : 'de',
-		target: 'messages',
-		heading : 'Nachrichten',
-		subheading: '',
-	});
-	Language.insert({
-		language : 'de',
-		target: 'registration',
-		firstname : 'Name',
-		lastname: 'Nachname',
-		createaccount: 'Benutzer erstellen',
-		backtosignin: 'Login'
-	});
-
-	Language.insert({
-		language: 'de',
-		target: 'rooms',
-		heading: 'Zimmer',
-		subheading: ''
+		firstname : 'First Name',
+		lastname: 'Last Name',
+		createaccount: 'Create Account',
+		backtosignin: 'Back to Sign in'
 	});
 });

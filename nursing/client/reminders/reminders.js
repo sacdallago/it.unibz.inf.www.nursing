@@ -1,4 +1,4 @@
-Alerts = new Meteor.Collection("alerts");
+Reminders = new Meteor.Collection("reminders");
 
 Lists = new Meteor.Collection("lists");
 
@@ -13,14 +13,14 @@ Session.setDefault('editing_alertname', null);
 var listsHandle = Meteor.subscribe('lists');
 
 
-var alertsHandle = null;
-// Always be subscribed to the alerts for the selected list.
+var remindersHandle = null;
+// Always be subscribed to the reminders for the selected list.
 Deps.autorun(function () {
   var list_id = Session.get('list_id');
   if (list_id)
-    alertsHandle = Meteor.subscribe('alerts', list_id);
+    remindersHandle = Meteor.subscribe('reminders', list_id);
   else
-    alertsHandle = Meteor.subscribe('alerts');
+    remindersHandle = Meteor.subscribe('reminders');
 });
 
 ////////// Helpers for in-place editing //////////
@@ -58,17 +58,17 @@ var activateInput = function (input) {
   input.select();
 };
 
-// Alerts
+// Reminders
 
-Template.alerts.loading = function () {
-  return alertsHandle && !alertsHandle.ready();
+Template.reminders.loading = function () {
+  return remindersHandle && !remindersHandle.ready();
 };
 
-Template.alerts.any_list_selected = function () {
+Template.reminders.any_list_selected = function () {
   return !Session.equals('list_id', null);
 };
 
-Template.alerts.events(okCancelEvents(
+Template.reminders.events(okCancelEvents(
   '#new-alert',
   {
     ok: function (text, evt) {
@@ -76,7 +76,7 @@ Template.alerts.events(okCancelEvents(
 
     if (Lists.findOne({_id : tmplist_id})) {
       console.log("creating new alert for list " + tmplist_id);
-      Alerts.insert({
+      Reminders.insert({
         message: text,
         list_id: tmplist_id,
         done: false,
@@ -89,12 +89,12 @@ Template.alerts.events(okCancelEvents(
     }
   }));
 
-Template.alerts.alerts = function () {
-  // Determine which alerts to display in main pane,
+Template.reminders.reminders = function () {
+  // Determine which reminders to display in main pane,
   // selected based on list_id
   var list_id = Session.get('list_id');
   var patientFilter = Session.get('patientFilter');
-  var alerts;
+  var reminders;
   var sel = {};
   if(list_id) {
 	sel.list_id = list_id;
@@ -104,10 +104,10 @@ Template.alerts.alerts = function () {
   }
   console.log(sel);
 
-  alerts = Alerts.find(sel, {sort: {time:1}});
+  reminders = Reminders.find(sel, {sort: {time:1}});
 	
   var tempHandle = null;
-  return alerts.map(function(element) {
+  return reminders.map(function(element) {
 	var patient = Patients.findOne({
 		_id : element.patientId
 	});
@@ -139,11 +139,11 @@ Template.alert_item.editing = function () {
 
 Template.alert_item.events({
   'click .check': function () {
-    Alerts.update(this._id, {$set: {done: !this.done}});
+    Reminders.update(this._id, {$set: {done: !this.done}});
   },
 
   'click .destroy': function () {
-    Alerts.remove(this._id);
+    Reminders.remove(this._id);
   },
 
   'dblclick .display .alert-text': function (evt, tmpl) {
@@ -158,7 +158,7 @@ Template.alert_item.events({
     evt.target.parentNode.style.opacity = 0;
     // wait for CSS animation to finish
     Meteor.setTimeout(function () {
-      Alerts.update({_id: id});
+      Reminders.update({_id: id});
     }, 300);
   }
 });
@@ -167,7 +167,7 @@ Template.alert_item.events(okCancelEvents(
   '#alert-input',
   {
     ok: function (value) {
-      Alerts.update(this._id, {$set: {text: value}});
+      Reminders.update(this._id, {$set: {text: value}});
       Session.set('editing_itemname', null);
     },
     cancel: function () {

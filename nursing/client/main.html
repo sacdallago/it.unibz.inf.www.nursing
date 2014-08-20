@@ -9,28 +9,20 @@
 				</button>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
-						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Beds' }}">
-							<a href="{{pathFor 'beds'}}"><i class="fa fa-fw fa-table"></i> {{language.beds}}</a>
+						<li id="home-navigation" class="{{ activeIfTemplateIs 'Home' }}">
+							<a href="{{pathFor 'home'}}"><i class="fa fa-fw fa-table"></i> {{language.home}}</a>
 						</li>
-						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Alerts' }}">
-							<a href="{{pathFor 'alerts'}}"><i class="fa fa-fw fa-warning"></i> {{language.alerts}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineAlerts}}</span></a>
+						<li id="home-navigation" class="{{ activeIfTemplateIs 'Reminders' }}">
+							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> {{language.reminders}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
 						</li>
-						<li id="beds-navigation" class="{{ activeIfTemplateIs 'Messages' }}">
-							<a href="{{pathFor 'messages'}}"><i class="fa fa-fw fa-envelope"></i> {{language.messages}}&nbsp;&nbsp;<span class="badge alert-info">{{unreadMessages}}</span></a>
+						<li id="home-navigation" class="{{ activeIfTemplateIs 'Journal' }}">
+							<a href="{{pathFor 'messages'}}"><i class="fa fa-fw fa-envelope"></i> {{language.journal}}&nbsp;&nbsp;<span class="badge alert-info">{{unreadMessages}}</span></a>
 						</li>
-						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Rooms' }}">
-							<a href="{{pathFor 'rooms'}}"><i class="fa fa-fw fa-table"></i> {{language.rooms}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Measures' }}">
+							<a href="{{pathFor 'rooms'}}"><i class="fa fa-fw fa-table"></i> {{language.measures}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
 						<li>
 							<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> {{language.signout}}</a>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<li>
-									<a href="#">Action</a>
-								</li>
-							</ul>
 						</li>
 					</ul>
 				</div>
@@ -64,14 +56,14 @@
 							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> New Measurement</a>
 						</li>
 						<li>
-							<a><i class="fa fa-bell"></i> New Alert</a>
+							<a href="#" data-toggle="modal" data-target="#alert"><i class="fa fa-bell"></i> New Alert</a>
 						</li>
 						<li>
-							<a><i class="fa fa-envelope"></i> New Message</a>
+							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> New Journal</a>
 						</li>
 						{{else}}
 						<li>
-							<a><i class="fa fa-user"></i> Please select a patient</a>
+							<a href="#" ><i class="fa fa-user"></i> Please select a patient</a>
 						</li>
 						{{/if}}
 					</ul>
@@ -91,7 +83,7 @@
 </template>
 
 <template name="newMeasurement">
-	<div class="modal fade" id="measurement">
+	<div class="modal fade" id="measurement" style="display:none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -125,8 +117,41 @@
 	</div><!-- /.modal -->
 </template>
 
+<template name="newJournal">
+	<div class="modal fade" id="journal" style="display:none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+       				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        			<h3 class="modal-title">New Journal</h3>
+     			</div>
+				<form>
+				<div class="modal-body">
+					<div class="input-group addmessage">
+						<strong>Message:&nbsp;</strong><br>
+						<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
+					</div>
+				</div>
+				<div class="input-group addmessage">
+				<button class="btn btn-default btn-file">
+					<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
+					<input id="file" type="file">
+				</button>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-block send">
+						<strong><i class="fa fa-circle-o river"></i></strong> Save
+					</button>
+				</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</template>
+
 <template name="modals">
 	{{> newMeasurement}}
+	{{> newJournal}}
 </template>
 
 <template name="loading">

@@ -11,9 +11,13 @@ Meteor.startup(function() {
 	//Db reset
 	Meteor.users.remove({});
 	Patients.remove({});
-	Messages.remove({});
+	Hospitalizations.remove({});
+	Reminders.remove({});
+	Journal.remove({});
+	Measures.remove({});
+	Favorites.remove({});
 
-	//Db mockdata
+	//USERS
 	Accounts.createUser({
 		username : 'test',
 		profile : {
@@ -34,60 +38,8 @@ Meteor.startup(function() {
 	var user = Meteor.users.findOne({
 		"username" : "test"
 	});
-	Accounts.createUser({
-		username : 'test1',
-		profile : {
-			department : "oncology",
-			first : "some",
-			last : "dude",
-			message : {
-				message : "",
-				data : [{
-					type : "",
-					value : "",
-					unit : ""
-				}]
-			}
-		},
-		password : 'password'
-	});
-	Accounts.createUser({
-		username : 'test2',
-		profile : {
-			department : "odontology",
-			first : "hey",
-			last : "imcool",
-			message : {
-				message : "",
-				data : [{
-					type : "",
-					value : "",
-					unit : ""
-				}]
-			}
-		},
-		password : 'password'
-	});
-	var user1 = Meteor.users.findOne({
-		"username" : "test2"
-	});
 
-	var hospitalization = {
-		nurseId : user._id,
-		ricoverydate : new Date(),
-		department : user.profile.department,
-		source : "programmed",
-		type : "urgent",
-		dateOfReservation : dateFormatter(new Date()),
-		priority : "30d",
-		proposingDoctor : "hospitaldoc",
-		poposingDoctorCode : "TB",
-		injuriesFrom : "other",
-		departmentOfStay : user.profile.department,
-		bed : "7B",
-		reason : "Cardio-ventricular failure"
-	};
-	
+	//Patient 1
 	var patientData = {
 		first : "hanna",
 		last : "montana",
@@ -107,33 +59,53 @@ Meteor.startup(function() {
 		taxcode : "CRDHDJ345JFDS",
 		studylevel : "highschool",
 		diabetes : false,
-		allergies : ["paracetamol", "penicillin"],
-		currentHospitalization : hospitalization
+		allergies : ["paracetamol", "penicillin"]
 	};
-
-	
 
 	var pid = Patients.insert(patientData);
-	var patient = Patients.findOne(pid);
 
-	///
-
-	var hospitalization1 = {
-		nurseId : user1._id,
-		ricoverydate : dateFormatter(new Date()),
-		department : user.profile.department,
-		source : "programmed",
-		type : "urgent",
-		dateOfReservation : dateFormatter(new Date()),
-		priority : "30d",
-		proposingDoctor : "hospitaldoc",
-		poposingDoctorCode : "TB",
-		injuriesFrom : "other",
-		departmentOfStay : user1.profile.department,
-		bed : "7B",
-		reason : "Cardio-ventricular failure"
+	var hospitalizationData = {
+		patientId : pid,
+		nurseID : user._id,
+		active : true,
+		timestamp : Date.now()
 	};
 
+	var hid = Hospitalizations.insert(hospitalizationData);
+
+	var today = new Date();
+	var tomorrow = new Date();
+	var dayAfterTomorrow = new Date();
+	tomorrow.setDate(today.getDate() + 1);
+	dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
+
+	var dates = [];
+	dates.push(today);
+	dates.push(tomorrow);
+	dates.push(dayAfterTomorrow);
+
+	for (var i = 0; i < 5; i++) {
+		var reminder = {
+			patientId : pid,
+			hospitalizationId : hid,
+			nurseID : user._id,
+			message : "text" + i,
+			category : names[i % names.length],
+			timestamp : (new Date()).getTime(),
+			dueDate : dates[i % dates.length].getTime()
+		};
+		Reminders.insert(reminder);
+	}
+	
+	var rooms = Rooms.findOne({number:4});
+	var beds = rooms.beds;
+	beds[0].patientId = pid;
+	Rooms.update({number:4},{$set:{'beds':beds}});
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// Patient 2
+	
 	var patientData1 = {
 		first : "some",
 		last : "gal",
@@ -153,17 +125,41 @@ Meteor.startup(function() {
 		taxcode : "CRDHDJ345JFDS",
 		studylevel : "highschool",
 		diabetes : false,
-		allergies : ["paracetamol", "penicillin"],
-		currentHospitalization : hospitalization1
+		allergies : ["paracetamol", "penicillin"]
 	};
+
 	var pid1 = Patients.insert(patientData1);
-	var patient1 = Patients.findOne(pid1);
+
+	var hospitalizationData1 = {
+		patientId : pid1,
+		nurseID : user._id,
+		active : true,
+		timestamp : Date.now()
+	};
 	
-	
-	//Populate units
-	Units.remove({});
-	Units.insert({type: 'weight', unit:'kg'});
-	Units.insert({type: 'height', unit:'m'});
-	Units.insert({type: 'pressure', unit:'mm Hg'});
-	Units.insert({type: 'glucose', unit:'mg/dL'});
+	var hid1 = Hospitalizations.insert(hospitalizationData1);
+
+	var today = new Date();
+	var tomorrow = new Date();
+	var dayAfterTomorrow = new Date();
+	tomorrow.setDate(today.getDate() + 1);
+	dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
+
+	var dates = [];
+	dates.push(today);
+	dates.push(tomorrow);
+	dates.push(dayAfterTomorrow);
+
+	for (var i = 0; i < 5; i++) {
+		var reminder = {
+			patientId : pid1,
+			hospitalizationId : hid1,
+			nurseID : user._id,
+			message : "text" + i,
+			category : names[i % names.length],
+			timestamp : (new Date()).getTime(),
+			dueDate : dates[i % dates.length].getTime()
+		};
+		Reminders.insert(reminder);
+	}
 });

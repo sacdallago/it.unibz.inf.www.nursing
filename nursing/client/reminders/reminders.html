@@ -26,7 +26,7 @@
   {{/if}}      
 </template>
 
-<template name="alerts">
+<template name="reminders">
 
   {{>lists}}
   
@@ -39,7 +39,7 @@
           <input type="text" id="new-alert" placeholder="New item" />
         </div>
         <ul id="item-list">
-          {{#each alerts}}
+          {{#each reminders}}
             {{> alert_item}}
           {{/each}}
         </ul>
@@ -69,7 +69,7 @@
 </template>
 
 <!-- Deprecated -->
-<template name='minialerts'>
+<template name='minireminders'>
 	<li>
 		<a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
 	</li>

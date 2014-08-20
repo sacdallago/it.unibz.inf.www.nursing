@@ -2,7 +2,7 @@ String.prototype.capitalize = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-Departments = ['cardiology', 'oncology', 'odontology'];
+Departments = ['cardiology'];
 
 niceName = function(first, last) {
 	return first.capitalize() + " " + last.capitalize();

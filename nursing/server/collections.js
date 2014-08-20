@@ -1,73 +1,62 @@
 // see https://github.com/sacdallago/it.unibz.inf.www.nursing/wiki/Collections
+Patients = new Meteor.Collection("patients");////
+Measures = new Meteor.Collection("measures");////
+Journal = new Meteor.Collection("journal");////
+Reminders = new Meteor.Collection("reminders");////
+Favorites = new Meteor.Collection("favorites");////
+Units = new Meteor.Collection("units");////
+Categories = new Meteor.Collection("categories");////
+Rooms = new Meteor.Collection("rooms");////
+Hospitalizations = new Meteor.Collection("hospitalizations");////
 
-Messages = new Meteor.Collection("messages");
-Messages._ensureIndex({ "timestamp": 1 }, { expireAfterSeconds: 86400 }); //Ensures messages get deleted after one day
-Alerts = new Meteor.Collection("alerts");
-Patients = new Meteor.Collection("patients");
-Notes = new Meteor.Collection("notes");
-Anagraphics = new Meteor.Collection("anagraphics");
-Rooms = new Meteor.Collection("rooms");
-Lists = new Meteor.Collection("lists");
-Units = new Meteor.Collection("units");
 //Security first
-Meteor.publish('notes', function() {
-	if (this.userId) {
-		return Notes.find();
-	} else {
-		return null;
-	}
-});
-Meteor.publish('messages', function(criteria, projection) {
-	if (this.userId) {
-		var user = Meteor.users.findOne(this.userId);
-		if (criteria && projection) {
-			criteria.target = user.profile.department;
-			return Messages.find(criteria, projection);
-		} else {
-			return Messages.find({
-				target : user.profile.department
-			}, {
-				sort : {
-					timestamp : -1
-				}
-			});
-		}
-
-	} else {
-		return null;
-	}
-}); 
-Meteor.publish('anagraphics', function(limit) {
-	if (this.userId) {
-		return Anagraphics.find({}, {
-			limit : limit
-		});
-	} else {
-		return null;
-	}
-});
+//_id: { $in: [ 5,  ObjectId("507c35dd8fada716c89d0013") ] }
 Meteor.publish('patients', function(criteria, projection) {
 	if (this.userId) {
 		if (criteria && projection) {
 			return Patients.find(criteria, projection);
 		} else {
-			var user = Meteor.users.findOne(this.userId);
-			return Patients.find({
-				'currentHospitalization.departmentOfStay' : user.profile.department
-			});
+			return Patients.find();
 		}
 	} else {
 		return null;
 	}
 });
-Meteor.publish('alerts', function() {
+Meteor.publish('favorites', function() {
 	if (this.userId) {
-		return Alerts.find();
+		return Favorites.find();
 	} else {
 		return null;
 	}
 });
-
+Meteor.publish('favor', function() {
+	if (this.userId) {
+		return Measures.find();
+	} else {
+		return null;
+	}
+});
+Meteor.publish('journal', function() {
+	if (this.userId) {
+		return Journal.find();
+	} else {
+		return null;
+	}
+});
+Meteor.publish('hospitalizations', function() {
+	if (this.userId) {
+		return Hospitalizations.find();
+	} else {
+		return null;
+	}
+});
+Meteor.publish('reminders', function() {
+	if (this.userId) {
+		return Reminders.find();
+	} else {
+		return null;
+	}
+});
 Meteor.publish('rooms', function() {
 	if (this.userId) {
 		return Rooms.find();
@@ -75,16 +64,16 @@ Meteor.publish('rooms', function() {
 		return null;
 	}
 });
-Meteor.publish('lists', function(){
+Meteor.publish('units', function(){
 	if (this.userId) {
-		return Lists.find();
+		return Units.find();
 	} else {
 		return null;
 	}
 });
-Meteor.publish('units', function(){
+Meteor.publish('categories', function(){
 	if (this.userId) {
-		return Units.find();
+		return Categories.find();
 	} else {
 		return null;
 	}

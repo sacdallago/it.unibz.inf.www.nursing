@@ -6,12 +6,12 @@ Template.navigation.helpers({
 		}
 		return unreadMessages;
 	},
-	deadlineAlerts : function() {
-		var deadlineAlerts = Session.get("deadlineAlerts");
-		if (deadlineAlerts == 0) {
+	deadlineReminders : function() {
+		var deadlineReminders = Session.get("deadlineReminders");
+		if (deadlineReminders == 0) {
 			return null;
 		}
-		return deadlineAlerts;
+		return deadlineReminders;
 	},
 	activeIfTemplateIs: function (template) {
       var currentRoute = Router.current();
