@@ -6,6 +6,7 @@ Reminders = new Meteor.Collection("reminders");////
 Favorites = new Meteor.Collection("favorites");////
 Units = new Meteor.Collection("units");////
 Categories = new Meteor.Collection("categories");////
+Categories._ensureIndex({'name':1},{unique:true});//// Category.name unique no redundant categories
 Rooms = new Meteor.Collection("rooms");////
 Hospitalizations = new Meteor.Collection("hospitalizations");////
 
