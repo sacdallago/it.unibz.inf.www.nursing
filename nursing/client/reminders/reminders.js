@@ -1,24 +1,24 @@
 Reminders = new Meteor.Collection("reminders");
 
-Lists = new Meteor.Collection("lists");
+Categories = new Meteor.Collection("categories");
 
 
-// ID of currently selected list
-Session.setDefault('list_id', null);
-// When editing a list name, ID of the list
-Session.setDefault('editing_listname', null);
-// When editing alert text, ID of the alert
-Session.setDefault('editing_alertname', null);
+// ID of currently selected category
+Session.setDefault('categoryName', null);
+// When editing a category name, ID of the category
+Session.setDefault('editing_categoryname', null);
+// When editing reminder text, ID of the reminder
+Session.setDefault('editing_reminderName', null);
 
-var listsHandle = Meteor.subscribe('lists');
+var categoriesHandle = Meteor.subscribe('categories');
 
 
 var remindersHandle = null;
-// Always be subscribed to the reminders for the selected list.
+// Always be subscribed to the reminders for the selected category.
 Deps.autorun(function () {
-  var list_id = Session.get('list_id');
-  if (list_id)
-    remindersHandle = Meteor.subscribe('reminders', list_id);
+  var category = Session.get('categoryName');
+  if (category)
+    remindersHandle = Meteor.subscribe('reminders', category);
   else
     remindersHandle = Meteor.subscribe('reminders');
 });
@@ -64,21 +64,21 @@ Template.reminders.loading = function () {
   return remindersHandle && !remindersHandle.ready();
 };
 
-Template.reminders.any_list_selected = function () {
-  return !Session.equals('list_id', null);
+Template.reminders.any_category_selected = function () {
+  return !Session.equals('categoryName', null);
 };
 
 Template.reminders.events(okCancelEvents(
-  '#new-alert',
+  '#new-reminder',
   {
     ok: function (text, evt) {
-    var tmplist_id = Session.get('list_id');
+    var tmpCategory = Session.get('categoryName');
 
-    if (Lists.findOne({_id : tmplist_id})) {
-      console.log("creating new alert for list " + tmplist_id);
+    if (Categories.findOne({name : tmpCategory})) {
+      console.log("creating new reminder for category " + tmpCategory);
       Reminders.insert({
         message: text,
-        list_id: tmplist_id,
+        category: tmpCategory,
         done: false,
         timestamp: (new Date()).getTime()
       });
@@ -91,13 +91,13 @@ Template.reminders.events(okCancelEvents(
 
 Template.reminders.reminders = function () {
   // Determine which reminders to display in main pane,
-  // selected based on list_id
-  var list_id = Session.get('list_id');
+  // selected based on category
+  var category = Session.get('categoryName');
   var patientFilter = Session.get('patientFilter');
   var reminders;
   var sel = {};
-  if(list_id) {
-	sel.list_id = list_id;
+  if(category) {
+	sel.category = category;
   }
   if(patientFilter) {
 	sel.patientId = patientFilter;
@@ -113,7 +113,8 @@ Template.reminders.reminders = function () {
 	});
 	if (patient) {
 		//This adds beds to patient names, if the patient is in the ward the message is sent to
-		element.bed = patient.currentHospitalization.bed;
+		//element.bed = patient.currentHospitalization.bed;
+    //TODO: add room and bed to result according to current collection structure
 	}
 	//This adds a nice formatting of the date the message was written / modified
 	element.date = dateFormatter(element.timestamp);
@@ -121,23 +122,23 @@ Template.reminders.reminders = function () {
   });
 };
 
-Template.alert_item.done_class = function () {
+Template.reminder_item.done_class = function () {
   return this.done ? 'done' : '';
 };
-Template.alert_item.isChecked = function(){
+Template.reminder_item.isChecked = function(){
   return this.done ? 'checked="checked"' : '';
 };
 
-Template.alert_item.done = function () {
+Template.reminder_item.done = function () {
   console.log(this);
   return this.done;
 };
 
-Template.alert_item.editing = function () {
-  return Session.equals('editing_itemname', this._id);
+Template.reminder_item.editing = function () {
+  return Session.equals('editing_reminderName', this._id);
 };
 
-Template.alert_item.events({
+Template.reminder_item.events({
   'click .check': function () {
     Reminders.update(this._id, {$set: {done: !this.done}});
   },
@@ -146,14 +147,14 @@ Template.alert_item.events({
     Reminders.remove(this._id);
   },
 
-  'dblclick .display .alert-text': function (evt, tmpl) {
-    Session.set('editing_itemname', this._id);
+  'dblclick .display .reminder-text': function (evt, tmpl) {
+    Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
-    activateInput(tmpl.find("#alert-input"));
+    activateInput(tmpl.find("#reminder-input"));
   },
 
   'click .remove': function (evt) {
-    var id = this.alert_id;
+    var id = this._id;
 
     evt.target.parentNode.style.opacity = 0;
     // wait for CSS animation to finish
@@ -163,78 +164,78 @@ Template.alert_item.events({
   }
 });
 
-Template.alert_item.events(okCancelEvents(
-  '#alert-input',
+Template.reminder_item.events(okCancelEvents(
+  '#reminder-input',
   {
     ok: function (value) {
       Reminders.update(this._id, {$set: {text: value}});
-      Session.set('editing_itemname', null);
+      Session.set('editing_reminderName', null);
     },
     cancel: function () {
-      Session.set('editing_itemname', null);
+      Session.set('editing_reminderName', null);
     }
   }));
 
-//Lists
+//Categories
 
-Template.lists.loading = function () {
-  return !listsHandle.ready();
+Template.categories.loading = function () {
+  return !categoriesHandle.ready();
 };
 
-Template.lists.lists = function () {
-  return Lists.find({}, {sort: {name: 1}});
+Template.categories.categories = function () {
+  return Categories.find({}, {sort: {name: 1}});
 };
 
-Template.lists.events({
-  'mousedown .list': function (evt) { // select list
-    console.log(this._id + 'mousedown');
-    Session.set('list_id', this._id);
+Template.categories.events({
+  'mousedown .category': function (evt) { // select category
+    console.log(this.name + 'mousedown');
+    Session.set('category', this.name);
   },
-  'click .list': function (evt) {
+  'click .category': function (evt) {
     // prevent clicks on <a> from refreshing the page.
     evt.preventDefault();
-    console.log(this._id + "onclick");
-    Session.set('list_id', this._id);
+    console.log(this.name + "onclick");
+    Session.set('category', this.name);
   },
-  'dblclick .list': function (evt, tmpl) { // start editing list name
-    Session.set('editing_listname', this._id);
+  'dblclick .category': function (evt, tmpl) { // start editing category name
+    Session.set('editing_categoryname', this.name);
     Deps.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput(tmpl.find("#list-name-input"));
+    activateInput(tmpl.find("#category-name-input"));
   }
 });
 
-// Attach events to keydown, keyup, and blur on "New list" input box.
-Template.lists.events(okCancelEvents(
-  '#new-list',
+// Attach events to keydown, keyup, and blur on "New category" input box.
+Template.categories.events(okCancelEvents(
+  '#new-category',
   {
     ok: function (text, evt) {
-      var id = Lists.insert({name: text});
-      Session.set('list_id', id._id);
+      var id = Categories.insert({name: text});
+      Session.set('category', id.name);
       evt.target.value = "";
     }
   }));
 
-Template.lists.events(okCancelEvents(
-  '#list-name-input',
+Template.categories.events(okCancelEvents(
+  '#category-name-input',
   {
     ok: function (value) {
-      Lists.update(this._id, {$set: {name: value}});
-      Session.set('editing_listname', null);
+      Categories.update(this.name, {$set: {name: value}});
+      Session.set('editing_categoryname', null);
     },
     cancel: function () {
-      Session.set('editing_listname', null);
+      Session.set('editing_categoryname', null);
     }
   }));
 
-Template.lists.selected = function () {
-  return Session.equals('list_id', this._id) ? 'selected' : '';
+Template.categories.selected = function () {
+  return Session.equals('category', this.name) ? 'selected' : '';
 };
 
-Template.lists.name_class = function () {
+Template.categories.name_class = function () {
   return this.name ? '' : 'empty';
 };
 
-Template.lists.editing = function () {
-  return Session.equals('editing_listname', this._id);
+Template.categories.editing = function () {
+  return Session.equals('editing_categoryname', this.name);
 };
 
