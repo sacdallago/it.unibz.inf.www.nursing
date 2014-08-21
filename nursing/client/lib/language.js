@@ -28,4 +28,13 @@ Template.registrationform.helpers({
 			'language' : Session.get('language').toString().substr(0, 2)
 		});
 	}
-}); 
+});
+
+Template.reminders.helpers({
+	language: function(){
+		return Language.findOne({
+			'target' : 'reminders',
+			'language' : Session.get('language').toString().substr(0,2)
+		});
+	}
+});

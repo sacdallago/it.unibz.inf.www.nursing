@@ -6,22 +6,13 @@ Categories = new Meteor.Collection("categories");
 // ID of currently selected category
 Session.setDefault('categoryName', null);
 // When editing a category name, ID of the category
-Session.setDefault('editing_categoryname', null);
+Session.setDefault('editing_categoryName', null);
 // When editing reminder text, ID of the reminder
 Session.setDefault('editing_reminderName', null);
 
 var categoriesHandle = Meteor.subscribe('categories');
 
-
-var remindersHandle = null;
-// Always be subscribed to the reminders for the selected category.
-Deps.autorun(function () {
-  var category = Session.get('categoryName');
-  if (category)
-    remindersHandle = Meteor.subscribe('reminders', category);
-  else
-    remindersHandle = Meteor.subscribe('reminders');
-});
+remindersHandle = null;
 
 ////////// Helpers for in-place editing //////////
 
@@ -183,24 +174,44 @@ Template.categories.loading = function () {
 };
 
 Template.categories.categories = function () {
-  return Categories.find({}, {sort: {name: 1}});
+  var categories = Categories.find();
+  return categories.map(function(element){
+    var sel ={};
+    sel.category = element.name;
+    var pid = Session.get('patientFilter');
+    if (pid){
+      sel.patientId = pid;
+    }
+    element.count = Reminders.find(sel).count();
+    return element;
+  });
+
 };
 
 Template.categories.events({
   'mousedown .category': function (evt) { // select category
     console.log(this.name + 'mousedown');
-    Session.set('category', this.name);
+    if(!this.name) {
+      Session.set('categoryName',null);
+    } else {
+      Session.set('categoryName', this.name);
+    }
   },
   'click .category': function (evt) {
-    // prevent clicks on <a> from refreshing the page.
-    evt.preventDefault();
     console.log(this.name + "onclick");
-    Session.set('category', this.name);
+    if(!this.name) {
+      Session.set('categoryName',null);
+    } else {
+      Session.set('categoryName', this.name);
+    }
   },
   'dblclick .category': function (evt, tmpl) { // start editing category name
-    Session.set('editing_categoryname', this.name);
-    Deps.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput(tmpl.find("#category-name-input"));
+    
+    if (!this.name){
+      Session.set('editing_categoryName', this.name);
+      Deps.flush(); // force DOM redraw, so we can focus the edit field
+      activateInput(tmpl.find("#category-name-input"));
+    }
   }
 });
 
@@ -210,7 +221,7 @@ Template.categories.events(okCancelEvents(
   {
     ok: function (text, evt) {
       var id = Categories.insert({name: text});
-      Session.set('category', id.name);
+      Session.set('categoryName', id.name);
       evt.target.value = "";
     }
   }));
@@ -220,22 +231,26 @@ Template.categories.events(okCancelEvents(
   {
     ok: function (value) {
       Categories.update(this.name, {$set: {name: value}});
-      Session.set('editing_categoryname', null);
+      Session.set('editing_categoryName', null);
     },
     cancel: function () {
-      Session.set('editing_categoryname', null);
+      Session.set('editing_categoryName', null);
     }
   }));
 
 Template.categories.selected = function () {
-  return Session.equals('category', this.name) ? 'selected' : '';
-};
-
-Template.categories.name_class = function () {
-  return this.name ? '' : 'empty';
+  return Session.equals('categoryName', this.name) ? 'label-info' : '';
 };
 
 Template.categories.editing = function () {
-  return Session.equals('editing_categoryname', this.name);
+  return Session.equals('editing_categoryName', this.name);
 };
 
+Template.categories.totalReminders = function(){
+  var sel = {};
+  var pid = Session.get('patientFilter');
+  if(pid){
+    sel.patientId = pid;
+  }
+  return Reminders.find(sel).count();
+};
