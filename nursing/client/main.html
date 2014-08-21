@@ -74,7 +74,7 @@
 </template>
 
 <template name="patientPill">
-	<span><strong>{{last}}, {{first}}</strong> {{currentHospitalization.bed}}</span>
+	<span><strong>{{last}}, {{first}}</strong> {{room}}</span>
 </template>
 
 <!-- Workaround to sort out logout issue -->
@@ -87,30 +87,32 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-       				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        			<h3 class="modal-title">New Measurement</h3>
-     			</div>
-				<form>
-				<div class="modal-body">
-					<strong name="department">Type</strong>&nbsp;
-					<select class="">
-						<option data-unit="" value="">Select...</option>
-						{{#each units}}
-						<option data-unit="{{unit}}" value="{{type}}">{{name}}</option>
-						{{/each}}
-					</select>
-
-					<div class="input-group addmessage">
-						<strong>Value</strong>
-						<input type="number" step="any" value="" >
-						<input id="unit" type="text" size="5" style="width: initial;" disabled="true">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-block send">
-						<strong><i class="fa fa-circle-o river"></i></strong> Save
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="fa fa-times"></i>
 					</button>
+					<h3 class="modal-title">New Measurement</h3>
 				</div>
+				<form>
+					<div class="modal-body">
+						<strong name="department">Type</strong>&nbsp;
+						<select id="measurementType">
+							<option data-unit="" value="">Select...</option>
+							{{#each units}}
+							<option data-unit="{{unit}}" value="{{type}}">{{name}}</option>
+							{{/each}}
+						</select>
+
+						<div class="input-group addmessage">
+							<strong>Value</strong>
+							<input id="measurementValue" type="number" step="any" value="" >
+							<input id="measurementUnit" type="text" size="5" style="width: initial;" disabled="true">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-block send">
+							<strong><i class="fa fa-circle-o river"></i></strong> Save
+						</button>
+					</div>
 				</form>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -122,27 +124,31 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-       				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        			<h3 class="modal-title">New Journal</h3>
-     			</div>
-				<form>
-				<div class="modal-body">
-					<div class="input-group addmessage">
-						<strong>Message:&nbsp;</strong><br>
-						<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
-					</div>
-				</div>
-				<div class="input-group addmessage">
-				<button class="btn btn-default btn-file">
-					<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
-					<input id="file" type="file">
-				</button>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-block send">
-						<strong><i class="fa fa-circle-o river"></i></strong> Save
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="fa fa-times"></i>
 					</button>
+					<h3 class="modal-title">New Journal</h3>
 				</div>
+				<form>
+					<div class="modal-body">
+						<div class="input-group addmessage">
+							<strong>Message:&nbsp;</strong>
+							<br>
+							<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
+							<p style="text-align: right; color: #555;" id="textCounter"></p>
+						</div>
+					</div>
+					<div class="input-group addmessage">
+						<button class="btn btn-default btn-file">
+							<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
+							<input id="journalFile" type="file">
+						</button>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-block send">
+							<strong><i class="fa fa-circle-o river"></i></strong> Save
+						</button>
+					</div>
 				</form>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
@@ -150,8 +156,10 @@
 </template>
 
 <template name="modals">
+	{{#if patientSelected}}
 	{{> newMeasurement}}
 	{{> newJournal}}
+	{{/if}}
 </template>
 
 <template name="loading">

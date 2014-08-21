@@ -18,3 +18,5 @@ paginated-subscription
 animation-helper-velocity
 autocomplete
 npm
+collectionFS
+cfs-filesystem

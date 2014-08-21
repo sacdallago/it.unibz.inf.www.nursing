@@ -29,7 +29,7 @@ Meteor.publish('favorites', function() {
 		return null;
 	}
 });
-Meteor.publish('favor', function() {
+Meteor.publish('measures', function() {
 	if (this.userId) {
 		return Measures.find();
 	} else {
