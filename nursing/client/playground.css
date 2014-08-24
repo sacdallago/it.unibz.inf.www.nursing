@@ -170,3 +170,7 @@
 .modal-backdrop {
 	background-color: gray;
 }
+
+.measures td{
+	width:30%;
+}

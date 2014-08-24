@@ -92,21 +92,31 @@
 					</button>
 					<h3 class="modal-title">New Measurement</h3>
 				</div>
-				<form>
+				<form class="form">
 					<div class="modal-body">
 						<strong name="department">Type</strong>&nbsp;
 						<select id="measurementType">
 							<option data-unit="" value="">Select...</option>
 							{{#each units}}
-							<option data-unit="{{unit}}" value="{{type}}">{{name}}</option>
+							<option data-_id="{{_id}}" value="{{type}}">{{name}}</option>
 							{{/each}}
 						</select>
 
-						<div class="input-group addmessage">
-							<strong>Value</strong>
-							<input id="measurementValue" type="number" step="any" value="" >
-							<input id="measurementUnit" type="text" size="5" style="width: initial;" disabled="true">
+						<div >
+							<table class="table measures">
+								<tbody>
+									{{#each measures}}
+									<tr>
+										<td>{{preText}}&nbsp;</td>
+										<td><input class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}></td>
+										<td>{{unit}}&nbsp;</td>	
+									</tr>
+									{{/each}}
+								</tbody>
+							</table>
+							
 						</div>
+
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">

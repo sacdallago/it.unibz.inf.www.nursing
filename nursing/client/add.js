@@ -7,9 +7,20 @@ Template.modals.helpers({
 	}
 });
 
+Template.newMeasurement.destroyed = function() {
+	delete Session.keys['measures'];
+};
+
+Template.newMeasurement.measures = function() {
+	return Session.get('measures');
+};
+
 Template.newMeasurement.events({
 	'change select' : function(event) {
-		document.getElementById('measurementUnit').value = $(event.currentTarget).find(':selected').data("unit");
+		var id = $(event.currentTarget).find(':selected').data("_id");
+		Session.set("measures",Units.findOne(id).fields);
+		//var form = document.getElementsByClassName('form');
+		//form[0].reset();
 	},
 	'submit' : function(event) {
 		event.preventDefault();
