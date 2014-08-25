@@ -1,3 +1,57 @@
 <template name="journal">
-	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span6 offset3">
+				{{> journalItems}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="journalItems">
+	{{#each journals}}
+	{{#AnimateWithVelocity}}
+	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="card">
+			<div class="card-heading pointer" data-toggle="collapse" data-target=".{{_id}}">
+				<div class="card-heading-header">
+					<p >
+						{{#if subject}}<strong class="alizarin">{{subject}}</strong>{{/if}} 
+					</p>
+					<div class="collapse {{_id}}">
+						<span>
+							<P>
+								<strong>{{patientName}}</strong> {{bed}} <i class="fa fa-clock-o"></i> {{date}}
+								<br />
+								<i class="fa fa-plus-square"></i> {{nurseName}} -
+								{{#if attachment}}
+								<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a>
+								{{/if}}
+								<br />
+							</p> </span>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<p >
+					{{message}}
+					{{image}}
+				</p>
+			</div>
+
+			<div class="card-bottom">
+				{{#if subject}}
+				<button class="btn read cardleftbutton">
+					<i class="fa fa-check emerald"></i> Checkin
+				</button>
+				{{/if}}
+
+				<button class="btn delete cardrightbutton">
+					<i class="fa fa-times alizarin"></i> Delete
+				</button>
+			</div>
+		</div>
+	</div>
+	{{/AnimateWithVelocity}}
+	{{/each}}
 </template>

@@ -69,7 +69,6 @@
 			onBeforeAction : function() {
 				if (Meteor.userId()){
 					journalDocumentsHandle = Meteor.subscribe('journalDocuments');
-					journalHandle = Meteor.subscribe('journal');
 				}
 			},
 			onAfterAction : function() {

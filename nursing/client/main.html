@@ -96,32 +96,46 @@
 					<div class="modal-body">
 						<strong name="department">Type</strong>&nbsp;
 						<select id="measurementType">
-							<option data-unit="" value="">Select...</option>
+							<option data-_id="" value="">Select...</option>
 							{{#each units}}
 							<option data-_id="{{_id}}" value="{{type}}">{{name}}</option>
 							{{/each}}
 						</select>
-
 						<div >
 							<table class="table measures">
 								<tbody>
 									{{#each measures}}
 									<tr>
 										<td>{{preText}}&nbsp;</td>
-										<td><input class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}></td>
-										<td>{{unit}}&nbsp;</td>	
+										<td>
+										<input class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
+										</td>
+										<td>{{unit}}&nbsp;</td>
 									</tr>
 									{{/each}}
 								</tbody>
 							</table>
-							
 						</div>
-
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
 							<strong><i class="fa fa-circle-o river"></i></strong> Save
 						</button>
+
+						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".measureProblemCollapse">
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+						</button>
+
+						<div class="input-group collapse measureProblemCollapse" style="margin-top: 20px;">
+							<strong>Select an existing problem:&nbsp;</strong>
+							<br>
+							<select id="journalProblemSelector" style="width: 100%">
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</div>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->
@@ -158,6 +172,34 @@
 						<button type="submit" class="btn btn-block send">
 							<strong><i class="fa fa-circle-o river"></i></strong> Save
 						</button>
+
+						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".journalProblemCollapse">
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+						</button>
+
+						<div class="collapse journalProblemCollapse">
+							<table class="table">
+								<tbody>
+									<td>
+									<div class="input-group addmessage">
+										<strong>Select an existing problem:&nbsp;</strong>
+										<br>
+										<select id="journalProblemSelector">
+											<option data-problemId="" value="">Select...</option>
+											{{#each problems}}
+											<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+											{{/each}}
+										</select>
+									</div></td>
+									<td>
+									<div class="input-group addmessage">
+										<strong>... Or define a new problem:&nbsp;</strong>
+										<br>
+										<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
+									</div></td>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->

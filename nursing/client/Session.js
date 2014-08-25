@@ -4,14 +4,10 @@
 Rooms = new Meteor.Collection('rooms');
 roomsHandle = Meteor.subscribe('rooms');
 
-//Define file storage collection at startup
-JournalDocuments = new FS.Collection("journalDocuments", {
-	stores : [new FS.Store.FileSystem("journalDocuments")]
-});
+//Load Journal at startup
+Journal = new Meteor.Collection("journal");
+journalHandle = Meteor.subscribe('journal');
 
-journalDocumentsHandle = null;
-
-FS.HTTP.setBaseUrl('/attachments');
 //Which page am I at?
 //Session.setDefault('pageName','login');
 

@@ -7,37 +7,52 @@ Template.modals.helpers({
 	}
 });
 
-Template.newMeasurement.destroyed = function() {
-	delete Session.keys['measures'];
-};
-
-Template.newMeasurement.measures = function() {
-	return Session.get('measures');
-};
-
 Template.newMeasurement.events({
-	'change select' : function(event) {
+	'change #measurementType' : function(event) {
 		var id = $(event.currentTarget).find(':selected').data("_id");
-		Session.set("measures",Units.findOne(id).fields);
+		Session.set("measures", Units.findOne(id).fields);
 		//var form = document.getElementsByClassName('form');
 		//form[0].reset();
 	},
 	'submit' : function(event) {
 		event.preventDefault();
-		var type = document.getElementById('measurementType').value;
-		var value = document.getElementById('measurementValue').value;
-		var unit = document.getElementById('measurementUnit').value;
-		if (unit && parseFloat(value)) {
+		//var type = document.getElementById('measurementType').value;
+		var measures = document.getElementsByClassName('measure');
+		var fields = [];
+
+		for (var i = 0; i < measures.length; i++) {
+			var element = {};
+			if (measures[i].placeholder) {
+				//Is a input field. Theoretically we only defined number fields, so the placeholder serves as unit.
+				element.value = measures[i].value.replace(",", ".");
+				//Fix the fact that some browsers allow to write a comma instead of a point for decimal values
+				element.unit = measures[i].placeholder;
+			} else {
+				//This is a checkbox. We only defined checkboxes and number inputs, so... there's not much to check here :D
+				//I'm gonna store 0 is the checkbox isn't checked, otherwise 1!
+				element.value = (measures[i].checked ? 1 : 0);
+			}
+			fields.push(element);
+		}
+
+		var problemId = $("#journalProblemSelector option:selected").attr("data-problemId");
+
+		var entry = {
+			patientId : Session.get('patientFilter'),
+			hospitalizationId : Session.get('hospitalizationFilter'),
+			nurseId : Meteor.userId(),
+			timestamp : Date.now(),
+			active : true,
+			fields : fields
+		};
+
+		if (problemId) {
+			entry.problemId = problemId;
+		}
+
+		if (fields.length > 0) {
 			if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {
-				Measures.insert({
-					patientId : Session.get('patientFilter'),
-					hospitalizationId : Session.get('hospitalizationFilter'),
-					nurseId : Meteor.userId(),
-					timestamp : Date.now(),
-					active : true,
-					value : value,
-					unit : unit
-				}, function(error) {
+				Measures.insert(entry, function(error) {
 					if (error) {
 						Notifications.error('Error', 'Something happened while saving your measurement.. :(');
 					} else {
@@ -56,11 +71,27 @@ Template.newMeasurement.events({
 	}
 });
 
-Template.newMeasurement.units = function() {
-	return Units.find().map(function(element) {
-		element.name = element.type.capitalize();
-		return element;
-	});
+Template.newMeasurement.helpers({
+	units : function() {
+		return Units.find().map(function(element) {
+			element.name = element.type.capitalize();
+			return element;
+		});
+	},
+	problems : function() {
+		return Journal.find({
+			subject : {
+				$exists : true
+			}
+		});
+	},
+	measures : function() {
+		return Session.get('measures');
+	}
+});
+
+Template.newMeasurement.destroyed = function() {
+	delete Session.keys['measures'];
 };
 
 Template.newJournal.events({
@@ -80,6 +111,29 @@ Template.newJournal.events({
 		event.preventDefault();
 		var message = document.getElementById('messageText').value;
 		var files = document.getElementById('journalFile').files;
+		var newProblem = document.getElementById("defineProblem").value;
+		var problemId = $("#journalProblemSelector option:selected").attr("data-problemId");
+
+		//create entry with basic data
+		var entry = {
+			patientId : Session.get('patientFilter'),
+			hospitalizationId : Session.get('hospitalizationFilter'),
+			nurseId : Meteor.userId(),
+			timestamp : Date.now(),
+			active : true
+		};
+
+		//Mark entry as problem if it is one, or add the problem id if it is problem-related
+		if (newProblem && problemId) {
+			Notifications.warn("Whops", "Please, either select an existing problem or define a new one!");
+			return;
+		} else if (newProblem) {
+			entry.subject = newProblem;
+			entry.active = true;
+		} else if (problemId) {
+			entry.problemId = problemId;
+		}
+
 		if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {
 			if (files[0]) {
 				JournalDocuments.insert(files[0], function(err, fileObj) {
@@ -87,15 +141,9 @@ Template.newJournal.events({
 						Notifications.error('Error', 'There was an error saving the file!');
 					} else {
 						if (message) {
-							Journal.insert({
-								patientId : Session.get('patientFilter'),
-								hospitalizationId : Session.get('hospitalizationFilter'),
-								nurseId : Meteor.userId(),
-								timestamp : Date.now(),
-								active : true,
-								message : message,
-								attachment : fileObj._id
-							}, function(error) {
+							entry.message = message;
+							entry.attachment = fileObj._id;
+							Journal.insert(entry, function(error) {
 								if (error) {
 									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
 								} else {
@@ -103,14 +151,8 @@ Template.newJournal.events({
 								}
 							});
 						} else {
-							Journal.insert({
-								patientId : Session.get('patientFilter'),
-								hospitalizationId : Session.get('hospitalizationFilter'),
-								nurseId : Meteor.userId(),
-								timestamp : Date.now(),
-								active : true,
-								attachment : fileObj._id
-							}, function(error) {
+							entry.attachment = fileObj._id;
+							Journal.insert(entry, function(error) {
 								if (error) {
 									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
 								} else {
@@ -121,14 +163,8 @@ Template.newJournal.events({
 					}
 				});
 			} else if (message) {
-				Journal.insert({
-					patientId : Session.get('patientFilter'),
-					hospitalizationId : Session.get('hospitalizationFilter'),
-					nurseId : Meteor.userId(),
-					timestamp : Date.now(),
-					active : true,
-					message : message
-				}, function(error) {
+				entry.message = message;
+				Journal.insert(entry, function(error) {
 					if (error) {
 						Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
 					} else {
@@ -136,11 +172,14 @@ Template.newJournal.events({
 					}
 				});
 			} else {
-				Notifications.warn('What?', 'Please, either attach a file or write a message!');
+				Notifications.warn('Whops', 'Please, either attach a file or write a message!');
+				return;
 			}
 		} else {
 			Notifications.error('Error', 'Please select a patient first!!');
 		}
+
+		//cleanup
 		$('#journal').modal('hide');
 		Meteor.users.update(Meteor.userId(), {
 			$set : {
@@ -149,7 +188,7 @@ Template.newJournal.events({
 		});
 		document.getElementById('textCounter').innerHTML = "";
 		event.target.reset();
-		Session.set('fileSelected',null);
+		Session.set('fileSelected', null);
 	},
 	'keydown #messageText' : function(event) {
 		var text = document.getElementById('messageText').value;
@@ -163,5 +202,16 @@ Template.newJournal.helpers({
 	},
 	messageData : function() {
 		return Meteor.user().profile.message;
+	},
+	problems : function() {
+		return Journal.find({
+			subject : {
+				$exists : true
+			}
+		});
 	}
 });
+
+Template.newJournal.destroyed = function() {
+	delete Session.keys['fileSelected'];
+};
