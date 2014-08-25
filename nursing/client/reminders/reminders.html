@@ -25,16 +25,27 @@
     <div id="items-view">
 
        <div class="card">
-        <div classe="card-body" style="text-align: left;">
+        <div classe="card-body">
       {{#if loading}}
         Loading...
       {{else}}
-     
-        <ul id="item-category">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ToDo</th>
+                <th>Name</th>
+                <th>Room</th>
+                <th>DueDate</th>
+                <th>CreatedBy</th>
+              </tr>
+            </thead>
+            <tbody>
           {{#each reminders}}
             {{> reminder_item}}
           {{/each}}
-        </ul>
+            </tbody>
+          </table>
       {{/if}}
       </div>
     </div>
@@ -69,14 +80,10 @@
 
 
 <template name="reminder_item">
-  <li class="reminder {{done_class}}">
-    {{#if editing}}
-      <div class="edit">
-        <input id="reminder-input" type="text" value="{{text}}" />
-      </div>
-    {{else}}
-      <div class="destroy"></div>
-      <div class="display">
+  {{#AnimateWithVelocity}}
+  <tr data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0"> 
+      
+        <td>
         <label class="checkbox">
           {{#if done}}
           <input class="check" name="markdone" type="checkbox" checked="checked"  />
@@ -84,8 +91,22 @@
           <input class="check" name="markdone" type="checkbox" />
           {{/if}}
         </label>
-        <div class="reminder-text">{{message}}</div>
-      </div>
-    {{/if}}
-  </li>
+      </td>
+      <td>
+        {{#if editing}}
+        <div class="edit">
+          <input id="reminder-input" type="text" value="{{text}}" />
+        </div>
+        {{else}}
+        <div class="display">
+        <span class="reminder-text">{{message}}</span>
+        </div>
+        {{/if}}
+      </td>
+      <td>{{patientName}}</td>
+      <td>{{roomNumber}}{{bed}}</td>
+      <td>{{niceDue}}</td>
+      <td><i>{{nurseName}}</i></td>
+  </tr>
+  {{/AnimateWithVelocity}}
 </template>

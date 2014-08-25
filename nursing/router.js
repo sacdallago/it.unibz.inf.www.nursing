@@ -55,6 +55,8 @@
 			onBeforeAction : function() {
 				if (Meteor.userId()){
 					remindersHandle = Meteor.subscribe('reminders');
+					categoriesHandle = Meteor.subscribe('categories');
+					usersHandle = Meteor.subscribe('users');
 				}
 			},
 			onAfterAction : function() {

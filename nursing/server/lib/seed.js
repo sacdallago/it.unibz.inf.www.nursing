@@ -28,9 +28,9 @@ Meteor.startup(function() {
 			Rooms.insert(data1);
 		}
 
-		//Lists
+		//Categories
 		Categories.remove({});
-		names = ['prelivevi', 'digiuni', 'diabetici', 'medicazioni', 'urine', 'peso', 'pic-midline-cvc', 'echi-ecg'];
+		names = ['prelivevi', 'digiuni', 'diabetici', 'medicazioni', 'urine', 'peso', 'pic-midline-cvc', 'echi-ecg','igiene intima','igiene personale','controllo accessi venosi periferici'];
 		for ( i = 0; i < names.length; i++) {
 			Categories.insert({
 				'name' : names[i]

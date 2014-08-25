@@ -68,7 +68,7 @@ Meteor.startup(function() {
 
 		var hospitalizationData = {
 			patientId : pid,
-			nurseID : user._id,
+			nurseId : user._id,
 			active : true,
 			timestamp : Date.now()
 		};
@@ -90,7 +90,7 @@ Meteor.startup(function() {
 			var reminder = {
 				patientId : pid,
 				hospitalizationId : hid,
-				nurseID : user._id,
+				nurseId : user._id,
 				message : "text" + i,
 				category : names[i % names.length],
 				timestamp : (new Date()).getTime(),
@@ -138,7 +138,7 @@ Meteor.startup(function() {
 
 		var hospitalizationData1 = {
 			patientId : pid1,
-			nurseID : user._id,
+			nurseId : user._id,
 			active : true,
 			timestamp : Date.now()
 		};
@@ -160,7 +160,7 @@ Meteor.startup(function() {
 			var reminder = {
 				patientId : pid1,
 				hospitalizationId : hid1,
-				nurseID : user._id,
+				nurseId : user._id,
 				message : "text" + i,
 				category : names[i % names.length],
 				timestamp : (new Date()).getTime(),

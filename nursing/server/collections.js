@@ -79,6 +79,13 @@ Meteor.publish('categories', function(){
 		return null;
 	}
 });
+Meteor.publish('users',function(){
+	if (this.userId) {
+		return Meteor.users.find( {}, {'profile.first':1, 'profile.last':1} );
+	} else {
+		return null;
+	}
+});
 /* by activating the following publication, all users can see each other!
  Meteor.publish("nurses", function () {
  return Meteor.users.find({}, {fields: {profile: 1}});

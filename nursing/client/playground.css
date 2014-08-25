@@ -174,3 +174,7 @@
 .measures td{
 	width:30%;
 }
+
+.edit input{
+	width: 90%;
+}
