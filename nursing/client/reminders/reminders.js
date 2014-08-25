@@ -1,7 +1,6 @@
 Reminders = new Meteor.Collection("reminders");
-
 Categories = new Meteor.Collection("categories");
-
+Accounts = Meteor.users;
 
 // ID of currently selected category
 Session.setDefault('categoryName', null);
@@ -10,9 +9,9 @@ Session.setDefault('editing_categoryName', null);
 // When editing reminder text, ID of the reminder
 Session.setDefault('editing_reminderName', null);
 
-var categoriesHandle = Meteor.subscribe('categories');
-
+categoriesHandle = null;
 remindersHandle = null;
+usersHandle = null;
 
 ////////// Helpers for in-place editing //////////
 
@@ -72,7 +71,13 @@ Template.reminders.events(okCancelEvents(
         category: tmpCategory,
         done: false,
         timestamp: (new Date()).getTime()
-      });
+      },function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "New Reminder successfully inserted!");
+      }
+    });
     } else {
       Notifications.error("Error", "Pick a Category");
     }
@@ -95,21 +100,38 @@ Template.reminders.reminders = function () {
   }
   console.log(sel);
 
-  reminders = Reminders.find(sel, {sort: {time:1}});
+  reminders = Reminders.find(sel, {sort: {dueDate:1}});
 	
   var tempHandle = null;
   return reminders.map(function(element) {
-	var patient = Patients.findOne({
-		_id : element.patientId
-	});
-	if (patient) {
-		//This adds beds to patient names, if the patient is in the ward the message is sent to
-		//element.bed = patient.currentHospitalization.bed;
-    //TODO: add room and bed to result according to current collection structure
-	}
-	//This adds a nice formatting of the date the message was written / modified
-	element.date = dateFormatter(element.timestamp);
-	return element;
+    var patient = Patients.findOne({
+      _id : element.patientId
+    });
+
+    var room = Rooms.findOne({
+      patientId : element.patientId
+    });
+
+    var nurse = Accounts.findOne({
+      _id : element.nurseId
+    });
+
+    if (patient) {
+      element.patientName = niceName(patient.first, patient.last);
+    }
+
+    if (room) {
+      element.roomNumber = room.number;
+      element.bed = room.bed;
+    }
+    console.log(nurse);
+    if (nurse) {
+      element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+    }
+    //This adds a nice formatting of the date the message was written / modified
+    element.date = dateFormatter(element.timestamp);
+    element.niceDue = dateFormatter(element.dueDate);
+    return element;
   });
 };
 
@@ -131,27 +153,20 @@ Template.reminder_item.editing = function () {
 
 Template.reminder_item.events({
   'click .check': function () {
-    Reminders.update(this._id, {$set: {done: !this.done}});
-  },
+    Reminders.remove(this._id,function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Task completed!");
+      }
+    });
 
-  'click .destroy': function () {
-    Reminders.remove(this._id);
   },
 
   'dblclick .display .reminder-text': function (evt, tmpl) {
     Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
-  },
-
-  'click .remove': function (evt) {
-    var id = this._id;
-
-    evt.target.parentNode.style.opacity = 0;
-    // wait for CSS animation to finish
-    Meteor.setTimeout(function () {
-      Reminders.update({_id: id});
-    }, 300);
   }
 });
 
@@ -159,7 +174,13 @@ Template.reminder_item.events(okCancelEvents(
   '#reminder-input',
   {
     ok: function (value) {
-      Reminders.update(this._id, {$set: {text: value}});
+      Reminders.update(this._id, {$set: {message: value}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Reminder successfully updated!");
+      }
+    });
       Session.set('editing_reminderName', null);
     },
     cancel: function () {
@@ -220,7 +241,13 @@ Template.categories.events(okCancelEvents(
   '#new-category',
   {
     ok: function (text, evt) {
-      var id = Categories.insert({name: text});
+      var id = Categories.insert({name: text},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "New Category successfully inserted!");
+      }
+    });
       Session.set('categoryName', id.name);
       evt.target.value = "";
     }
@@ -230,7 +257,13 @@ Template.categories.events(okCancelEvents(
   '#category-name-input',
   {
     ok: function (value) {
-      Categories.update(this.name, {$set: {name: value}});
+      Categories.update(this.name, {$set: {name: value}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Category successfully updated!");
+      }
+    });
       Session.set('editing_categoryName', null);
     },
     cancel: function () {
