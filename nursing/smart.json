@@ -1,7 +1,6 @@
 {
   "packages": {
     "iron-router": {},
-    "notifications": {},
     "paginated-subscription": {},
     "animation-helper-velocity": {},
     "autocomplete": {},
