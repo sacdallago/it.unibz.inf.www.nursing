@@ -4,13 +4,16 @@
 
 @media (max-width: 979px) {
 	body {
-		padding-bottom: 40px;
+		padding-bottom: 60px;
 	}
 	.navbar-fixed-bottom {
 		position: fixed;
 	}
 	.plusButton {
 		line-height: 44px;
+	}
+	.fixed {
+		position: fixed;
 	}
 }
 
@@ -25,7 +28,7 @@
 	cursor: pointer;
 }
 
-.pointer :hover {
+.pointer {
 	cursor: pointer;
 }
 
@@ -177,4 +180,14 @@
 
 .edit input{
 	width: 90%;
+}
+
+.journalTableView td{
+	width:50%;
+	overflow-y: hidden;
+	border-top:0;
+}
+
+.journalTableView {
+	margin-bottom:0;
 }

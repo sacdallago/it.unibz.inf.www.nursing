@@ -1,57 +1,99 @@
 <template name="journal">
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span6 offset3">
+			<ul class="span6 offset3 unstyled">
 				{{> journalItems}}
-			</div>
+			</ul>
 		</div>
 	</div>
 </template>
 
 <template name="journalItems">
-	{{#each journals}}
 	{{#AnimateWithVelocity}}
-	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+	{{#each journals}}
+	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<div class="card">
-			<div class="card-heading pointer" data-toggle="collapse" data-target=".{{_id}}">
+			<div class="card-heading" style="{{#if subject}} background-color: #dd4b39;color:white; {{/if}}" >
 				<div class="card-heading-header">
-					<p >
-						{{#if subject}}<strong class="alizarin">{{subject}}</strong>{{/if}} 
-					</p>
+					<div style="text-align: center;" class="pointer" data-toggle="collapse" data-target=".{{_id}}">
+						<ul class="unstyled">
+							{{#if subject}}
+							<li>
+								<strong>{{subject}}</strong>
+							</li>
+							{{/if}}
+							{{#if problemSubject}}
+							<li>
+								<label class="label label-important"><strong>{{problemSubject}}</strong></label>
+							</li>
+							{{/if}}
+							{{#if noPatientSelected}}
+							<li>
+								<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
+							</li>
+							{{/if}}
+						</ul>
+					</div>
 					<div class="collapse {{_id}}">
-						<span>
-							<P>
-								<strong>{{patientName}}</strong> {{bed}} <i class="fa fa-clock-o"></i> {{date}}
-								<br />
-								<i class="fa fa-plus-square"></i> {{nurseName}} -
-								{{#if attachment}}
-								<a href="{{attachment}}"><i class="fa fa-file-archive-o"></i>{{attachment}}</a>
-								{{/if}}
-								<br />
-							</p> </span>
+						<table class="table journalTableView">
+							<tbody>
+								<tr>
+									<td>
+									<ul class="unstyled">
+										{{#unless noPatientSelected}}
+										<li>
+											<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
+										</li>
+										{{/unless}}
+										<li>
+											<i class="fa fa-plus-square"></i> {{nurseName}}
+										</li>
+										{{#if attachment}}
+										<li>
+											<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+										</li>
+										{{/if}}
+									</ul></td>
+									<td>
+									<ul class="unstyled">
+										<li>
+											<i class="fa fa-warning"></i> {{#if problemSubject}}
+												<label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
+												{{else}}
+												{{#if subject}}
+													<label class="label label-important"><strong>{{subject}}</strong></label>
+												{{else}}
+													<select class="label label-important form-control" >
+														<option data-problemId="" value="">Select...</option>
+														{{#each problems}}
+															<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+														{{/each}}
+													</select>
+												{{/if}}
+											{{/if}}
+										</li>
+									</ul></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 			<div class="card-body">
-				<p >
+				<p>
 					{{message}}
-					{{image}}
+				</p>
+				{{#if attachment.isImage}}
+				<p class="{{attachment._id}} collapse pointer" data-toggle="collapse" data-target=".{{attachment._id}}" style="display: inherit; text-align: center; padding-bottom: 50px;">
+					<img  src="{{attachment.url}}" alt="attachment">
+				</p>
+				{{/if}}
+				<p style="text-align: right; opacity: 0.7;">
+					<i class="fa fa-clock-o"></i> {{date}}
 				</p>
 			</div>
-
-			<div class="card-bottom">
-				{{#if subject}}
-				<button class="btn read cardleftbutton">
-					<i class="fa fa-check emerald"></i> Checkin
-				</button>
-				{{/if}}
-
-				<button class="btn delete cardrightbutton">
-					<i class="fa fa-times alizarin"></i> Delete
-				</button>
-			</div>
 		</div>
-	</div>
-	{{/AnimateWithVelocity}}
+	</li>
 	{{/each}}
+	{{/AnimateWithVelocity}}
 </template>

@@ -223,6 +223,18 @@
 	{{/if}}
 </template>
 
+<template name="connectionStatus">
+	{{#if connectionLost}}
+	{{#AnimateWithVelocity}}
+	<div class="navbar-fixed-top fixed" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="alert alert-error" style="text-align: center;">
+			<strong>Connection lost</strong>
+		</div>
+	</div>
+	{{/AnimateWithVelocity}}
+	{{/if}}
+</template>
+
 <template name="loginform">
 	<div class="container">
 		<form id="login-form" class="form-signin">
@@ -291,6 +303,7 @@
 	{{#if currentUser}}
 	{{> modals}}
 	{{> navigation}}
+	{{> connectionStatus}}
 	{{> footer}}
 	{{/if}}
 </body>

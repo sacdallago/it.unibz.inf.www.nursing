@@ -28,3 +28,7 @@ Template.navigation.events({
 		Router.go('goodbye');
 	}
 });
+
+Template.connectionStatus.connectionLost = function(){
+	return !Meteor.status().connected;
+};
