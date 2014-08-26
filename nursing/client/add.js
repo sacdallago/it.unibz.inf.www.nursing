@@ -136,31 +136,43 @@ Template.newJournal.events({
 
 		if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {
 			if (files[0]) {
+				console.log(files[0]);
 				JournalDocuments.insert(files[0], function(err, fileObj) {
+					console.log(1);
 					if (err) {
+						console.log(2);
 						Notifications.error('Error', 'There was an error saving the file!');
 					} else {
+						console.log(3);
 						if (message) {
+							console.log(4);
 							entry.message = message;
 							entry.attachment = fileObj._id;
 							Journal.insert(entry, function(error) {
 								if (error) {
+									console.log(5);
 									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
 								} else {
+									console.log(6);
 									Notifications.info('Confirmation', 'New journal entry inserted!');
 								}
 							});
+							console.log(7);
 						} else {
+							console.log(8);
 							entry.attachment = fileObj._id;
 							Journal.insert(entry, function(error) {
 								if (error) {
+									console.log(9);
 									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
 								} else {
+									console.log(10);
 									Notifications.info('Confirmation', 'New journal entry inserted!');
 								}
 							});
 						}
 					}
+					console.log(11);
 				});
 			} else if (message) {
 				entry.message = message;

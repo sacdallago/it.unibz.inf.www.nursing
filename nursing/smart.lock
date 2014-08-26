@@ -3,23 +3,18 @@
   "dependencies": {
     "basePackages": {
       "iron-router": {},
-      "notifications": {},
       "paginated-subscription": {},
       "animation-helper-velocity": {},
       "autocomplete": {},
       "npm": {},
-      "collectionFS": {}
+      "collectionFS": {},
+      "notifications": {}
     },
     "packages": {
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.8.2",
         "commit": "05415a8891ea87a00fb1e2388585f2ca5a38e0da"
-      },
-      "notifications": {
-        "git": "https://github.com/gfk-ba/meteor-notifications.git",
-        "tag": "v0.6.0",
-        "commit": "9b15974266b6e36d87e98b164c429872f7db885e"
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
@@ -28,8 +23,8 @@
       },
       "animation-helper-velocity": {
         "git": "https://github.com/frozeman/meteor-animation-helper-velocity.git",
-        "tag": "v0.0.9",
-        "commit": "3258384b2aeac467870c086edb828a6eed8e6bd6"
+        "tag": "v0.1.1",
+        "commit": "fd9575b2ebbd5a9f2694aefd310d9ff80b3af274"
       },
       "autocomplete": {
         "git": "https://github.com/mizzao/meteor-autocomplete.git",
@@ -46,15 +41,15 @@
         "tag": "v0.4.8",
         "commit": "fea890b1e27799ccc9f71046748fb23a84330a16"
       },
+      "notifications": {
+        "git": "https://github.com/gfk-ba/meteor-notifications.git",
+        "tag": "v1.0.5",
+        "commit": "f61cd5dcede6cc572bc045dad11c4634db79267a"
+      },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",
         "tag": "v0.2.0",
         "commit": "4a2d53e35ba036b0c189c7ceca34be494d4c6c97"
-      },
-      "munit": {
-        "git": "https://github.com/spacejamio/meteor-munit.git",
-        "tag": "v0.2.0",
-        "commit": "9fbf742c3ea863d9d37f608d58f8fda646c01b2c"
       },
       "velocityjs": {
         "git": "https://github.com/Sewdn/meteor-velocityjs.git",
@@ -106,6 +101,16 @@
         "tag": "v0.0.13",
         "commit": "c27760e668099f2a07f77c3dfad8319f3326e31c"
       },
+      "sinon": {
+        "git": "https://github.com/spacejamio/meteor-sinon.git",
+        "tag": "v0.1.5",
+        "commit": "5078abefbfc67a6c4c19f628ceba4249b84b4e07"
+      },
+      "chai": {
+        "git": "https://github.com/spacejamio/meteor-chai.git",
+        "tag": "v0.1.5",
+        "commit": "9c8f1f769839c946f11f580b8c6f8601f9286a66"
+      },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
         "tag": "v0.2.5",
@@ -121,16 +126,6 @@
         "tag": "v0.2.1",
         "commit": "4dd1185c4d9d616c9abdb3f33e4a7d5a88db7e18"
       },
-      "chai": {
-        "git": "https://github.com/spacejamio/meteor-chai.git",
-        "tag": "v0.1.5",
-        "commit": "9c8f1f769839c946f11f580b8c6f8601f9286a66"
-      },
-      "sinon": {
-        "git": "https://github.com/spacejamio/meteor-sinon.git",
-        "tag": "v0.1.5",
-        "commit": "5078abefbfc67a6c4c19f628ceba4249b84b4e07"
-      },
       "cfs-filesaver": {
         "git": "https://github.com/CollectionFS/Meteor-cfs-filesaver.git",
         "tag": "v0.0.3",
@@ -143,8 +138,8 @@
       },
       "http-methods": {
         "git": "https://github.com/CollectionFS/Meteor-http-methods.git",
-        "tag": "v0.0.22",
-        "commit": "5b0f7723f49436b8a0a930f284ed05f0b26021fe"
+        "tag": "v0.0.23",
+        "commit": "8e555d953f1a2dfdfe983e58b65bd6054a840dde"
       },
       "numeral": {
         "git": "https://github.com/vsivsi/meteor-numeral.git",

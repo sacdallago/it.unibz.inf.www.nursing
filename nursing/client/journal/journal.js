@@ -7,7 +7,6 @@ journalDocumentsHandle = null;
 
 FS.HTTP.setBaseUrl('/attachments');
 
-
 Template.journalItems.journals = function(){
 	return Journal.find({},{ sort : { timestamp : -1} }).map(function(element){
 		var patient = Patients.findOne(element.patientId);
@@ -21,7 +20,7 @@ Template.journalItems.journals = function(){
 		element.subject ? (element.subject = ((String) (element.subject)).capitalize()) : null ;
 		
 		var nurse = Meteor.users.findOne(element.nurseId);
-		element.nurseName = niceName(nurse.first,nurse.last);
+		element.nurseName = niceName(nurse.profile.first,nurse.profile.last);
 		
 		return element;
 	});
