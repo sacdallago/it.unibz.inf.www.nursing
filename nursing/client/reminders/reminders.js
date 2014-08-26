@@ -1,6 +1,5 @@
 Reminders = new Meteor.Collection("reminders");
 Categories = new Meteor.Collection("categories");
-Accounts = Meteor.users;
 
 // ID of currently selected category
 Session.setDefault('categoryName', null);
@@ -112,7 +111,7 @@ Template.reminders.reminders = function () {
       patientId : element.patientId
     });
 
-    var nurse = Accounts.findOne({
+    var nurse = Meteor.users.findOne({
       _id : element.nurseId
     });
 
