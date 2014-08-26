@@ -2,10 +2,32 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<ul class="span6 offset3 unstyled">
+				{{> testtest}}
 				{{> journalItems}}
 			</ul>
 		</div>
 	</div>
+</template>
+
+<template name="testtest">
+	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div style="width: 100%; background-color: #fff; display: flex;">
+			<div style="width: 20%; text-align: center; padding-top: 20px; padding-bottom: 20px; background: red;">
+				LEFT
+			</div>
+			<div style="width: 80%; padding-top: 20px; padding-bottom: 20px; padding-left:20px; ">
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur rid
+			</div>
+		</div>
+		<div style="width:100%; clear:both; background-color: #fff;">
+			<div style="padding-left:20px; padding-top:10px; padding-bottom: 10px;">
+				BOTTOM
+			</div>
+			<div style="padding-left:20px; padding-top:10px; padding-bottom: 10px;">
+				Time
+			</div>
+		</div>
+	</li>
 </template>
 
 <template name="journalItems">
