@@ -7,12 +7,25 @@ journalDocumentsHandle = null;
 
 FS.HTTP.setBaseUrl('/attachments');
 
+Deps.autorun(function () {
+	Journal.find().observe({
+		added: function(item){
+			Session.set('newJournals', Session.get('newJournals')+1);
+		}
+	});
+});
+
 Template.journalItems.journals = function() {
-	return Journal.find({}, {
+	var filter = {};
+	if(Session.get('patientFilter')){
+		filter.patientId = Session.get('patientFilter');
+	}
+	return Journal.find(filter, {
 		sort : {
 			timestamp : -1
 		}
 	}).map(function(element) {
+
 		var patient = Patients.findOne(element.patientId);
 		element.patientName = niceName(patient.first, patient.last);
 
@@ -22,8 +35,8 @@ Template.journalItems.journals = function() {
 		element.bed = room.number + "" + room.bed;
 
 		element.date = dateFormatter(element.timestamp);
-		
-		if(element.journalId){
+
+		if (element.journalId) {
 			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
 		}
 
@@ -61,5 +74,47 @@ Template.journalItems.events({
 				journalId : problemId
 			}
 		});
+	},
+	'click .label' : function(event) {
+		event.preventDefault();
+		Journal.update({
+			_id : this._id
+		}, {
+			$unset : {
+				journalId : ""
+			}
+		});
+	},
+	'click .delete' : function(event) {
+		event.preventDefault();
+		var id = this._id;
+		if (this.subject) {
+			var count = 1;
+			Meteor.call('deleteProblem', id);
+		}
+		if (this.attachment) {
+			JournalDocuments.remove({
+				_id : this.attachment._id
+			}, function(err) {
+				if (!err) {
+					Journal.remove({
+						_id : id
+					}, function(e) {
+						if (!e) {
+							Notifications.success("Success", "Removed Journal entry");
+						}
+					});
+				}
+			});
+		} else {
+			Journal.remove({
+				_id : id
+			}, function(e) {
+				if (!e) {
+					Notifications.success("Success", "Removed Journal entry");
+				}
+			});
+		}
+
 	}
 });

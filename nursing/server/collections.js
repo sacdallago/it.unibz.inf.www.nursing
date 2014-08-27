@@ -91,3 +91,30 @@ Meteor.publish('users',function(){
  return Meteor.users.find({}, {fields: {profile: 1}});
  });
  */
+
+Meteor.methods({
+	deleteProblem : function(problemId) {
+		Journal.update({
+			journalId : problemId
+		}, {
+			$unset : {
+				journalId : ""
+			}
+		});
+		Measures.update({
+			journalId : problemId
+		}, {
+			$unset : {
+				journalId : ""
+			}
+		});
+		Reminders.update({
+			journalId : problemId
+		}, {
+			$unset : {
+				journalId : ""
+			}
+		});
+		return true;
+	}
+});

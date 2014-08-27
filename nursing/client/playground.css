@@ -147,7 +147,7 @@
 .addmessage textarea:focus {
 	height: 103px;
 }
-	
+
 .table-condensed textarea {
 	resize: none;
 	height: 20px;
@@ -174,47 +174,69 @@
 	background-color: gray;
 }
 
-.measures td{
-	width:30%;
+.measures td {
+	width: 30%;
 }
 
-.edit input{
+.edit input {
 	width: 90%;
 }
 
-.journalTableView td{
-	width:50%;
+.journalTableView td {
+	width: 50%;
 	overflow-y: hidden;
-	border-top:0;
+	border-top: 0;
 }
 
 .journalTableView {
-	margin-bottom:0;
+	margin-bottom: 0;
 }
 
-.twitter{
-	width: 100%; background-color: #fff; display: flex;
+.twitter {
+	width: 100%;
+	background-color: #fff;
+	display: flex;
 }
 
 .twitter-left {
-	width: 20%; text-align: center; padding-top: 20px; padding-bottom: 20px;
+	width: 20%;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
-.twitter-red{
+.twitter-left select,button{
+	width:100%;
+	padding: 5px 0 !important;
+}
+
+.twitter-left li{
+	margin-bottom: 5px;
+}
+
+.twitter-left a{
 	color:white;
-	background-color: #dd4b39;
 }
 
-.twitter-orange{
-	color:white;
-	background-color: #dd4b39;
+.twitter-red {
+	color: white;
+	background-color: #dd4b39 !important;
 }
 
-.twitter-green{
-	color:white;
-	background-color: #dd4b39;
+.twitter-orange {
+	color: white;
+	background-color: #f89406 !important;
 }
 
-.twitter-right{
-	width: 80%; padding-top: 20px; padding-bottom: 10px; padding-left:20px; padding-right: 20px;
+.twitter-green {
+	color: white;
+	background-color: #3d9400;
+}
+
+.twitter-right {
+	width: 80%;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 }

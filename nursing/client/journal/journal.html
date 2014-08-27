@@ -1,7 +1,7 @@
 <template name="journal">
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<ul class="span6 offset3 unstyled">
+			<ul class="span7 offset3 unstyled">
 				{{> journalItems}}
 			</ul>
 		</div>
@@ -13,28 +13,65 @@
 	{{#each journals}}
 	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="margin-bottom: 20px;">
 		<div class="twitter">
-			<div data-toggle="collapse" data-target=".{{_id}}" class="pinter twitter-left twitter-green {{#if subject}} twitter-red  {{/if}} {{#if problemSubject}} twitter-orange {{/if}}">
+			<div data-toggle="collapse" data-target=".{{_id}}" class="twitter-left twitter-green {{#if subject}}twitter-red{{/if}} {{#if problemSubject}} twitter-orange {{/if}}">
 				<ul class="unstyled">
+					{{#if problemSubject}}
 					<li>
-						<i class="fa fa-warning"></i> {{#if problemSubject}} <label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
-						{{else}}
-						{{#if subject}}
-						<label class="label label-important"><strong>{{subject}}</strong></label>
-						{{else}}
-						<select class="label label-important form-control" >
-							<option data-problemId="" value="">Select...</option>
-							{{#each problems}}
-							<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-							{{/each}}
-						</select>
-						{{/if}}
-						{{/if}}
+						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
 					</li>
-					<div class="collapse {{_id}}">
+					{{else}}
+					{{#if subject}}
+					<li>
+						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
+					</li>
+					{{else}}
+					<li>
+						<strong>Options</strong>
+					</li>
+					{{/if}}
+					{{/if}}
+					{{#if attachment.isImage}}
+					<li>
+						<i class="fa fa-file-image-o" style="font-size: 16pt;"></i>
+					</li>
+					{{else}}
+					{{#if attachment}}
+					<li>
+						<i class="fa fa-file-archive-o" style="font-size: 16pt;"></i>
+					</li>
+					{{/if}}
+					{{/if}}
+					<div class="collapse {{_id}}" >
+						{{#unless problemSubject}}
+						{{#unless subject}}
 						<li>
-							TEST
+							<select class="" >
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</li>
+						{{/unless}}
+						{{/unless}}
+						{{#if subject}}
+						{{#unless solved}}
+						<li>
+							<button type="button" class="btn btn-inverse">
+								<i class="fa fa-check"></i> Solved
+							</button>
+						</li>
+						{{/unless}}
+						{{/if}}
+						<li>
+							<button type="button" class="btn btn-inverse delete">
+								<i class="fa fa-times"></i> Delete
+							</button>
 						</li>
 					</div>
+					<li>
+						<i class="fa fa-angle-down"></i>
+					</li>
 				</ul>
 			</div>
 			<div class="twitter-right">
@@ -45,10 +82,20 @@
 				<div class="collapse {{_id}}">
 					<div style="padding-bottom: 10px;">
 						<p style="text-align: center;">
-							<img  src="{{attachment.url}}" alt="attachment">
+							<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
 						</p>
 					</div>
 				</div>
+				{{else}}
+				{{#if attachment}}
+				<div class="collapse {{_id}}">
+					<div style="padding-bottom: 10px;">
+						<p style="text-align: center;">
+							<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+						</p>
+					</div>
+				</div>
+				{{/if}}
 				{{/if}}
 				<div style=" opacity: 0.5;">
 					<ul class="unstyled inline" style="text-align: right;">

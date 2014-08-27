@@ -35,7 +35,7 @@ Template.newMeasurement.events({
 			fields.push(element);
 		}
 
-		var problemId = $("#journalProblemSelector option:selected").attr("data-problemId");
+		var problemId = $("#measurementProblemSelector option:selected").attr("data-problemId");
 
 		var entry = {
 			patientId : Session.get('patientFilter'),
@@ -47,7 +47,7 @@ Template.newMeasurement.events({
 		};
 
 		if (problemId) {
-			entry.problemId = problemId;
+			entry.journalId = problemId;
 		}
 
 		if (fields.length > 0) {
@@ -131,7 +131,7 @@ Template.newJournal.events({
 			entry.subject = newProblem;
 			entry.active = true;
 		} else if (problemId) {
-			entry.problemId = problemId;
+			entry.journalId = problemId;
 		}
 
 		if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {

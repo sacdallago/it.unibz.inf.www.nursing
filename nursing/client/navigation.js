@@ -1,10 +1,10 @@
 Template.navigation.helpers({
-	unreadMessages : function() {
-		var unreadMessages = Session.get("unreadMessages");
-		if (unreadMessages == 0) {
+	newJournals : function() {
+		var newJournals = Session.get("newJournals");
+		if (newJournals == 0) {
 			return null;
 		}
-		return unreadMessages;
+		return newJournals;
 	},
 	deadlineReminders : function() {
 		var deadlineReminders = Session.get("deadlineReminders");
