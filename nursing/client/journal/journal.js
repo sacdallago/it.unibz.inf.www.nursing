@@ -7,6 +7,7 @@ journalDocumentsHandle = null;
 
 FS.HTTP.setBaseUrl('/attachments');
 
+/*
 Deps.autorun(function () {
 	Journal.find().observe({
 		added: function(item){
@@ -14,6 +15,7 @@ Deps.autorun(function () {
 		}
 	});
 });
+*/
 
 Template.journalItems.journals = function() {
 	var filter = {};
