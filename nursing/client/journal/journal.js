@@ -7,16 +7,6 @@ journalDocumentsHandle = null;
 
 FS.HTTP.setBaseUrl('/attachments');
 
-/*
-Deps.autorun(function () {
-	Journal.find().observe({
-		added: function(item){
-			Session.set('newJournals', Session.get('newJournals')+1);
-		}
-	});
-});
-*/
-
 Template.journalItems.journals = function() {
 	var filter = {};
 	if(Session.get('patientFilter')){
@@ -61,7 +51,9 @@ Template.journalItems.helpers({
 		return Journal.find({
 			subject : {
 				$exists : true
-			}
+			},
+			patientId: this.patientId,
+			$or: [{ solved: false}, {solved :{$exists: false}}]
 		});
 	}
 });
@@ -84,6 +76,16 @@ Template.journalItems.events({
 		}, {
 			$unset : {
 				journalId : ""
+			}
+		});
+	},
+	'click .solved' : function(event) {
+		event.preventDefault();
+		Journal.update({
+			_id : this._id
+		}, {
+			$set : {
+				solved : true
 			}
 		});
 	},

@@ -71,6 +71,7 @@
 			onBeforeAction : function() {
 				if (Meteor.userId()){
 					journalDocumentsHandle = Meteor.subscribe('journalDocuments');
+					Session.set('newJournals',0);
 				}
 			},
 			onAfterAction : function() {

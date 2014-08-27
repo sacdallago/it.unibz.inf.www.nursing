@@ -82,7 +82,9 @@ Template.newMeasurement.helpers({
 		return Journal.find({
 			subject : {
 				$exists : true
-			}
+			},
+			patientId: Session.get('patientFilter'),
+			$or: [{ solved: false}, {solved :{$exists: false}}]
 		});
 	},
 	measures : function() {
@@ -207,7 +209,9 @@ Template.newJournal.helpers({
 		return Journal.find({
 			subject : {
 				$exists : true
-			}
+			},
+			patientId: Session.get('patientFilter'),
+			$or: [{ solved: false}, {solved :{$exists: false}}]
 		});
 	}
 });

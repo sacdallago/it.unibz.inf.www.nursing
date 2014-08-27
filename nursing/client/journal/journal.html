@@ -13,7 +13,7 @@
 	{{#each journals}}
 	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="margin-bottom: 20px;">
 		<div class="twitter">
-			<div data-toggle="collapse" data-target=".{{_id}}" class="twitter-left twitter-green {{#if subject}}twitter-red{{/if}} {{#if problemSubject}} twitter-orange {{/if}}">
+			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
 				<ul class="unstyled">
 					{{#if problemSubject}}
 					<li>
@@ -57,7 +57,7 @@
 						{{#if subject}}
 						{{#unless solved}}
 						<li>
-							<button type="button" class="btn btn-inverse">
+							<button type="button" class="btn btn-inverse solved">
 								<i class="fa fa-check"></i> Solved
 							</button>
 						</li>
@@ -69,9 +69,14 @@
 							</button>
 						</li>
 					</div>
-					<li>
-						<i class="fa fa-angle-down"></i>
-					</li>
+					<div class="pointer" data-toggle="collapse" data-target=".{{_id}}" style="padding-bottom: 10px; padding-top: 20px;">
+						<li class="collapse in {{_id}}" >
+							<i class="fa fa-angle-down"></i>
+						</li>
+						<li class="collapse {{_id}}">
+							<i class="fa fa-angle-up"></i>
+						</li>
+					</div>
 				</ul>
 			</div>
 			<div class="twitter-right">
