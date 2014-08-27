@@ -2,35 +2,74 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<ul class="span6 offset3 unstyled">
-				{{> testtest}}
 				{{> journalItems}}
 			</ul>
 		</div>
 	</div>
 </template>
 
-<template name="testtest">
-	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div style="width: 100%; background-color: #fff; display: flex;">
-			<div style="width: 20%; text-align: center; padding-top: 20px; padding-bottom: 20px; background: red;">
-				LEFT
+<template name="journalItems">
+	{{#AnimateWithVelocity}}
+	{{#each journals}}
+	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="margin-bottom: 20px;">
+		<div class="twitter">
+			<div data-toggle="collapse" data-target=".{{_id}}" class="pinter twitter-left twitter-green {{#if subject}} twitter-red  {{/if}} {{#if problemSubject}} twitter-orange {{/if}}">
+				<ul class="unstyled">
+					<li>
+						<i class="fa fa-warning"></i> {{#if problemSubject}} <label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
+						{{else}}
+						{{#if subject}}
+						<label class="label label-important"><strong>{{subject}}</strong></label>
+						{{else}}
+						<select class="label label-important form-control" >
+							<option data-problemId="" value="">Select...</option>
+							{{#each problems}}
+							<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+							{{/each}}
+						</select>
+						{{/if}}
+						{{/if}}
+					</li>
+					<div class="collapse {{_id}}">
+						<li>
+							TEST
+						</li>
+					</div>
+				</ul>
 			</div>
-			<div style="width: 80%; padding-top: 20px; padding-bottom: 20px; padding-left:20px; ">
-				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur rid
-			</div>
-		</div>
-		<div style="width:100%; clear:both; background-color: #fff;">
-			<div style="padding-left:20px; padding-top:10px; padding-bottom: 10px;">
-				BOTTOM
-			</div>
-			<div style="padding-left:20px; padding-top:10px; padding-bottom: 10px;">
-				Time
+			<div class="twitter-right">
+				<div  style="padding-bottom: 10px; ">
+					<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
+				</div>
+				{{#if attachment.isImage}}
+				<div class="collapse {{_id}}">
+					<div style="padding-bottom: 10px;">
+						<p style="text-align: center;">
+							<img  src="{{attachment.url}}" alt="attachment">
+						</p>
+					</div>
+				</div>
+				{{/if}}
+				<div style=" opacity: 0.5;">
+					<ul class="unstyled inline" style="text-align: right;">
+						{{#if noPatientSelected}}
+						<li>
+							<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
+						</li>
+						{{/if}}
+						<li>
+							<i class="fa fa-clock-o"></i> {{date}}
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</li>
+	{{/each}}
+	{{/AnimateWithVelocity}}
 </template>
 
-<template name="journalItems">
+<template name="journalItems2">
 	{{#AnimateWithVelocity}}
 	{{#each journals}}
 	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
@@ -79,19 +118,18 @@
 									<td>
 									<ul class="unstyled">
 										<li>
-											<i class="fa fa-warning"></i> {{#if problemSubject}}
-												<label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
-												{{else}}
-												{{#if subject}}
-													<label class="label label-important"><strong>{{subject}}</strong></label>
-												{{else}}
-													<select class="label label-important form-control" >
-														<option data-problemId="" value="">Select...</option>
-														{{#each problems}}
-															<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-														{{/each}}
-													</select>
-												{{/if}}
+											<i class="fa fa-warning"></i> {{#if problemSubject}} <label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
+											{{else}}
+											{{#if subject}}
+											<label class="label label-important"><strong>{{subject}}</strong></label>
+											{{else}}
+											<select class="label label-important form-control" >
+												<option data-problemId="" value="">Select...</option>
+												{{#each problems}}
+												<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+												{{/each}}
+											</select>
+											{{/if}}
 											{{/if}}
 										</li>
 									</ul></td>
