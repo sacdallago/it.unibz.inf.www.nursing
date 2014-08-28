@@ -256,3 +256,14 @@ canvas {
             max-width: 800px;
             height: auto !important;
 }
+
+.submenu{
+	margin: 5px;
+}
+
+.reminder-item-footer{
+	position:relative;
+	left:5px;
+	width:100%;
+	text-align:right;
+}

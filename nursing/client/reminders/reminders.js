@@ -57,6 +57,66 @@ Template.reminders.any_category_selected = function () {
   return !Session.equals('categoryName', null);
 };
 
+Template.reminders.helpers({
+  reminders : function () {
+  // Determine which reminders to display in main pane,
+  // selected based on category
+    var category = Session.get('categoryName');
+    var patientFilter = Session.get('patientFilter');
+    var reminders;
+    var sel = {};
+    if(category) {
+    sel.category = category;
+    }
+    if(patientFilter) {
+    sel.patientId = patientFilter;
+    }
+    console.log(sel);
+
+    reminders = Reminders.find(sel, {sort: {dueDate:1}});
+    
+    var tempHandle = null;
+    return reminders.map(function(element) {
+      var patient = Patients.findOne({
+        _id : element.patientId
+      });
+
+      var room = Rooms.findOne({
+        patientId : element.patientId
+      });
+
+      var nurse = Meteor.users.findOne({
+        _id : element.nurseId
+      });
+      
+      if (element.journalId){
+        var journalentry = Journal.findOne(element.journalId);
+        element.problemSubject = journalentry.subject;
+        if (journalentry.solved){
+          element.solved = journalentry.solved;
+        }
+      }
+      
+      if (patient) {
+        element.patientName = niceName(patient.first, patient.last);
+      }
+
+      if (room) {
+        element.roomNumber = room.number;
+        element.bed = room.bed;
+      }
+      console.log(nurse);
+      if (nurse) {
+        element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+      }
+      //This adds a nice formatting of the date the message was written / modified
+      element.date = dateFormatter(element.timestamp);
+      element.niceDue = dateFormatter(element.dueDate);
+      return element;
+    });
+  }
+});
+
 Template.reminders.events(okCancelEvents(
   '#new-reminder',
   {
@@ -84,88 +144,92 @@ Template.reminders.events(okCancelEvents(
     }
   }));
 
-Template.reminders.reminders = function () {
-  // Determine which reminders to display in main pane,
-  // selected based on category
-  var category = Session.get('categoryName');
-  var patientFilter = Session.get('patientFilter');
-  var reminders;
-  var sel = {};
-  if(category) {
-	sel.category = category;
-  }
-  if(patientFilter) {
-	sel.patientId = patientFilter;
-  }
-  console.log(sel);
+Template.reminder_item.helpers({
+  done : function () {
+    console.log(this);
+    return (this.done)?'label-info':'';
+  },
 
-  reminders = Reminders.find(sel, {sort: {dueDate:1}});
-	
-  var tempHandle = null;
-  return reminders.map(function(element) {
-    var patient = Patients.findOne({
-      _id : element.patientId
-    });
+  doneCheck : function() {
+    return (this.done)?'fa-check-square-o':'fa-square-o';
+  },
 
-    var room = Rooms.findOne({
-      patientId : element.patientId
-    });
+  isProblem : function(){
+    var isProblem = (this.journalId)?true:false;
+    return isProblem;
+  },
 
-    var nurse = Meteor.users.findOne({
-      _id : element.nurseId
-    });
-
-    if (patient) {
-      element.patientName = niceName(patient.first, patient.last);
-    }
-
-    if (room) {
-      element.roomNumber = room.number;
-      element.bed = room.bed;
-    }
-    console.log(nurse);
-    if (nurse) {
-      element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-    }
-    //This adds a nice formatting of the date the message was written / modified
-    element.date = dateFormatter(element.timestamp);
-    element.niceDue = dateFormatter(element.dueDate);
-    return element;
-  });
-};
-
-Template.reminder_item.done_class = function () {
-  return this.done ? 'done' : '';
-};
-Template.reminder_item.isChecked = function(){
-  return this.done ? 'checked="checked"' : '';
-};
-
-Template.reminder_item.done = function () {
-  console.log(this);
-  return this.done;
-};
-
-Template.reminder_item.editing = function () {
+  editing : function () {
   return Session.equals('editing_reminderName', this._id);
-};
+  },
+
+  problems : function() {
+    var sel = {};
+    var patientFilter = Session.get('patientFilter');
+    if (patientFilter){
+     sel.patientId = patientFilter;
+    } else{
+      sel.patientId = this.patientId;
+    }
+    sel.subject = {$exists: true};
+    var problems = Journal.find(sel);
+    return problems;
+  },
+
+  
+});
+
+
 
 Template.reminder_item.events({
   'click .check': function () {
+
+    Reminders.update(this._id,{$set:{done: !this.done}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Task updated!");
+      }
+    });
+
+  },
+
+  'click .category': function (evt) {
+    var categoryCurrent = Session.get('categoryName');
+    if (categoryCurrent && categoryCurrent=== this.category){
+      Session.set('categoryName', null);
+    } else {
+      Session.set('categoryName', this.category);
+    }
+  },
+
+  'click .delete': function(){
     Reminders.remove(this._id,function(error) {
       if (error) {
         Notifications.error("Error", "An error occoured. Please try again");
       } else {
-        Notifications.success("", "Task completed!");
+        Notifications.success("", "Task removed!");
       }
     });
-
   },
 
   'dblclick .display .reminder-text': function (evt, tmpl) {
     Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
+  },
+
+  'change select' : function(event){
+    var problemId = $(event.currentTarget).find(':selected').data("problemid");
+    console.log(this);
+    console.log(problemId);
+    Reminders.update(this._id,{$set:{journalId:problemId}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Marked as Problem!");
+      }
+    });
   }
 });
 
@@ -277,7 +341,9 @@ Template.categories.selected = function () {
 Template.categories.editing = function () {
   return Session.equals('editing_categoryName', this.name);
 };
-
+Template.categories.allSelected = function (){
+  return (!Session.get('categoryName'))?'label-info':'';
+};
 Template.categories.totalReminders = function(){
   var sel = {};
   var pid = Session.get('patientFilter');
