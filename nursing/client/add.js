@@ -10,7 +10,7 @@ Template.modals.helpers({
 Template.newMeasurement.events({
 	'change #measurementType' : function(event) {
 		var id = $(event.currentTarget).find(':selected').data("_id");
-		Session.set("measures", Units.findOne(id).fields);
+		Session.set("measures", Units.findOne(id));
 		//var form = document.getElementsByClassName('form');
 		//form[0].reset();
 	},
@@ -32,6 +32,7 @@ Template.newMeasurement.events({
 				//I'm gonna store 0 is the checkbox isn't checked, otherwise 1!
 				element.value = (measures[i].checked ? 1 : 0);
 			}
+			element.type = measures[i].dataset.pretext;
 			fields.push(element);
 		}
 
@@ -42,6 +43,7 @@ Template.newMeasurement.events({
 			hospitalizationId : Session.get('hospitalizationFilter'),
 			nurseId : Meteor.userId(),
 			timestamp : Date.now(),
+			type : Session.get('measures').type,
 			active : true,
 			fields : fields
 		};

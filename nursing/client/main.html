@@ -104,11 +104,11 @@
 						<div >
 							<table class="table measures">
 								<tbody>
-									{{#each measures}}
+									{{#each measures.fields}}
 									<tr>
 										<td>{{preText}}&nbsp;</td>
 										<td>
-										<input class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
+										<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
 										</td>
 										<td>{{unit}}&nbsp;</td>
 									</tr>

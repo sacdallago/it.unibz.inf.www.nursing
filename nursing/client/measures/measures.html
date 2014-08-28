@@ -1,3 +1,122 @@
 <template name="measures">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<ul class="span7 offset3 unstyled">
+				{{> measureTags}}
+				{{#if measureSelected}}
+				{{#if patientSelected}}
+				{{#AnimateWithVelocity}}
+				{{> chart}}
+				{{/AnimateWithVelocity}}
+				{{/if}}
+				{{/if}}
+				{{> measureItems}}
+			</ul>
+		</div>
+	</div>
+</template>
 
+<template name="chart">
+	<div class="card" data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
+		<canvas class="card-body" id="chart" height="300" width="500"></canvas>
+	</div>
+</template>
+
+<template name="measureTags">
+	<div class="card">
+		<div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
+			<div class="card-heading-header">
+				<p style="font-size: 22.75px;">
+					<strong><i class="fa fa-tags"></i> Measures</strong>
+				</p>
+			</div>
+		</div>
+		<div class="card-body in collapse tagcollapse" style="text-align: left;">
+			<div class="list-group">
+				{{#each tags}}
+				{{#if type}}
+				<span class="label label-sea tag {{active}}"><strong>{{type}}</strong> ({{count}})</span>
+				{{else}}
+				<span class="label label-sea tag {{active}}"><strong>All</strong> ({{count}})</span>
+				{{/if}}
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="measureItems">
+	{{#AnimateWithVelocity}}
+	{{#each measures}}
+	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="twitter" style="border-bottom:1px solid #e5e5e5;">
+			<div class="twitter-left twitter-blue {{#if problemSubject}} twitter-orange {{/if}}" style="padding-bottom: 0px;">
+				<ul class="unstyled">
+					<li>
+						<strong>{{type}}</strong>
+					</li>
+					{{#if problemSubject}}
+					<li>
+						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
+					</li>
+					{{/if}}
+					<div class="collapse {{_id}}" >
+						{{#unless problemSubject}}
+						<li>
+							<select class="" >
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</li>
+						{{/unless}}
+						<li>
+							<button type="button" class="btn btn-inverse delete">
+								<i class="fa fa-times"></i> Delete
+							</button>
+						</li>
+					</div>
+					<div class="pointer" data-toggle="collapse" data-target=".{{_id}}" style="padding-bottom: 10px; padding-top: 20px;">
+						<li class="collapse in {{_id}}" >
+							<i class="fa fa-angle-down" style="font-size: 19pt;"></i>
+						</li>
+						<li class="collapse {{_id}}" style="font-size: 18pt;">
+							<i class="fa fa-angle-up"></i>
+						</li>
+					</div>
+				</ul>
+			</div>
+			<div class="twitter-right">
+				<ul class="unstyled" style="padding-bottom: 10px; ">
+					{{#each fields}}
+					<li>
+						{{#if unit}}
+						<strong>{{type}}:</strong> {{value}}{{unit}}
+						{{else}}
+						<strong>{{type}}:</strong> {{checkbox}}
+						{{/if}}
+					</li>
+					{{/each}}
+				</ul>
+				<div style=" opacity: 0.5;">
+					<ul class="unstyled inline" style="text-align: right;">
+						{{#if noPatientSelected}}
+						<li>
+							<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
+						</li>
+						{{/if}}
+						<li>
+							<i class="fa fa-plus-square"></i> {{nurseName}}
+						</li>
+						<li>
+							<i class="fa fa-clock-o"></i> {{date}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</li>
+	{{/each}}
+	{{/AnimateWithVelocity}}
 </template>

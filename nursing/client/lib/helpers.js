@@ -13,6 +13,11 @@ dateFormatter = function(timestamp) {
 	return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " - " + date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 };
 
+dayTimeFormatter = function(timestamp) {
+	var date = new Date(timestamp);
+	return date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + "\n" + date.getDate() + "/" + (date.getMonth()+1);
+};
+
 ///INFINITE SCROLL
 //Set the 'handle' variable equal to the actual paginated subscription handle on page load! (use iron-router onBeforeAction)
 /* Eg.:
