@@ -56,7 +56,7 @@
 							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> New Measurement</a>
 						</li>
 						<li>
-							<a href="#" data-toggle="modal" data-target="#alert"><i class="fa fa-bell"></i> New Alert</a>
+							<a href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> New Reminder</a>
 						</li>
 						<li>
 							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> New Journal</a>
@@ -206,6 +206,50 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 </template>
+
+<template name="newReminder">
+	<div class="modal fade" id="reminder" style="display:none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="fa fa-times"></i>
+					</button>
+					<h3 class="modal-title">New Reminder</h3>
+				</div>
+				<form class="form">
+					<div class="modal-body">
+						<strong name="task">Task description</strong>&nbsp;
+						<input type="text" name="message" value="What is the activity for which you want to create a reminder..."/>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-block send">
+							<strong><i class="fa fa-circle-o river"></i></strong> Save
+						</button>
+
+						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".reminderProblemCollapse">
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+						</button>
+
+						<div class="input-group collapse reminderProblemCollapse" style="margin-top: 20px;">
+							<strong>Select an existing problem:&nbsp;</strong>
+							<br>
+							<select id="reminderProblemSelector" style="width: 100%">
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+</template>
+
 
 <template name="modals">
 	{{#if patientSelected}}

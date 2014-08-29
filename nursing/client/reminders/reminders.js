@@ -58,7 +58,37 @@ Template.reminders.any_category_selected = function () {
 };
 
 Template.reminders.helpers({
-  reminders : function () {
+  
+});
+
+Template.reminders.events(okCancelEvents(
+  '#new-reminder',
+  {
+    ok: function (text, evt) {
+    var tmpCategory = Session.get('categoryName');
+
+    if (Categories.findOne({name : tmpCategory})) {
+   
+      Reminders.insert({
+        message: text,
+        category: tmpCategory,
+        done: false,
+        timestamp: (new Date()).getTime()
+      },function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "New Reminder successfully inserted!");
+      }
+    });
+    } else {
+      Notifications.error("Error", "Pick a Category");
+    }
+      evt.target.value = '';
+    }
+  }));
+
+Template.reminder_item.reminders = function () {
   // Determine which reminders to display in main pane,
   // selected based on category
     var category = Session.get('categoryName');
@@ -71,9 +101,9 @@ Template.reminders.helpers({
     if(patientFilter) {
     sel.patientId = patientFilter;
     }
-    console.log(sel);
 
-    reminders = Reminders.find(sel, {sort: {dueDate:1}});
+
+    reminders = Reminders.find(sel, {sort: {done:1,journalId:-1,dueDate:1}});
     
     var tempHandle = null;
     return reminders.map(function(element) {
@@ -105,48 +135,22 @@ Template.reminders.helpers({
         element.roomNumber = room.number;
         element.bed = room.bed;
       }
-      console.log(nurse);
+
       if (nurse) {
         element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
       }
       //This adds a nice formatting of the date the message was written / modified
+      console.log("Remapping");
       element.date = dateFormatter(element.timestamp);
       element.niceDue = dateFormatter(element.dueDate);
       return element;
     });
-  }
-});
-
-Template.reminders.events(okCancelEvents(
-  '#new-reminder',
-  {
-    ok: function (text, evt) {
-    var tmpCategory = Session.get('categoryName');
-
-    if (Categories.findOne({name : tmpCategory})) {
-      console.log("creating new reminder for category " + tmpCategory);
-      Reminders.insert({
-        message: text,
-        category: tmpCategory,
-        done: false,
-        timestamp: (new Date()).getTime()
-      },function(error) {
-      if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
-      } else {
-        Notifications.success("", "New Reminder successfully inserted!");
-      }
-    });
-    } else {
-      Notifications.error("Error", "Pick a Category");
-    }
-      evt.target.value = '';
-    }
-  }));
+};
+ 
 
 Template.reminder_item.helpers({
-  done : function () {
-    console.log(this);
+  doneStyle: function () {
+    
     return (this.done)?'label-info':'';
   },
 
@@ -174,17 +178,37 @@ Template.reminder_item.helpers({
     sel.subject = {$exists: true};
     var problems = Journal.find(sel);
     return problems;
-  },
-
-  
+  }
 });
 
+var getFutureTime = function(date, days){
+  var tmp = new Date(date);
+  tmp.setDate(tmp.getDate()+days);
+  return tmp;
+};
 
+var setDueDate = function(element){
+  console.log(element);
+  
+  Reminders.update(element._id,{$set:{dueDate: element.dueDate, done: false}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Due date updated!");
+      }
+    });
+};
 
 Template.reminder_item.events({
   'click .check': function () {
-
-    Reminders.update(this._id,{$set:{done: !this.done}},function(error) {
+    var set;
+    if (!this.hasOwnProperty('done')){
+      set = true;
+    } else {
+      set = !this.done;
+    }
+    console.log(set);
+    Reminders.update(this._id,{$set:{done: set}},function(error) {
       if (error) {
         Notifications.error("Error", "An error occoured. Please try again");
       } else {
@@ -192,6 +216,21 @@ Template.reminder_item.events({
       }
     });
 
+  },
+  'click .postpone1' : function(){
+    var newDueDate = getFutureTime(this.dueDate,1);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
+  },
+  'click .postpone2' : function(){
+    var newDueDate = getFutureTime(this.dueDate,2);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
+  },
+  'click .postpone3' : function(){
+    var newDueDate = getFutureTime(this.dueDate,3);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
   },
 
   'click .category': function (evt) {
@@ -212,6 +251,15 @@ Template.reminder_item.events({
       }
     });
   },
+  'click .detach': function(){
+    Reminders.update(this._id, {$set:{journalId:null}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Problem deattachment successful");
+      }
+    });
+  },
 
   'dblclick .display .reminder-text': function (evt, tmpl) {
     Session.set('editing_reminderName', this._id);
@@ -221,8 +269,7 @@ Template.reminder_item.events({
 
   'change select' : function(event){
     var problemId = $(event.currentTarget).find(':selected').data("problemid");
-    console.log(this);
-    console.log(problemId);
+   
     Reminders.update(this._id,{$set:{journalId:problemId}},function(error) {
       if (error) {
         Notifications.error("Error", "An error occoured. Please try again");
@@ -274,7 +321,7 @@ Template.categories.categories = function () {
 
 Template.categories.events({
   'mousedown .category': function (evt) { // select category
-    console.log(this.name + 'mousedown');
+   
     if(!this.name) {
       Session.set('categoryName',null);
     } else {
@@ -282,7 +329,7 @@ Template.categories.events({
     }
   },
   'click .category': function (evt) {
-    console.log(this.name + "onclick");
+ 
     if(!this.name) {
       Session.set('categoryName',null);
     } else {
