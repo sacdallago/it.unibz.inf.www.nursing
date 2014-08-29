@@ -94,7 +94,8 @@ Meteor.startup(function() {
 				message : "text" + i,
 				category : names[i % names.length],
 				timestamp : (new Date()).getTime(),
-				dueDate : dates[i % dates.length].getTime()
+				dueDate : dates[i % dates.length].getTime(),
+				done:false
 			};
 			Reminders.insert(reminder);
 		}
@@ -164,7 +165,8 @@ Meteor.startup(function() {
 				message : "text" + i,
 				category : names[i % names.length],
 				timestamp : (new Date()).getTime(),
-				dueDate : dates[i % dates.length].getTime()
+				dueDate : dates[i % dates.length].getTime(),
+				done : false
 			};
 			Reminders.insert(reminder);
 		}

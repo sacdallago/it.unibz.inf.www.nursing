@@ -33,9 +33,9 @@
         Loading...
       {{else}}
         <ul class="unstyled">
-          {{#each reminders}}
+         
             {{> reminder_item}}
-          {{/each}}
+          
         </ul>
       {{/if}}
    
@@ -77,10 +77,14 @@
 
 <template name="reminder_item">
   {{#AnimateWithVelocity}}
+  {{#each reminders}}
+          
+          
+
   
       <li class="card" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <label class="check" style="margin-right:0;margin-top:0;float:right"> 
-            <button class="btn btn-default {{done}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
+            <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
         </label>
       
       <div class="{{#if problemSubject}} twitter-orange  {{/if}}" style="padding:20px">
@@ -163,16 +167,16 @@
       </div>
 
       <div class="offset1 collapse submenu {{_id}}">
-        {{#if done}}
-        <ul class="unstyled inline">
+        
+        <ul class="unstyled inline ">
           <li>
-            <i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
+            <i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
           </li>
           <li>
-            <button class="btn btn-inverse"><i class="fa fa-times delete"> delete</i></button>
+            <button class="btn btn-inverse {{#unless done}} invisible {{/unless}}"><i class="fa fa-times delete"> delete</i></button>
           </li>
         </ul>
-        {{/if}}
+        
       </div>
       
 
@@ -192,6 +196,6 @@
       </div>
 
   </li>
-
+  {{/each}}
   {{/AnimateWithVelocity}}
 </template>

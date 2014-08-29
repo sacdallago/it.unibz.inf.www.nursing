@@ -267,3 +267,6 @@ canvas {
 	width:100%;
 	text-align:right;
 }
+.invisible{
+	display: none;
+}
