@@ -221,3 +221,6 @@ Template.newJournal.helpers({
 Template.newJournal.destroyed = function() {
 	delete Session.keys['fileSelected'];
 };
+
+Template.newReminder.events();
+Template.newReminder.helpers();

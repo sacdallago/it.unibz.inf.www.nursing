@@ -189,7 +189,8 @@ var getFutureTime = function(date, days){
 
 var setDueDate = function(element){
   console.log(element);
-  Reminders.update(element._id,{$set:{dueDate: element.dueDate}},function(error) {
+  
+  Reminders.update(element._id,{$set:{dueDate: element.dueDate, done: false}},function(error) {
       if (error) {
         Notifications.error("Error", "An error occoured. Please try again");
       } else {
