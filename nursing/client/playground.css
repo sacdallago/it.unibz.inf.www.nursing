@@ -270,3 +270,7 @@ canvas {
 .invisible{
 	display: none;
 }
+.twitter-grey{
+	color: white;
+	background-color: #b0b0b0 !important;
+}

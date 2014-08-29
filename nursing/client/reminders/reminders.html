@@ -78,11 +78,7 @@
 <template name="reminder_item">
   {{#AnimateWithVelocity}}
   {{#each reminders}}
-          
-          
-
-  
-      <li class="card" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+      <li class="card  {{#if done}} twitter-grey {{/if}}" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <label class="check" style="margin-right:0;margin-top:0;float:right"> 
             <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
         </label>
@@ -116,7 +112,7 @@
                 {{roomNumber}}{{bed}}
               </li>
               <li>
-                <label class="label {{#unless problemSubject}} label-warning{{/unless}}" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">{{niceDue}}</label>
+                <button class="btn btn-default" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">{{niceDue}}</button>
               </li>
             </ul>
           </li>
@@ -149,19 +145,28 @@
             <i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
           </li>
           <li>
-            {{#if problemSubject}} <i class="fa fa-warning"></i>  <label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
-            {{else}}
+
             {{#if problemSubject}}
-            <label class="label label-important"><strong>{{problemSubject}}</strong></label>
+            <ul class="unstyled inline">
+              <li>
+                <i class="fa fa-warning"></i>
+              </li>
+              <li> 
+                <label class="label label-important"><strong>{{problemSubject}}</strong></label>
+              </li>
+              <li>
+                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"> detach problem</i></button>
+              </li>
+            </ul>
             {{else}}
             <select class="label label-important form-control" >
-              <option data-problemId="" value="">Select...</option>
+              <option data-problemId="" value="">Attach to a problem</option>
               {{#each problems}}
               <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
               {{/each}}
             </select>
             {{/if}}
-            {{/if}}
+           
           </li>
         </ul>
       </div>

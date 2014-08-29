@@ -103,7 +103,7 @@ Template.reminder_item.reminders = function () {
     }
 
 
-    reminders = Reminders.find(sel, {sort: {dueDate:1}});
+    reminders = Reminders.find(sel, {sort: {done:1,journalId:-1,dueDate:1}});
     
     var tempHandle = null;
     return reminders.map(function(element) {
@@ -178,8 +178,6 @@ Template.reminder_item.helpers({
     var problems = Journal.find(sel);
     return problems;
   }
-
-  
 });
 
 Template.reminder_item.events({
@@ -216,6 +214,15 @@ Template.reminder_item.events({
         Notifications.error("Error", "An error occoured. Please try again");
       } else {
         Notifications.success("", "Task removed!");
+      }
+    });
+  },
+  'click .detach': function(){
+    Reminders.update(this._id, {$set:{journalId:null}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Problem deattachment successful");
       }
     });
   },
