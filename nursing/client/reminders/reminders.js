@@ -140,6 +140,7 @@ Template.reminder_item.reminders = function () {
         element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
       }
       //This adds a nice formatting of the date the message was written / modified
+      console.log("Remapping");
       element.date = dateFormatter(element.timestamp);
       element.niceDue = dateFormatter(element.dueDate);
       return element;
@@ -180,6 +181,23 @@ Template.reminder_item.helpers({
   }
 });
 
+var getFutureTime = function(date, days){
+  var tmp = new Date(date);
+  tmp.setDate(tmp.getDate()+days);
+  return tmp;
+};
+
+var setDueDate = function(element){
+  console.log(element);
+  Reminders.update(element._id,{$set:{dueDate: element.dueDate}},function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "Due date updated!");
+      }
+    });
+};
+
 Template.reminder_item.events({
   'click .check': function () {
     var set;
@@ -197,6 +215,21 @@ Template.reminder_item.events({
       }
     });
 
+  },
+  'click .postpone1' : function(){
+    var newDueDate = getFutureTime(this.dueDate,1);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
+  },
+  'click .postpone2' : function(){
+    var newDueDate = getFutureTime(this.dueDate,2);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
+  },
+  'click .postpone3' : function(){
+    var newDueDate = getFutureTime(this.dueDate,3);
+    this.dueDate = newDueDate.getTime();
+    setDueDate(this);
   },
 
   'click .category': function (evt) {
