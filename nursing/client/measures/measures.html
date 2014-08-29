@@ -3,13 +3,9 @@
 		<div class="row-fluid">
 			<ul class="span7 offset3 unstyled">
 				{{> measureTags}}
-				{{#if measureSelected}}
-				{{#if patientSelected}}
 				{{#AnimateWithVelocity}}
 				{{> chart}}
 				{{/AnimateWithVelocity}}
-				{{/if}}
-				{{/if}}
 				{{> measureItems}}
 			</ul>
 		</div>
@@ -18,7 +14,17 @@
 
 <template name="chart">
 	<div class="card" data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
-		<canvas class="card-body" id="chart" height="300" width="500"></canvas>
+		<div class="card-heading pointer" data-toggle="collapse" data-target=".graphcollapse">
+			<div class="card-heading-header">
+				<p style="font-size: 22.75px;">
+					<strong><i class="fa fa-tags"></i> Graph {{#if graphTitle}}- {{graphTitle}} {{/if}}</strong>
+				</p>
+			</div>
+		</div>
+		<div class="card-body collapse graphcollapse" style="text-align: left;">
+			<div id="placeholder" style=" width: 100%; height: 300px "></div>
+			<div id="legendholder"></div>
+		</div>
 	</div>
 </template>
 

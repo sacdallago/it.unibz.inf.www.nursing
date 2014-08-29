@@ -41,3 +41,5 @@
 /cfs-filesystem
 /reactive-property
 /micro-queue
+/flot
+/collectionfs

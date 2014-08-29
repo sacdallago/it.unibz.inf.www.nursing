@@ -2,16 +2,22 @@ Measures = new Meteor.Collection("measures");
 
 measuresHandle = null;
 
-Template.measures.helpers({
-	measureSelected : function() {
-		return Session.get('measureFilter');
-	},
-	patientSelected : function() {
-		return Session.get('patientFilter');
-	},
+Template.chart.helpers({
+	graphTitle : function() {
+		return Session.get('graphTitle');
+	}
 });
 
-Template.chart.rendered = function() {
+function showTooltip(x, y, contents, z) {
+	$('<div id="flot-tooltip">' + contents + '</div>').css({
+		position : "absolute",
+		top : y - 30,
+		left : x - 135,
+		'border-color' : z,
+	}).appendTo(".card").fadeIn(200);
+}
+
+function showGraph() {
 	var filter = {};
 	if (Session.get('patientFilter')) {
 		filter.patientId = Session.get('patientFilter');
@@ -20,20 +26,46 @@ Template.chart.rendered = function() {
 		filter.type = Session.get('measureFilter');
 	}
 	var labels = [];
-	var charts = Measures.findOne(filter).fields.length;
-	console.log(charts);
+	var measure = Measures.findOne(filter);
+	Session.set('graphTitle',measure.type);
+	var charts = measure.fields;
 	var dataset = [];
-	for (var i = 0; i < charts; i++) {
+	for (var i = 0; i < charts.length; i++) {
 		color = (100 + ((i + 1) * 10)) % 220;
-		dataset.push({
-			fillColor : "rgba(" + color + "," + color + "," + color + ",0.5)",
-			strokeColor : "rgba(" + color + "," + color + "," + color + ",1)",
-			pointColor : "rgba(" + color + "," + color + "," + color + ",1)",
-			pointStrokeColor : "#fff",
+		var obj = {
+			label : charts[i].type,
+			color : getRandomColor(),
 			data : []
-		});
+		};
+		if (!charts[i].unit) {
+			obj.bars = {
+				show : true,
+				align : "center",
+				barWidth : 0,
+				lineWidth : 0
+			};
+			obj.lines = {
+				show : false
+			};
+			obj.points = {
+				radius : 9,
+				show : true
+			};
+			obj.yaxis = 2;
+		} else {
+			obj.lines = {
+				show : true
+			};
+			obj.points = {
+				radius : 6,
+				show : true,
+				fill : true
+			};
+			obj.yaxis = 1;
+		}
+		dataset.push(obj);
 	}
-	var measures = Measures.find(filter, {
+	Measures.find(filter, {
 		sort : {
 			timestamp : 1
 		}
@@ -41,26 +73,67 @@ Template.chart.rendered = function() {
 		labels.push(dayTimeFormatter(element.timestamp));
 		var count = 0;
 		_.each(element.fields, function(field) {
-			dataset[count].data.push(field.value);
+			dataset[count].data.push([element.timestamp, field.value]);
 			count++;
 		});
 	});
-	console.log(labels);
-	console.log(dataset);
-	var data = {
-		labels : labels,
-		datasets : dataset
-	};
 
-	//Get context with jQuery - using jQuery's .get() method.
-	var ctx = $("#chart").get(0).getContext("2d");
-	//ctx.canvas.width  = .innerWidth;
-	//ctx.canvas.height = window.innerHeight;
-	//This will get the first returned node in the jQuery collection.
-	var myNewChart = new Chart(ctx);
+	$.plot($("#placeholder"), dataset, {
+		xaxis : {
+			mode : "time"
+		},
+		yaxes : [{
+			axisLabel : "Right",
 
-	new Chart(ctx).Line(data);
-};
+		}, {
+			ticks : [[0, "No"], [1, "Yes"]],
+			max : 1,
+			min : 0
+		}],
+
+		grid : {
+			hoverable : true,
+			clickable : true
+		},
+		legend : {
+			show : true,
+			container : '#legendholder'
+		}
+	});
+	$("#placeholder").bind("plothover", function(event, pos, item) {
+		if (item) {
+			if ((previousPoint != item.dataIndex) || (previousLabel != item.series.label)) {
+				previousPoint = item.dataIndex;
+				previousLabel = item.series.label;
+
+				$("#flot-tooltip").remove();
+
+				var x = dayTimeFormatter(item.datapoint[0]), y = item.datapoint[1];
+				z = item.series.color;
+
+				if (item.datapoint[2] != null) {
+					y = y == 0 ? "No" : "Yes";
+				}
+
+				showTooltip(item.pageX, item.pageY, "<b>" + item.series.label + "</b><br /> " + x + " = " + y, z);
+			}
+		} else {
+			$("#flot-tooltip").remove();
+			previousPoint = null;
+		}
+	});
+}
+
+Deps.autorun(function(c) {
+	if (Session.get('patientFilter') && Session.get('measureFilter') && typeof measureslHandle !== 'undefined' && measureslHandle.ready()) {
+		showGraph();
+		Measures.find({}).observeChanges({
+			added : function(item) {
+				showGraph();
+			}
+		});
+	}
+});
 
 Template.measureItems.measures = function() {
 	var filter = {};
@@ -160,7 +233,7 @@ Template.measureItems.events({
 });
 
 Template.measureTags.destroyed = function() {
-	delete Session.keys['measureFilter'];
+	delete Session.keys['measureFilter','graphTitle'];
 };
 
 Template.measureTags.tags = function() {

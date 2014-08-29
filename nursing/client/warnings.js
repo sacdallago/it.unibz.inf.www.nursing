@@ -13,6 +13,7 @@ Meteor.call("removeWarnings");
  *  Meteor.call("newNotification", title, message, department);
  */
 
+/*
 Deps.autorun(function() {
 	Warnings.find({}).observeChanges({
 		added : function(item) {
@@ -27,4 +28,5 @@ Deps.autorun(function() {
 			Session.set('newJournals', Session.get('newJournals') + 1);
 		}
 	});
-}); 
+});
+*/

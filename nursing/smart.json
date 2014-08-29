@@ -6,6 +6,7 @@
     "autocomplete": {},
     "npm": {},
     "collectionFS": {},
-    "notifications": {}
+    "notifications": {},
+    "flot": {}
   }
 }

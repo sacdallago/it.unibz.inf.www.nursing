@@ -18,6 +18,15 @@ dayTimeFormatter = function(timestamp) {
 	return date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + "\n" + date.getDate() + "/" + (date.getMonth()+1);
 };
 
+getRandomColor = function() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
+
 ///INFINITE SCROLL
 //Set the 'handle' variable equal to the actual paginated subscription handle on page load! (use iron-router onBeforeAction)
 /* Eg.:
