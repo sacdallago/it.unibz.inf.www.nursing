@@ -6,30 +6,32 @@
 				{{#AnimateWithVelocity}}
 				{{> chart}}
 				{{/AnimateWithVelocity}}
-				{{> measureItems}}
+				{{#each measures}}
+					{{> measureItems}}
+				{{/each}}
 			</ul>
 		</div>
 	</div>
 </template>
 
 <template name="chart">
-	<div class="card" data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
-		<div class="card-heading pointer" data-toggle="collapse" data-target=".graphcollapse">
+	<li style="{{#unless display}} display: none; {{/unless}}" class="card" data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
+		<div class="card-heading pointer">
 			<div class="card-heading-header">
 				<p style="font-size: 22.75px;">
 					<strong><i class="fa fa-tags"></i> Graph {{#if graphTitle}}- {{graphTitle}} {{/if}}</strong>
 				</p>
 			</div>
 		</div>
-		<div class="card-body collapse graphcollapse" style="text-align: left;">
+		<div class="card-body" style="text-align: left;">
 			<div id="placeholder" style=" width: 100%; height: 300px "></div>
 			<div id="legendholder"></div>
 		</div>
-	</div>
+	</li>
 </template>
 
 <template name="measureTags">
-	<div class="card">
+	<li class="card">
 		<div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
 			<div class="card-heading-header">
 				<p style="font-size: 22.75px;">
@@ -48,12 +50,11 @@
 				{{/each}}
 			</div>
 		</div>
-	</div>
+	</li>
 </template>
 
 <template name="measureItems">
 	{{#AnimateWithVelocity}}
-	{{#each measures}}
 	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<div class="twitter" style="border-bottom:1px solid #e5e5e5;">
 			<div class="twitter-left twitter-blue {{#if problemSubject}} twitter-orange {{/if}}" style="padding-bottom: 0px;">
@@ -123,6 +124,5 @@
 			</div>
 		</div>
 	</li>
-	{{/each}}
 	{{/AnimateWithVelocity}}
 </template>

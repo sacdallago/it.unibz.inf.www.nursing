@@ -18,6 +18,11 @@ dayTimeFormatter = function(timestamp) {
 	return date.getHours() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes() + "\n" + date.getDate() + "/" + (date.getMonth()+1);
 };
 
+dayYearFormatter = function(timestamp) {
+	var date = new Date(timestamp);
+	return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+};
+
 getRandomColor = function() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';

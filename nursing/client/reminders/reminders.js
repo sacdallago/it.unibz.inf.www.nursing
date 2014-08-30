@@ -9,8 +9,7 @@ Session.setDefault('editing_categoryName', null);
 Session.setDefault('editing_reminderName', null);
 
 categoriesHandle = null;
-remindersHandle = null;
-usersHandle = null;
+remindersHandle = Meteor.subscribe('reminders');
 
 ////////// Helpers for in-place editing //////////
 

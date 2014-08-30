@@ -54,9 +54,7 @@
 			path : '/reminders',
 			onBeforeAction : function() {
 				if (Meteor.userId()){
-					remindersHandle = Meteor.subscribe('reminders');
 					categoriesHandle = Meteor.subscribe('categories');
-					usersHandle = Meteor.subscribe('users');
 				}
 			},
 			onAfterAction : function() {
@@ -85,7 +83,7 @@
 			path : '/measures',
 			onBeforeAction : function() {
 				if (Meteor.userId()){
-					measureslHandle = Meteor.subscribe('measures');
+					
 				}
 			},
 			onAfterAction : function() {

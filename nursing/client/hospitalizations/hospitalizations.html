@@ -1,13 +1,132 @@
 <template name="home">
 	{{> loading}}
+	{{#if patient}}
 	<div class="container-fluid">
-		<div class="span12">
-			<div class="hero-unit">
-				<h1 class="page-header"> {{language.heading}} <small>{{language.subheading}}</small></h1>
-				<p>
-					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-				</p>
-			</div>
+		<div class="row-fluid">
+			<ul class="span7 offset3 unstyled">
+				{{> patientCard}}
+				{{> hospitalizationCard}}
+				{{> reminder_item}}
+				{{#each entry}}
+					{{#if fields}}
+						{{> measureItems}}
+					{{else}}
+						{{> journalItems}}
+					{{/if}}
+				{{/each}}
+			</ul>
 		</div>
 	</div>
+	{{else}}
+	<div class="noPatientSelected" data-animate data-property="height" data-duration="200" data-from-value="0" data-to-value="200px">
+		<p data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
+			<i class="fa fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-arrow-circle-o-down"></i>
+		</p>
+	</div>
+	{{/if}}
+</template>
+
+<template name="patientCard">
+	{{#with patient}}
+	<li class="card">
+		<div class="card-heading">
+			<div class="card-heading-header">
+				<h4><strong>{{capitalize first}} {{capitalize last}}</strong>, {{bed}}</h4>
+			</div>
+		</div>
+		<div class="card-body" style="text-align: left;">
+			<ul class="unstyled">
+				<li>
+					Birthdate: {{formatDate birthdate}}
+				</li>
+				<li>
+					Address: {{residenceAddress}}, {{residenceNumber}} - {{residenceCity}} ({{residenceProvince}})
+				</li>
+				<li>
+					Sex: {{sex}}
+				</li>
+				<li>
+					Height: {{height}}
+				</li>
+				<li>
+					Marrital status: {{maritalstatus}}
+				</li>
+				<li>
+					Reference phone: {{referencePhone}}
+				</li>
+			</ul>
+
+		</div>
+	</li>
+	{{/with}}
+</template>
+
+<template name="hospitalizationCard">
+	{{#with hospitalization}}
+	<li class="card">
+		<div class="card-heading">
+			<div class="card-heading-header">
+				<h4><strong>Hospitalization details</strong></h4>
+				{{capitalize reason}}
+			</div>
+		</div>
+		<div class="card-body" style="text-align: left;">
+			<ul class="unstyled">
+				<li>
+					Hospitalized by: {{nurseNameFormatter nurseId}}
+				</li>
+				<li>
+					Hospitalized on: {{formatDate timestamp}}
+				</li>
+				<li>
+					Allergies: {{allergies}}
+				</li>
+				<li>
+					Diabetes: {{diabetes}}
+				</li>
+				<li>
+					Allergies to drugs: {{drugAllergies}}
+				</li>
+				<li>
+					Lucid:
+					<input type="checkbox" disabled="true"  checked="{{lucid}}" />
+				</li>
+				<li>
+					Oriented:
+					<input type="checkbox" disabled="true"  checked="{{oriented}}" />
+				</li>
+				<li>
+					Cooperative:
+					<input type="checkbox" disabled="true"  checked="{{cooperative}}" />
+				</li>
+				<li>
+					Smoker:
+					<input type="checkbox" disabled="true"  checked="{{smoker}}" />
+				</li>
+				<li>
+					Diet: {{diet}}
+				</li>
+				<li>
+					Active or sedentary: {{lifestyle}}
+				</li>
+				<li>
+					Problems urinating:
+					<input type="checkbox" disabled="true"  checked="{{urinationProblem}}" />
+				</li>
+				<li>
+					Wears prosethics:
+					<input type="checkbox" disabled="true"  checked="{{prosthetics}}" />
+				</li>
+				<li>
+					Carries goods:
+					<input type="checkbox" disabled="true"  checked="{{goods}}" />
+				</li>
+				<li>
+					Utilizes a walking aid:
+					<input type="checkbox" disabled="true"  checked="{{walkingAid}}" />
+				</li>
+			</ul>
+		</div>
+	</li>
+	{{/with}}
 </template>

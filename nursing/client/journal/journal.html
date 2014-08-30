@@ -2,7 +2,9 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<ul class="span7 offset3 unstyled">
-				{{> journalItems}}
+				{{#each journals}}
+					{{> journalItems}}
+				{{/each}}
 			</ul>
 		</div>
 	</div>
@@ -10,11 +12,13 @@
 
 <template name="journalItems">
 	{{#AnimateWithVelocity}}
-	{{#each journals}}
-	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="margin-bottom: 20px;">
-		<div class="twitter">
+	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="twitter" style="border-bottom:1px solid #e5e5e5;">
 			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
 				<ul class="unstyled">
+					<li>
+						<strong>Journal</strong>
+					</li>
 					{{#if problemSubject}}
 					<li>
 						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
@@ -25,9 +29,6 @@
 						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
 					</li>
 					{{else}}
-					<li>
-						<strong>Options</strong>
-					</li>
 					{{/if}}
 					{{/if}}
 					{{#if attachment.isImage}}
@@ -117,7 +118,6 @@
 			</div>
 		</div>
 	</li>
-	{{/each}}
 	{{/AnimateWithVelocity}}
 </template>
 

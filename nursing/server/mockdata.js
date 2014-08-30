@@ -37,6 +37,23 @@ Meteor.startup(function() {
 			},
 			password : 'password'
 		});
+		Accounts.createUser({
+			username : 'test1',
+			profile : {
+				department : "cardiology",
+				first : "cazzo",
+				last : "culo",
+				message : {
+					message : "",
+					data : [{
+						type : "",
+						value : "",
+						unit : ""
+					}]
+				}
+			},
+			password : 'password'
+		});
 		var user = Meteor.users.findOne({
 			"username" : "test"
 		});
@@ -45,23 +62,15 @@ Meteor.startup(function() {
 		var patientData = {
 			first : "hanna",
 			last : "montana",
-			birthdate : dateFormatter((new Date(1982, 11, 7).getTime())),
-			birthcity : "Bolzano",
-			birthprovince : "BZ",
+			birthdate : (new Date(1982, 11, 7).getTime()),
+			residenceAddress : "via culoculo",
+			residenceNumber : "67",
+			residenceCity : "Bolzano",
+			residenceProvince : "BZ",
 			sex : "m",
-			weight : 75.3,
 			height : 1.75,
-			citizenship : "italian",
 			maritalstatus : "married",
-			street : "via something",
-			streetnumber : "69/c",
-			city : "tornoto",
-			province : "BZ",
-			country : "italy",
-			taxcode : "CRDHDJ345JFDS",
-			studylevel : "highschool",
-			diabetes : false,
-			allergies : ["paracetamol", "penicillin"]
+			referencePhone: "04714736284"
 		};
 
 		var pid = Patients.insert(patientData);
@@ -70,7 +79,22 @@ Meteor.startup(function() {
 			patientId : pid,
 			nurseId : user._id,
 			active : true,
-			timestamp : Date.now()
+			timestamp : Date.now(),
+			allergies : "guacamole, something dark",
+			diabetes: "autonomous",
+			drugAllergies: "",
+			lucid: true,
+			oriented: true,
+			cooperative: true,
+			smoker: false,
+			diet: "fat",
+			lifestyle: "active",
+			urinationProblem: true,
+			defecationProblem: true,
+			prosthetics: false,
+			goods: true,
+			walkingAid: false,
+			reason: "She fucking continuously shits herself, goddamnit"
 		};
 
 		var hid = Hospitalizations.insert(hospitalizationData);

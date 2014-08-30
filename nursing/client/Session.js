@@ -8,6 +8,8 @@ roomsHandle = Meteor.subscribe('rooms');
 Journal = new Meteor.Collection("journal");
 journalHandle = Meteor.subscribe('journal');
 
+usersHandle = Meteor.subscribe('users');
+
 //Which page am I at?
 //Session.setDefault('pageName','login');
 

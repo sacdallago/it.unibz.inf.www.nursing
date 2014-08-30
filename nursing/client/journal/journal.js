@@ -7,7 +7,7 @@ journalDocumentsHandle = null;
 
 FS.HTTP.setBaseUrl('/attachments');
 
-Template.journalItems.journals = function() {
+Template.journal.journals = function() {
 	var filter = {};
 	if(Session.get('patientFilter')){
 		filter.patientId = Session.get('patientFilter');

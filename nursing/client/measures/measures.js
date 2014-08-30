@@ -1,10 +1,13 @@
 Measures = new Meteor.Collection("measures");
 
-measuresHandle = null;
+measureslHandle = Meteor.subscribe('measures');
 
 Template.chart.helpers({
 	graphTitle : function() {
 		return Session.get('graphTitle');
+	},
+	display : function() {
+		return Session.get('patientFilter') && Session.get('measureFilter');
 	}
 });
 
@@ -12,7 +15,7 @@ function showTooltip(x, y, contents, z) {
 	$('<div id="flot-tooltip">' + contents + '</div>').css({
 		position : "absolute",
 		top : y - 30,
-		left : x - 135,
+		//left : x - 135,
 		'border-color' : z,
 	}).appendTo(".card").fadeIn(200);
 }
@@ -48,16 +51,17 @@ function showGraph() {
 				show : false
 			};
 			obj.points = {
-				radius : 9,
+				radius : 20,
 				show : true
 			};
 			obj.yaxis = 2;
 		} else {
 			obj.lines = {
-				show : true
+				show : true,
+				fill: true
 			};
 			obj.points = {
-				radius : 6,
+				radius : 15,
 				show : true,
 				fill : true
 			};
@@ -100,7 +104,8 @@ function showGraph() {
 			container : '#legendholder'
 		}
 	});
-	$("#placeholder").bind("plothover", function(event, pos, item) {
+	var previousPoint = null;
+	$("#placeholder").bind("plotclick", function(event, pos, item) {
 		if (item) {
 			if ((previousPoint != item.dataIndex) || (previousLabel != item.series.label)) {
 				previousPoint = item.dataIndex;
@@ -111,7 +116,7 @@ function showGraph() {
 				var x = dayTimeFormatter(item.datapoint[0]), y = item.datapoint[1];
 				z = item.series.color;
 
-				if (item.datapoint[2] != null) {
+				if (!item.series.lines.show) {
 					y = y == 0 ? "No" : "Yes";
 				}
 
@@ -135,7 +140,7 @@ Deps.autorun(function(c) {
 	}
 });
 
-Template.measureItems.measures = function() {
+Template.measures.measures = function() {
 	var filter = {};
 	if (Session.get('patientFilter')) {
 		filter.patientId = Session.get('patientFilter');
@@ -233,7 +238,7 @@ Template.measureItems.events({
 });
 
 Template.measureTags.destroyed = function() {
-	delete Session.keys['measureFilter','graphTitle'];
+	delete Session.keys['measureFilter'];
 };
 
 Template.measureTags.tags = function() {
