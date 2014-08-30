@@ -141,7 +141,5 @@ Template.home.entry = function() {
 		return 0;
 	});
 
-	console.log(entries);
-
 	return entries;
 };

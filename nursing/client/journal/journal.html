@@ -16,10 +16,10 @@
 		<div class="twitter" style="border-bottom:1px solid #e5e5e5;">
 			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
 				<ul class="unstyled">
-					<li>
-						<strong>Journal</strong>
-					</li>
 					{{#if problemSubject}}
+					<li>
+						<i class="fa fa-book"></i> <strong>Journal</strong>
+					</li>
 					<li>
 						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
 					</li>
@@ -29,6 +29,9 @@
 						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
 					</li>
 					{{else}}
+					<li>
+						<i class="fa fa-book"></i> <strong>Journal</strong>
+					</li>
 					{{/if}}
 					{{/if}}
 					{{#if attachment.isImage}}
@@ -46,7 +49,7 @@
 						{{#unless problemSubject}}
 						{{#unless subject}}
 						<li>
-							<select class="" >
+							<select data-native-menu="false">
 								<option data-problemId="" value="">Select...</option>
 								{{#each problems}}
 								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>

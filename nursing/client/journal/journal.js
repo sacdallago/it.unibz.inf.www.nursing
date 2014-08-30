@@ -3,7 +3,7 @@ JournalDocuments = new FS.Collection("journalDocuments", {
 	stores : [new FS.Store.FileSystem("journalDocuments")]
 });
 
-journalDocumentsHandle = null;
+journalDocumentsHandle = Meteor.subscribe('journalDocuments');
 
 FS.HTTP.setBaseUrl('/attachments');
 
