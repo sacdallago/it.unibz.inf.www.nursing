@@ -23,6 +23,11 @@ dayYearFormatter = function(timestamp) {
 	return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 };
 
+htmlDate = function(timestamp) {
+	var date = new Date(timestamp);
+	return date.getFullYear() + "-" + ((date.getMonth()+1) < 10 ? '0' : '') + (date.getMonth()+1) + "-" + (date.getDate() < 10 ? '0' : '') + date.getDate();
+};
+
 getRandomColor = function() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';

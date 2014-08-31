@@ -6,14 +6,48 @@
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
 				{{> hospitalizationCard}}
-				{{> reminder_item}}
-				{{#each entry}}
+				<li class="card">
+					<div class="card-body" style="text-align: center; padding-top: 10px">
+						<ul class="unstyled inline">
+							<li>
+								<div class="reminders collapse in">
+									<button class="btn" data-toggle="collapse" data-target=".reminders">
+										Show Reminders
+									</button>
+								</div>
+								<div class="reminders collapse">
+									<button class="btn" data-toggle="collapse" data-target=".reminders">
+										Hide Reminders
+									</button>
+								</div>
+							</li>
+							<li>
+								<div class="diary collapse in">
+									<button class="btn" data-toggle="collapse" data-target=".diary">
+										Show Patient Diary
+									</button>
+								</div>
+								<div class="diary collapse">
+									<button class="btn" data-toggle="collapse" data-target=".diary">
+										Hide Patient Diary
+									</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<div class="reminders collapse">
+					{{> reminder_item}}
+				</div>
+				<div class="diary collapse">
+					{{#each entry}}
 					{{#if fields}}
-						{{> measureItems}}
+					{{> measureItems}}
 					{{else}}
-						{{> journalItems}}
+					{{> journalItems}}
 					{{/if}}
-				{{/each}}
+					{{/each}}
+				</div>
 			</ul>
 		</div>
 	</div>
@@ -28,34 +62,78 @@
 
 <template name="patientCard">
 	{{#with patient}}
-	<li class="card">
-		<div class="card-heading">
-			<div class="card-heading-header">
-				<h4><strong>{{capitalize first}} {{capitalize last}}</strong>, {{bed}}</h4>
-			</div>
-		</div>
+	<li class="card" style="padding-top: 20px;">
 		<div class="card-body" style="text-align: left;">
-			<ul class="unstyled">
-				<li>
-					Birthdate: {{formatDate birthdate}}
-				</li>
-				<li>
-					Address: {{residenceAddress}}, {{residenceNumber}} - {{residenceCity}} ({{residenceProvince}})
-				</li>
-				<li>
-					Sex: {{sex}}
-				</li>
-				<li>
-					Height: {{height}}
-				</li>
-				<li>
-					Marrital status: {{maritalstatus}}
-				</li>
-				<li>
-					Reference phone: {{referencePhone}}
-				</li>
-			</ul>
-
+			<table class="table table-condensed patientUpdate">
+				<tbody>
+					<tr>
+						<td> First name: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Last name: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Birthdate: </td>
+						<td>
+						<input input disabled="true" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Street: </td>
+						<td>
+						<input input disabled="true" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Number: </td>
+						<td>
+						<input input disabled="true" type="number" value="{{residenceNumber}}" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> City: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Province: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Sex: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Height: </td>
+						<td>
+						<input input disabled="true" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Marrital status: </td>
+						<td>
+						<input input disabled="true" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Reference phone: </td>
+						<td>
+						<input input disabled="true" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</li>
 	{{/with}}

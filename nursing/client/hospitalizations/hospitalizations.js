@@ -20,6 +20,12 @@ UI.registerHelper('formatDate', function(context, options) {
 	}
 });
 
+UI.registerHelper('htmlDate', function(context, options) {
+	if (context) {
+		return htmlDate(context);
+	}
+});
+
 UI.registerHelper('nurseNameFormatter', function(context, options) {
 	if (context) {
 		var user = Meteor.users.findOne(context);
@@ -53,7 +59,18 @@ Template.patientCard.helpers({
 		} else {
 			return null;
 		}
+	}
+});
 
+Template.patientCard.events({
+	'tap input' : function(e){
+		if(e.target.disabled){
+			//Put a color to 
+			e.target.disabled=false;
+		} else {
+			//Codice per fare l'update sull'ogetto
+			e.target.disabled=true;
+		}
 	}
 });
 
@@ -84,7 +101,11 @@ Template.home.entry = function() {
 		var room = Rooms.findOne({
 			'patientId' : element.patientId
 		});
-		element.bed = room.number + "" + room.bed;
+		if (room) {
+			element.bed = room.number + "" + room.bed;
+		} else {
+			element.bed = "NO BED ASSIGNED";
+		}
 
 		element.date = dateFormatter(element.timestamp);
 
