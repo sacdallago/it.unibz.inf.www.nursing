@@ -53,9 +53,8 @@
 		this.route('reminders', {
 			path : '/reminders',
 			onBeforeAction : function() {
-				if (Meteor.userId()){
-					categoriesHandle = Meteor.subscribe('categories');
-				}
+				if (!Meteor.userId())
+					this.redirect('loginform');
 			},
 			onAfterAction : function() {
 			},
@@ -91,6 +90,18 @@
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
+		});
+		this.route('problems',{
+			path : '/problems',
+			onBeforeAction : function(){
+				if (!Meteor.userId())
+					this.redirect('loginform');
+			},
+			onRun : function(){
+				if (!Meteor.userId())
+					this.redirect('loginform');
+			},
+			onAfterAction : function(){}
 		});
 	});
 })();

@@ -12,12 +12,14 @@ usersHandle = Meteor.subscribe('users');
 
 //Which page am I at?
 //Session.setDefault('pageName','login');
+categoriesHandle = Meteor.subscribe('categories');
 
 //Badges counter. These show up in the menu next to the relevant menu item
 Session.setDefault('deadlineReminders', 0); // Count the reminders that are due today
 Session.setDefault('newJournals', 0); // When a new message is sent to the department the user is registered at, augment. When user enters /messages, set to 0
 
-
+// newReminder category
+Session.setDefault('inputCategory', null);
 
 //Filters for find queries
 Session.setDefault('typeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)

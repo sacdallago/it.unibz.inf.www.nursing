@@ -337,3 +337,18 @@ body {
 	background: #6bba70;
 	margin-left: -2px;
 }
+
+.input-block{
+	padding: 2%;
+}
+
+.input-block label{
+	margin-bottom: 1%;
+	cursor: default;
+}
+.input-block-title{
+	margin: 1%;
+}
+.reminder-items{
+	margin: 0.666%;
+}

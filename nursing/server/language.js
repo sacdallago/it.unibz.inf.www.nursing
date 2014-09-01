@@ -13,6 +13,7 @@ Meteor.startup(function() {
 		home : 'Home',
 		reminders: 'Reminders',
 		journal: 'Journal',
+		problems: 'Problems',
 		signout: 'Sign out',
 		measures: "Measures"
 	});
@@ -44,6 +45,12 @@ Meteor.startup(function() {
 		language : 'en',
 		target: 'journal',
 		heading : 'Journal',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'en',
+		target: 'problems',
+		heading : 'Problems',
 		subheading: '',
 	});
 	Language.insert({
@@ -61,6 +68,7 @@ Meteor.startup(function() {
 		home : 'Home',
 		reminders: 'Reminders',
 		journal: 'Journal',
+		problems: 'Problemi',
 		signout: 'Sign out',
 		measures: "Measures"
 	});
@@ -92,6 +100,12 @@ Meteor.startup(function() {
 		language : 'it',
 		target: 'journal',
 		heading : 'Journal',
+		subheading: '',
+	});
+	Language.insert({
+		language : 'it',
+		target: 'problems',
+		heading : 'Problemi',
 		subheading: '',
 	});
 	Language.insert({

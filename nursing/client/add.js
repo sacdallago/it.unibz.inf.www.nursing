@@ -222,5 +222,86 @@ Template.newJournal.destroyed = function() {
 	delete Session.keys['fileSelected'];
 };
 
-Template.newReminder.events();
-Template.newReminder.helpers();
+Template.newReminder.events({
+	'click .category' : function(event){
+		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
+		event.preventDefault();
+		Session.set('inputCategory',this.name);
+	},
+	'submit' : function(event){
+		event.preventDefault();
+		var patientId = Session.get('patientFilter');
+		var hospitalizationId = Session.get('hospitalizationFilter');
+		var nurseId = Meteor.userId();
+		
+		var problemId = $("#reminderProblemSelector option:selected").attr("data-problemId");
+		
+		var category = Session.get('inputCategory');
+		var dueDate = $('input[name="dueDate"]:checked').val();
+		var message = document.getElementById('remindermessage').value;
+		var done = false;
+		var timestamp = new Date().getTime();
+
+		if(dueDate === "today"){
+			dueDate = new Date();
+		} else if(dueDate === "tomorrow"){
+			dueDate = new Date();
+			dueDate.setDate(dueDate.getDate()+1);
+		} else if(dueDate === "day after tomorrow"){
+			dueDate = new Date();
+			dueDate.setDate(dueDate.getDate()+2);
+		} else {
+			dueDate = $('input[name="otherDueDate"]').val();
+			dueDate = new Date(dueDate);
+		}
+
+		var entry = {
+			patientId : patientId,
+			hospitalizationId : hospitalizationId,
+			nurseId : nurseId,
+			done : done,
+			message : message,
+			timestamp : timestamp,
+			dueDate : dueDate.getTime(),
+			category : category
+		};
+
+		if (problemId){
+			entry.journalId = problemId;
+		}
+		console.log(entry);
+		Reminders.insert(entry,function(error) {
+			if (error) {
+        		Notifications.error("Error", "An error occoured. Please try again");
+      		} else {
+        		Notifications.success("Success", "New Reminder saved!");
+        		$('#reminder').modal('hide');
+        		event.target.reset();
+				Session.set('inputCategory', null);
+      		}
+    	});
+	}
+});
+
+
+Template.newReminder.helpers({
+	loading : function () {
+ 		return !categoriesHandle.ready();
+	},
+	categories : function() {
+		var list = Categories.find({});
+		return list;
+	},
+	categorySelected : function(){
+		return (Session.equals('inputCategory', this.name)) ? 'label-info' : '';
+	},
+	problems : function(){
+		return Journal.find({
+			subject : {
+				$exists : true
+			},
+			patientId: Session.get('patientFilter'),
+			$or: [{ solved: false}, {solved :{$exists: false}}]
+		});
+	}
+});

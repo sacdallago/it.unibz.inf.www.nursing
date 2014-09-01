@@ -38,3 +38,12 @@ Template.reminders.helpers({
 		});
 	}
 });
+
+Template.problems.helpers({
+	language:function(){
+		return Language.findOne({
+			'target': 'problems',
+			'language' : Session.get('language').toString().substr(0,2)
+		});
+	}
+});

@@ -21,6 +21,9 @@
 						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Measures' }}">
 							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> {{language.measures}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
+						<li id="home-navigation" class="{{ activeIfTemplateIs 'Problems' }}">
+							<a href="{{pathFor 'problems'}}"><i class="fa fa-fw fa-folder-open"></i> {{language.problems}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+						</li>
 						<li>
 							<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> {{language.signout}}</a>
 						</li>
@@ -219,9 +222,63 @@
 				</div>
 				<form class="form">
 					<div class="modal-body">
-						<strong name="task">Task description</strong>&nbsp;
-						<input type="text" name="message" value="What is the activity for which you want to create a reminder..."/>
-						
+						<div class="input-block">
+							<div class="input-block-title">
+							<strong name="task">Task description</strong>&nbsp;<br/>
+							</div>
+							<input id="remindermessage" type="text" name="message" value=""/>
+							<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
+						</div>
+						<div class="input-block">	
+							<div class="input-block-title">
+							<strong>Pick a category</strong><br/>
+							</div>
+					
+							{{#each categories}}
+								
+									<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">{{name}}</button>
+								
+							{{/each}}
+							
+						</div>
+
+						<div class="input-block">
+							<div class="input-block-title">
+								<strong>Pick a due date</strong><br/>
+							</div>
+							<ul class="unstyled inline">
+							<li>
+								<label class="radio">
+								<input type="radio" name="dueDate" value="today" checked="checked">
+								<em>Today</em>
+								</label>
+							</li>
+								<li>
+								<label class="radio">
+								<input type="radio" name="dueDate" value="tomorrow">
+								<em>Tomorrow</em>
+								</label>
+							</li>
+							<li>
+								<label class="radio">
+								<input type="radio" name="dueDate" value="day after tomorrow">
+								<em>Day after Tomorrow</em>
+								</label>
+							</li>
+							<li>
+								<label class="radio">
+								<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate"><em>Other</em>
+								</label>
+							</li>
+							</ul>
+
+							<div class="otherdate collapse offset1" style="padding-top=10px;margin:auto">
+								<label class="offset1">
+								<input type="date" name="otherDueDate">
+								</label>
+
+							</div>
+						</div>	
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
@@ -255,6 +312,7 @@
 	{{#if patientSelected}}
 	{{> newMeasurement}}
 	{{> newJournal}}
+	{{> newReminder}}
 	{{/if}}
 </template>
 
