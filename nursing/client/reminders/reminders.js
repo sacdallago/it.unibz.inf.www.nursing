@@ -405,3 +405,7 @@ Template.categories.totalReminders = function(){
   }
   return Reminders.find(sel).count();
 };
+
+Template.reminders.destroyed = function(){
+  delete Session.keys['categoryName'];
+};
