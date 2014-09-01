@@ -78,7 +78,7 @@
 <template name="reminder_item">
   {{#AnimateWithVelocity}}
   {{#each reminders}}
-      <li class="card  {{#if done}} twitter-grey {{/if}}" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+      <li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <label class="check" style="margin-right:0;margin-top:0;float:right"> 
             <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
         </label>
