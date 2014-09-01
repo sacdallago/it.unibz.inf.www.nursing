@@ -52,9 +52,10 @@
 		</div>
 	</div>
 	{{else}}
-	<div class="noPatientSelected" data-animate data-property="height" data-duration="200" data-from-value="0" data-to-value="200px">
-		<p data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
-			<i class="fa fa-spin fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-spin fa-arrow-circle-o-down"></i>
+	<div >
+		<p class="noPatientSelected">
+			<i class="fa fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-arrow-circle-o-down"></i>
+			<br />
 		</p>
 	</div>
 	{{/if}}
@@ -62,74 +63,75 @@
 
 <template name="patientCard">
 	{{#with patient}}
-	<li class="card" style="padding-top: 20px;">
+	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
+			<h3>Patient Details:</h3>
 			<table class="table table-condensed patientUpdate">
 				<tbody>
 					<tr>
 						<td> First name: </td>
 						<td>
-						<input input disabled="true" data-field="first" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="first" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Last name: </td>
 						<td>
-						<input input disabled="true" data-field="last" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="last" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Birthdate: </td>
 						<td>
-						<input input disabled="true" data-field="birthdate" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
+						<input disabled="true" data-field="birthdate" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Street: </td>
 						<td>
-						<input input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
+						<input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Number: </td>
 						<td>
-						<input input disabled="true" data-field="residenceNumber" type="number" value="{{residenceNumber}}" required/>
+						<input disabled="true" data-field="residenceNumber" type="number" value="{{residenceNumber}}" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> City: </td>
 						<td>
-						<input input disabled="true" data-field="residenceCity" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="residenceCity" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Province: </td>
 						<td>
-						<input input disabled="true" data-field="residenceProvince" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="residenceProvince" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Sex: </td>
 						<td>
-						<input input disabled="true" data-field="sex" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						<input disabled="true" data-field="sex" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Height: </td>
 						<td>
-						<input input disabled="true" data-field="height" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
+						<input disabled="true" data-field="height" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Marrital status: </td>
 						<td>
-						<input input disabled="true" data-field="maritalstatus" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="maritalstatus" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Reference phone: </td>
 						<td>
-						<input input disabled="true" data-field="referencePhone" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						<input disabled="true" data-field="referencePhone" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
 						</td>
 					</tr>
 				</tbody>
@@ -141,67 +143,183 @@
 
 <template name="hospitalizationCard">
 	{{#with hospitalization}}
-	<li class="card">
-		<div class="card-heading">
-			<div class="card-heading-header">
-				<h4><strong>Hospitalization details</strong></h4>
-				{{capitalize reason}}
-			</div>
-		</div>
+	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
-			<ul class="unstyled">
+			<h3>Hospitalization Details:</h3>
+			<table class="table table-condensed patientUpdate">
+				<tbody>
+					<tr>
+						<td> Reason: </td>
+						<td>
+						<input disabled="true" data-field="reason" type="text" placeholder="Surgery recap" value="{{capitalize reason}}" pattern="[a-zA-Z ]+" required/>
+						</td>
+					</tr>
+					<tr>
+						<td> Allergies: </td>
+						<td>
+						<input disabled="true" data-field="allergies" type="text" placeholder="Guacamole, milk" value="{{allergies}}" pattern="[a-zA-Z ]+"/>
+						</td>
+					</tr>
+					<tr>
+						<td> Allergies to drugs: </td>
+						<td>
+						<input disabled="true" data-field="drugAllergies" placeholder="Paracetamol, ..." type="text" value="{{drugAllergies}}" pattern="[a-zA-Z ]+"/>
+						</td>
+					</tr>
+					<tr>
+						<td> Diabetes: </td>
+						<td>
+						<select disabled="true" data-field="diabetes">
+							<option value="no" {{findSelected diabetes "no"}}>No</option>
+							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomous</option>
+							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Decompensated</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td> Diet: </td>
+						<td>
+						<select disabled="true" data-field="diet">
+							<option value="healthy" {{findSelected diet "healthy"}}>Healthy</option>
+							<option value="fat" {{findSelected diet "fat"}}>Fat</option>
+						</select></td>
+					</tr>
+
+					<tr>
+						<td> Active or sedentary: </td>
+						<td>
+						<select disabled="true" data-field="lifestyle">
+							<option value="active" {{findSelected lifestyle "active"}}>Active</option>
+							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentary</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td> Lucid: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="lucid" checked="{{lucid}}" id="lucid" name="" />
+							<label for="lucid">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Oriented: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="oriented" checked="{{oriented}}" id="oriented" name="" />
+							<label for="oriented">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Cooperative: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="cooperative" checked="{{cooperative}}" id="cooperative" name="" />
+							<label for="cooperative">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Smoker: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="smoker" checked="{{smoker}}" id="smoker" name="" />
+							<label for="smoker">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Problems urinating: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="urinationProblem" checked="{{urinationProblem}}" id="urinationProblem" name="" />
+							<label for="urinationProblem">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Wears prosethics: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="prosthetics" checked="{{prosthetics}}" id="prosthetics" name="" />
+							<label for="prosthetics">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Carries goods: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="goods" checked="{{goods}}" id="goods" name="" />
+							<label for="goods">&nbsp;</label>
+						</div></td>
+					</tr>
+					<tr>
+						<td> Utilizes a walking aid: </td>
+						<td>
+						<div class="switch">
+							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
+								<tr>
+									<td style="padding-left: 5px;"><strong>NO</strong></td>
+									<td></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+								</tr>
+							</table>
+							<input type="checkbox" disabled="true" data-field="walkingAid" checked="{{walkingAid}}" id="walkingAid" name="" />
+							<label for="walkingAid">&nbsp;</label>
+						</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
 				<li>
 					Hospitalized by: {{nurseNameFormatter nurseId}}
 				</li>
 				<li>
 					Hospitalized on: {{formatDate timestamp}}
-				</li>
-				<li>
-					Allergies: {{allergies}}
-				</li>
-				<li>
-					Diabetes: {{diabetes}}
-				</li>
-				<li>
-					Allergies to drugs: {{drugAllergies}}
-				</li>
-				<li>
-					Lucid:
-					<input type="checkbox" disabled="true"  checked="{{lucid}}" />
-				</li>
-				<li>
-					Oriented:
-					<input type="checkbox" disabled="true"  checked="{{oriented}}" />
-				</li>
-				<li>
-					Cooperative:
-					<input type="checkbox" disabled="true"  checked="{{cooperative}}" />
-				</li>
-				<li>
-					Smoker:
-					<input type="checkbox" disabled="true"  checked="{{smoker}}" />
-				</li>
-				<li>
-					Diet: {{diet}}
-				</li>
-				<li>
-					Active or sedentary: {{lifestyle}}
-				</li>
-				<li>
-					Problems urinating:
-					<input type="checkbox" disabled="true"  checked="{{urinationProblem}}" />
-				</li>
-				<li>
-					Wears prosethics:
-					<input type="checkbox" disabled="true"  checked="{{prosthetics}}" />
-				</li>
-				<li>
-					Carries goods:
-					<input type="checkbox" disabled="true"  checked="{{goods}}" />
-				</li>
-				<li>
-					Utilizes a walking aid:
-					<input type="checkbox" disabled="true"  checked="{{walkingAid}}" />
 				</li>
 			</ul>
 		</div>

@@ -284,11 +284,58 @@ body {
 	background-color: #b0b0b0 !important;
 }
 
-.patientUpdate input{
-	border:0;
-	width: 90%;
+.patientUpdate input {
+	cursor: default;
+	border: 0;
+	width: 100%;
 	font-size: 16pt;
 	margin-bottom: 0;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.patientUpdate select {
+	min-height: 29px;
+	cursor: default;
+	border: 0;
+	width: 100%;
+	font-size: 16pt;
+	margin-bottom: 0;
+	padding: 0;
+}
+
+.patientUpdate input[type=checkbox] {
+	display: none;
+}
+
+.switch {
+	width: 100px;
+	height: 20px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	text-align: center;
+	background: #333333;
+	border: 0;
+	color: white;
+}
+
+.switch td {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.switch label {
+	position: relative;
+	top: -20px;
+	width: 50px;
+	min-height: 20px;
+	background: #E74C3C;
+	margin-left: 50px;
+}
+.switch input[type=checkbox]:checked + label {
+	background: #6bba70;
+	margin-left: -2px;
 }
 
 .input-block{

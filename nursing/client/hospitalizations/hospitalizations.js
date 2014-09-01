@@ -20,6 +20,10 @@ UI.registerHelper('formatDate', function(context, options) {
 	}
 });
 
+UI.registerHelper('findSelected', function(context, paragon) {
+  return context == paragon ? 'selected' : '';
+});
+
 UI.registerHelper('htmlDate', function(context, options) {
 	if (context) {
 		return htmlDate(context);
@@ -70,6 +74,10 @@ Template.patientCard.events({
 		} else {
 			var value = e.target.value;
 			var field = e.target.dataset.field;
+			var reqiored = e.target.required;
+			if(!validatePatientData(field,value)){
+				return;
+			}
 			if (field == "birthdate") {
 				value = new Date(value).getTime();
 			}
@@ -100,6 +108,9 @@ Template.patientCard.events({
 		if (e.keyCode == '13' && !e.target.disabled) {
 			var value = e.target.value;
 			var field = e.target.dataset.field;
+			if(!validatePatientData(field,value)){
+				return;
+			}
 			if (field == "birthdate") {
 				value = new Date(value).getTime();
 			}
