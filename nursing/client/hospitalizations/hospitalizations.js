@@ -21,7 +21,7 @@ UI.registerHelper('formatDate', function(context, options) {
 });
 
 UI.registerHelper('findSelected', function(context, paragon) {
-  return context == paragon ? 'selected' : '';
+	return context == paragon ? 'selected' : '';
 });
 
 UI.registerHelper('htmlDate', function(context, options) {
@@ -69,13 +69,13 @@ Template.patientCard.helpers({
 Template.patientCard.events({
 	'taphold input' : function(e) {
 		if (e.target.disabled) {
-			e.target.style.border = "3px solid #f89406";
+			e.target.style.color = "#f89406";
 			e.target.disabled = false;
 		} else {
 			var value = e.target.value;
 			var field = e.target.dataset.field;
-			var reqiored = e.target.required;
-			if(!validatePatientData(field,value)){
+			var required = e.target.required;
+			if (!validatePatientData(field, value)) {
 				return;
 			}
 			if (field == "birthdate") {
@@ -93,14 +93,14 @@ Template.patientCard.events({
 				}
 			});
 			//Codice per fare l'update sull'ogetto
-			e.target.style.border = "0";
+			e.target.style.color = "";
 			e.target.disabled = true;
 		}
 	},
 	'dblclick input' : function(e) {
 		if (e.target.disabled) {
 			//Put a color to
-			e.target.style.border = "3px solid #f89406";
+			e.target.style.color = "#f89406";
 			e.target.disabled = false;
 		}
 	},
@@ -108,7 +108,7 @@ Template.patientCard.events({
 		if (e.keyCode == '13' && !e.target.disabled) {
 			var value = e.target.value;
 			var field = e.target.dataset.field;
-			if(!validatePatientData(field,value)){
+			if (!validatePatientData(field, value)) {
 				return;
 			}
 			if (field == "birthdate") {
@@ -126,9 +126,100 @@ Template.patientCard.events({
 				}
 			});
 			//Codice per fare l'update sull'ogetto
-			e.target.style.border = "0";
+			e.target.style.color = "";
 			e.target.disabled = true;
 		}
+	}
+});
+
+Template.hospitalizationCard.events({
+	'taphold input' : function(e) {
+		if (e.target.type == "text") {
+			if (e.target.disabled) {
+				e.target.style.color = "#f89406";
+				e.target.disabled = false;
+			} else {
+				var value = e.target.value;
+				var field = e.target.dataset.field;
+				var update = {};
+				update[field] = value;
+				Hospitalizations.update({
+					_id : this._id
+				}, {
+					$set : update
+				}, function(error) {
+					if (!error) {
+						Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+					}
+				});
+				e.target.style.color = "";
+				e.target.disabled = true;
+			}
+		}
+	},
+	'dblclick input' : function(e) {
+		if (e.target.type == "text") {
+			if (e.target.disabled) {
+				e.target.style.color = "#f89406";
+				e.target.disabled = false;
+			}
+		}
+	},
+	'keydown input' : function(e) {
+		if (e.keyCode == '13' && !e.target.disabled) {
+			var value = e.target.value;
+			var field = e.target.dataset.field;
+			var update = {};
+			update[field] = value;
+			Hospitalizations.update({
+				_id : this._id
+			}, {
+				$set : update
+			}, function(error) {
+				if (!error) {
+					Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+				}
+			});
+			e.target.style.color = "";
+			e.target.disabled = true;
+		}
+	},
+	'change input' : function(e) {
+		var checked = e.target.checked;
+		var type = e.target.type;
+		var field = e.target.dataset.field;
+		var update = {};
+
+		if (type == "checkbox") {
+			update[field] = checked;
+
+			Hospitalizations.update({
+				_id : this._id
+			}, {
+				$set : update
+			}, function(error) {
+				if (!error) {
+					Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+				}
+			});
+		}
+	},
+	'change select' : function(e) {
+		var value = e.target.value;
+		var field = e.target.dataset.field;
+		var update = {};
+
+		update[field] = value;
+
+		Hospitalizations.update({
+			_id : this._id
+		}, {
+			$set : update
+		}, function(error) {
+			if (!error) {
+				Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+			}
+		});
 	}
 });
 

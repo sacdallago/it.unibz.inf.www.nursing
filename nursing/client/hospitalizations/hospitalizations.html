@@ -6,48 +6,15 @@
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
 				{{> hospitalizationCard}}
-				<li class="card">
-					<div class="card-body" style="text-align: center; padding-top: 10px">
-						<ul class="unstyled inline">
-							<li>
-								<div class="reminders collapse in">
-									<button class="btn" data-toggle="collapse" data-target=".reminders">
-										Show Reminders
-									</button>
-								</div>
-								<div class="reminders collapse">
-									<button class="btn" data-toggle="collapse" data-target=".reminders">
-										Hide Reminders
-									</button>
-								</div>
-							</li>
-							<li>
-								<div class="diary collapse in">
-									<button class="btn" data-toggle="collapse" data-target=".diary">
-										Show Patient Diary
-									</button>
-								</div>
-								<div class="diary collapse">
-									<button class="btn" data-toggle="collapse" data-target=".diary">
-										Hide Patient Diary
-									</button>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</li>
-				<div class="reminders collapse">
-					{{> reminder_item}}
-				</div>
-				<div class="diary collapse">
-					{{#each entry}}
-					{{#if fields}}
-					{{> measureItems}}
-					{{else}}
-					{{> journalItems}}
-					{{/if}}
-					{{/each}}
-				</div>
+				{{> reminder_item}}
+				<li style="margin-bottom: 20px;"></li>
+				{{#each entry}}
+				{{#if fields}}
+				{{> measureItems}}
+				{{else}}
+				{{> journalItems}}
+				{{/if}}
+				{{/each}}
 			</ul>
 		</div>
 	</div>
@@ -71,25 +38,25 @@
 					<tr>
 						<td> First name: </td>
 						<td>
-						<input disabled="true" data-field="first" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Last name: </td>
 						<td>
-						<input disabled="true" data-field="last" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Birthdate: </td>
 						<td>
-						<input disabled="true" data-field="birthdate" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
+						<input disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Street: </td>
 						<td>
-						<input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
+						<input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" pattern="[a-zA-Z ]+" required/>
 						</td>
 					</tr>
 					<tr>
@@ -101,37 +68,37 @@
 					<tr>
 						<td> City: </td>
 						<td>
-						<input disabled="true" data-field="residenceCity" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="residenceCity" type="text" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Province: </td>
 						<td>
-						<input disabled="true" data-field="residenceProvince" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="residenceProvince" type="text" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Sex: </td>
 						<td>
-						<input disabled="true" data-field="sex" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						<input disabled="true" data-field="sex" type="text" value="{{sex}}" pattern="[m|f|M|F]" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Height: </td>
 						<td>
-						<input disabled="true" data-field="height" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
+						<input disabled="true" data-field="height" type="number" value="{{height}}" step="any" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Marrital status: </td>
 						<td>
-						<input disabled="true" data-field="maritalstatus" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="maritalstatus" type="text" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Reference phone: </td>
 						<td>
-						<input disabled="true" data-field="referencePhone" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						<input disabled="true" data-field="referencePhone" type="tel" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
 						</td>
 					</tr>
 				</tbody>
@@ -146,30 +113,30 @@
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
 			<h3>Hospitalization Details:</h3>
-			<table class="table table-condensed patientUpdate">
+			<table class="table table-condensed addmessage patientUpdate">
 				<tbody>
 					<tr>
 						<td> Reason: </td>
 						<td>
-						<input disabled="true" data-field="reason" type="text" placeholder="Surgery recap" value="{{capitalize reason}}" pattern="[a-zA-Z ]+" required/>
+						<input data-field="reason" type="text" disabled="true" value="{{reason}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
 						<td> Allergies: </td>
 						<td>
-						<input disabled="true" data-field="allergies" type="text" placeholder="Guacamole, milk" value="{{allergies}}" pattern="[a-zA-Z ]+"/>
+						<input data-field="allergies" type="text" disabled="true" value="{{allergies}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
 						<td> Allergies to drugs: </td>
 						<td>
-						<input disabled="true" data-field="drugAllergies" placeholder="Paracetamol, ..." type="text" value="{{drugAllergies}}" pattern="[a-zA-Z ]+"/>
+						<input data-field="drugAllergies" type="text" disabled="true" value="{{drugAllergies}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
 						<td> Diabetes: </td>
 						<td>
-						<select disabled="true" data-field="diabetes">
+						<select data-field="diabetes">
 							<option value="no" {{findSelected diabetes "no"}}>No</option>
 							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomous</option>
 							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Decompensated</option>
@@ -178,7 +145,7 @@
 					<tr>
 						<td> Diet: </td>
 						<td>
-						<select disabled="true" data-field="diet">
+						<select  data-field="diet">
 							<option value="healthy" {{findSelected diet "healthy"}}>Healthy</option>
 							<option value="fat" {{findSelected diet "fat"}}>Fat</option>
 						</select></td>
@@ -187,7 +154,7 @@
 					<tr>
 						<td> Active or sedentary: </td>
 						<td>
-						<select disabled="true" data-field="lifestyle">
+						<select  data-field="lifestyle">
 							<option value="active" {{findSelected lifestyle "active"}}>Active</option>
 							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentary</option>
 						</select></td>
@@ -203,7 +170,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="lucid" checked="{{lucid}}" id="lucid" name="" />
+							<input type="checkbox"  data-field="lucid" checked="{{lucid}}" id="lucid" name="" />
 							<label for="lucid">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -218,7 +185,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="oriented" checked="{{oriented}}" id="oriented" name="" />
+							<input type="checkbox"  data-field="oriented" checked="{{oriented}}" id="oriented" name="" />
 							<label for="oriented">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -233,7 +200,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="cooperative" checked="{{cooperative}}" id="cooperative" name="" />
+							<input type="checkbox"  data-field="cooperative" checked="{{cooperative}}" id="cooperative" name="" />
 							<label for="cooperative">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -248,7 +215,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="smoker" checked="{{smoker}}" id="smoker" name="" />
+							<input type="checkbox"  data-field="smoker" checked="{{smoker}}" id="smoker" name="" />
 							<label for="smoker">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -263,7 +230,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="urinationProblem" checked="{{urinationProblem}}" id="urinationProblem" name="" />
+							<input type="checkbox"  data-field="urinationProblem" checked="{{urinationProblem}}" id="urinationProblem" name="" />
 							<label for="urinationProblem">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -278,7 +245,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="prosthetics" checked="{{prosthetics}}" id="prosthetics" name="" />
+							<input type="checkbox"  data-field="prosthetics" checked="{{prosthetics}}" id="prosthetics" name="" />
 							<label for="prosthetics">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -293,7 +260,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="goods" checked="{{goods}}" id="goods" name="" />
+							<input type="checkbox"  data-field="goods" checked="{{goods}}" id="goods" name="" />
 							<label for="goods">&nbsp;</label>
 						</div></td>
 					</tr>
@@ -308,7 +275,7 @@
 									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
 								</tr>
 							</table>
-							<input type="checkbox" disabled="true" data-field="walkingAid" checked="{{walkingAid}}" id="walkingAid" name="" />
+							<input type="checkbox"  data-field="walkingAid" checked="{{walkingAid}}" id="walkingAid" name="" />
 							<label for="walkingAid">&nbsp;</label>
 						</div></td>
 					</tr>
