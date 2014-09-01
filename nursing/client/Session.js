@@ -25,6 +25,7 @@ Session.setDefault('inputCategory', null);
 Session.setDefault('typeFilter',null); // Filter that stores type attribute. Can be used in messsages (data.type: this)
 Session.setDefault('patientFilter',null); // Filter that stores patient id. Can be used wherever patientId is used.
 Session.setDefault('hospitalizationFilter',null); // Filter that stores hospitalization id. Can be used wherever hospitalizationId is used.
+Session.setDefault('problemFilter',null);
 
 //Loading cubes
 /*
