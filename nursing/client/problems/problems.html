@@ -1,0 +1,43 @@
+<template name="problems">
+
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span6 offset3">
+        <div class="card">
+          <div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
+            <div class="card-heading-header">
+              <p style="font-size: 22.75px;">
+                <strong><i class="fa fa-tags"></i>Problems</strong>
+              </p>
+            </div>
+          </div>
+          <div class="card-body in collapse tagcollapse" style="text-align: left;">
+            <!-- problem subject list -->
+            {{#each subjects}}
+              {{> subject}}
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span10 offset1">
+        <div class="card">
+           <!-- journal with that subject -->
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span8 offset2">
+        <div id="items-view">
+          <!-- entries: mixed journal and measures -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</template>
+
+<template name="subject">
+  <button type="button" class="btn btn-default pointer subject {{selected}}">{{subject}}</button>
+</template>
