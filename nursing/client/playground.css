@@ -290,3 +290,15 @@ body {
 	font-size: 16pt;
 	margin-bottom: 0;
 }
+
+.input-block{
+	padding: 2%;
+}
+
+.input-block label{
+	margin-bottom: 1%;
+	cursor: default;
+}
+.input-block-title{
+	margin: 1%;
+}

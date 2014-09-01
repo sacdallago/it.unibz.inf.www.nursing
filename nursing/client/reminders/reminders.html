@@ -63,7 +63,7 @@
   {{/each}}
   </p>
   <p>
-  <div id="createCategory">
+  <div id="createCategory" class="invisible">
     
         <input type="text" id="new-category" placeholder="New category" />
 
@@ -97,7 +97,7 @@
               <li>
                 {{#if editing}}
                   <div class="edit">
-                    <input id="reminder-input" type="text" value="{{text}}" />
+                    <input id="reminder-input" type="text" value="{{message}}" />
                   </div>
                 {{else}}
                   <div class="display">

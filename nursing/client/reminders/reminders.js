@@ -265,6 +265,11 @@ Template.reminder_item.events({
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
   },
+  'taphold .display .reminder-text': function (evt, tmpl) {
+    Session.set('editing_reminderName', this._id);
+    Deps.flush(); // update DOM before focus
+    activateInput(tmpl.find("#reminder-input"));
+  },
 
   'change select' : function(event){
     var problemId = $(event.currentTarget).find(':selected').data("problemid");
