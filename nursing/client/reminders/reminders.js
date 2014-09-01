@@ -149,7 +149,7 @@ reminders = function () {
 Template.reminders.reminders = reminders;
  
 
-Template.reminder_item.helpers({
+Template.reminderItem.helpers({
   doneStyle: function () {
     
     return (this.done)?'label-info':'';
@@ -200,7 +200,7 @@ var setDueDate = function(element){
     });
 };
 
-Template.reminder_item.events({
+Template.reminderItem.events({
   'click .check': function () {
     var set;
     if (!this.hasOwnProperty('done')){
@@ -286,7 +286,7 @@ Template.reminder_item.events({
   }
 });
 
-Template.reminder_item.events(okCancelEvents(
+Template.reminderItem.events(okCancelEvents(
   '#reminder-input',
   {
     ok: function (value) {

@@ -34,28 +34,22 @@
     </div>
     <div class="row-fluid">
       <div class="span8 offset2">
-        
+        <ul class="unstyled">
           <!-- entries: mixed journal and measures -->
           {{#each entry}}
             {{#if isClass "journal"}}
               {{>journalItems}}
             {{/if}}
             {{#if isClass "measure"}}
-              <div class="offset1">
                 {{>measureItems}}
-              </div>
+            {{/if}}
+            {{#if isClass "reminder"}}
+              {{>reminderItem}}
             {{/if}}
           {{/each}}
-       
+       </ul>
       </div>
-    </div>
-    <div class="row-fluid">
-      <div class="span8 offset2">
-        {{#each reminders}}
-          {{> reminder_item}}
-        {{/each}}
-      </div>
-    </div>
+    </div> 
   </div>
   
 </template>
