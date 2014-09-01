@@ -49,6 +49,65 @@ Template.home.helpers({
 	}
 });
 
+Template.home.reminders = function () {
+  // Determine which reminders to display in main pane,
+  // selected based on category
+    var category = Session.get('categoryName');
+    var patientFilter = Session.get('patientFilter');
+    var reminders;
+    var sel = {};
+    if(category) {
+    sel.category = category;
+    }
+    if(patientFilter) {
+    sel.patientId = patientFilter;
+    }
+
+
+    reminders = Reminders.find(sel, {sort: {done:1,journalId:-1,dueDate:1}});
+    
+    var tempHandle = null;
+    return reminders.map(function(element) {
+      var patient = Patients.findOne({
+        _id : element.patientId
+      });
+
+      var room = Rooms.findOne({
+        patientId : element.patientId
+      });
+
+      var nurse = Meteor.users.findOne({
+        _id : element.nurseId
+      });
+      
+      if (element.journalId){
+        var journalentry = Journal.findOne(element.journalId);
+        element.problemSubject = journalentry.subject;
+        if (journalentry.solved){
+          element.solved = journalentry.solved;
+        }
+      }
+      
+      if (patient) {
+        element.patientName = niceName(patient.first, patient.last);
+      }
+
+      if (room) {
+        element.roomNumber = room.number;
+        element.bed = room.bed;
+      }
+
+      if (nurse) {
+        element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+      }
+      //This adds a nice formatting of the date the message was written / modified
+      console.log("Remapping");
+      element.date = dateFormatter(element.timestamp);
+      element.niceDue = dateFormatter(element.dueDate);
+      return element;
+    });
+};
+
 Template.patientCard.helpers({
 	patient : function() {
 		return Patients.findOne(Session.get('patientFilter'));

@@ -3,8 +3,23 @@ Template.problems.helpers({
 	subjects : function(){
 		var list = Journal.find({
 			active: true,
-			subject: $exists:true
+			subject: {$exists:true}
 		});
+		return list;
+	},
+	origin : function(){
+		var problemId = Session.get('problemFilter');
+		var problem = null;
+		if (problemId){
+			 problem = Journal.findOne({
+			 	_id: problemId
+			});
+		}
+		console.log(problem);
+		return problem;
+	},
+	isClass : function(itemClass){
+		return (this.itemClass === itemClass);
 	}
 });
 

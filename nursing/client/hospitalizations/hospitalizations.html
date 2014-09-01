@@ -6,7 +6,9 @@
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
 				{{> hospitalizationCard}}
-				{{> reminder_item}}
+				{{#each reminders}}
+					{{> reminder_item}}
+				{{/each}}
 				<li style="margin-bottom: 20px;"></li>
 				{{#each entry}}
 				{{#if fields}}

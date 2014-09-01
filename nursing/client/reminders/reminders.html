@@ -33,8 +33,10 @@
         Loading...
       {{else}}
         <ul class="unstyled">
-         
+          {{#each reminders}}
             {{> reminder_item}}
+          
+          {{/each}}
           
         </ul>
       {{/if}}
@@ -77,7 +79,7 @@
 
 <template name="reminder_item">
   {{#AnimateWithVelocity}}
-  {{#each reminders}}
+  
       <li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <label class="check" style="margin-right:0;margin-top:0;float:right"> 
             <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
@@ -189,7 +191,7 @@
       <ul class="unstyled inline" > 
        <li> 
           <div>   
-            <i style="opacity: 0.5;" class="fa fa-clock-o"> {{date}} {{nurseName}}</i> 
+            <i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i> 
           </div>
         </li>
         <li>    
@@ -201,6 +203,6 @@
       </div>
 
   </li>
-  {{/each}}
+  
   {{/AnimateWithVelocity}}
 </template>

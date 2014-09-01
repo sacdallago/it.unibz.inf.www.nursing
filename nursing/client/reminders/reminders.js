@@ -87,7 +87,7 @@ Template.reminders.events(okCancelEvents(
     }
   }));
 
-Template.reminder_item.reminders = function () {
+reminders = function () {
   // Determine which reminders to display in main pane,
   // selected based on category
     var category = Session.get('categoryName');
@@ -145,6 +145,8 @@ Template.reminder_item.reminders = function () {
       return element;
     });
 };
+
+Template.reminders.reminders = reminders;
  
 
 Template.reminder_item.helpers({
