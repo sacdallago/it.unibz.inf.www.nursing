@@ -63,13 +63,60 @@ Template.patientCard.helpers({
 });
 
 Template.patientCard.events({
-	'tap input' : function(e){
-		if(e.target.disabled){
-			//Put a color to 
-			e.target.disabled=false;
+	'taphold input' : function(e) {
+		if (e.target.disabled) {
+			e.target.style.border = "3px solid #f89406";
+			e.target.disabled = false;
 		} else {
+			var value = e.target.value;
+			var field = e.target.dataset.field;
+			if (field == "birthdate") {
+				value = new Date(value).getTime();
+			}
+			var update = {};
+			update[field] = value;
+			Patients.update({
+				_id : this._id
+			}, {
+				$set : update
+			}, function(error) {
+				if (!error) {
+					Notifications.success('Updated', 'Updated ' + field + ' of patient');
+				}
+			});
 			//Codice per fare l'update sull'ogetto
-			e.target.disabled=true;
+			e.target.style.border = "0";
+			e.target.disabled = true;
+		}
+	},
+	'dblclick input' : function(e) {
+		if (e.target.disabled) {
+			//Put a color to
+			e.target.style.border = "3px solid #f89406";
+			e.target.disabled = false;
+		}
+	},
+	'keydown input' : function(e) {
+		if (e.keyCode == '13' && !e.target.disabled) {
+			var value = e.target.value;
+			var field = e.target.dataset.field;
+			if (field == "birthdate") {
+				value = new Date(value).getTime();
+			}
+			var update = {};
+			update[field] = value;
+			Patients.update({
+				_id : this._id
+			}, {
+				$set : update
+			}, function(error) {
+				if (!error) {
+					Notifications.success('Updated', 'Updated ' + field + ' of patient');
+				}
+			});
+			//Codice per fare l'update sull'ogetto
+			e.target.style.border = "0";
+			e.target.disabled = true;
 		}
 	}
 });

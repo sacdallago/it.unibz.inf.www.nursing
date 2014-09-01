@@ -283,7 +283,9 @@ body {
 	color: white;
 	background-color: #b0b0b0 !important;
 }
+
 .patientUpdate input{
+	border:0;
 	width: 90%;
 	font-size: 16pt;
 	margin-bottom: 0;

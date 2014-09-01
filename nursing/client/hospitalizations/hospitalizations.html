@@ -69,67 +69,67 @@
 					<tr>
 						<td> First name: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						<input input disabled="true" data-field="first" type="text" placeholder="Irene" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Last name: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						<input input disabled="true" data-field="last" type="text" placeholder="Pichler" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Birthdate: </td>
 						<td>
-						<input input disabled="true" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
+						<input input disabled="true" data-field="birthdate" type="date" placeholder="dd/mm/yyyy" value="{{htmlDate birthdate}}" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Street: </td>
 						<td>
-						<input input disabled="true" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
+						<input input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" placeholder="via Goethe" pattern="[a-zA-Z ]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Number: </td>
 						<td>
-						<input input disabled="true" type="number" value="{{residenceNumber}}" required/>
+						<input input disabled="true" data-field="residenceNumber" type="number" value="{{residenceNumber}}" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> City: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						<input input disabled="true" data-field="residenceCity" type="text" placeholder="ora" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Province: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						<input input disabled="true" data-field="residenceProvince" type="text" placeholder="bz" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Sex: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						<input input disabled="true" data-field="sex" type="text" placeholder="f" value="{{sex}}" pattern="[m|f|M|F]" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Height: </td>
 						<td>
-						<input input disabled="true" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
+						<input input disabled="true" data-field="height" type="number" placeholder="1,45" value="{{height}}" step="any" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Marrital status: </td>
 						<td>
-						<input input disabled="true" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						<input input disabled="true" data-field="maritalstatus" type="text" placeholder="married" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
 						<td> Reference phone: </td>
 						<td>
-						<input input disabled="true" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						<input input disabled="true" data-field="referencePhone" type="tel" placeholder="0045669532658" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
 						</td>
 					</tr>
 				</tbody>
