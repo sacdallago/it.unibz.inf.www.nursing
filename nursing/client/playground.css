@@ -371,3 +371,14 @@ body {
 .reminder-items {
 	margin: 0.666%;
 }
+.entry{
+	margin: 1%;
+}
+.free select{
+	background-color: green;
+	cursor: default;
+}
+.occupied select{
+	background-color: red;
+	cursor: default;
+}

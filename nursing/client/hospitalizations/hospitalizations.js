@@ -392,3 +392,61 @@ Template.home.entry = function() {
 
 	return entries;
 };
+
+Template.bedCard.helpers({
+	rooms : function(){
+		var entries = [];
+		Rooms.find({}).map(function(room){
+			room.niceId = room.number + room.bed;
+			console.log(room.niceId);
+
+			if(!room.hasOwnProperty("patientId")){
+				room.status = "free";
+			} else{
+				if(room.patientId){
+					room.status = "occupied";
+				} else {
+					room.status = "free";
+				}
+			}
+			entries.push(room);
+		});
+
+		return entries;
+	},
+	bedStatus : function(){
+		return (this.status)?'fa fa-circle':'fa fa-circle-thin';
+	},
+	getRoomAndBed : function(){
+		var patientId = Session.get('patientFilter');
+		var bed = Rooms.findOne({patientId:patientId});
+
+		if (bed){
+			var niceId = bed.number + bed.bed;
+			return niceId;
+		} else {
+			return "NO ROOM OR BED ASSIGNED";
+		}
+	}
+});
+
+Template.bedCard.events({
+	'change #roomSelect' : function(){
+		var roomId = $(event.currentTarget).find(':selected').data("_id");
+		var patientId = Session.get('patientFilter');
+		var oldRoomId = Rooms.findOne({patientId: patientId});
+		Rooms.update({_id : oldRoomId._id},{$unset:{patientId: ""}},function(error) {
+								if (error) {
+									Notifications.error('Error', 'Something happened while saving updating the room');
+								} else {
+									Rooms.update({_id:roomId},{$set:{patientId:patientId}},function(error) {
+								if (error) {
+									Notifications.error('Error', 'Something happened while updating the room');
+								} else {
+									Notifications.info('Confirmation', 'Room updated successfully!');
+								}
+							});
+						}
+					});
+	}
+});

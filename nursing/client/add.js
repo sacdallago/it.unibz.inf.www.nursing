@@ -15,23 +15,23 @@ Template.newPatient.events({
 		event.preventDefault();
 		var inputs = document.getElementsByClassName('newPatient');
 		var patient = {};
-		for(var i=0;i<inputs.length;i++){
+		for (var i = 0; i < inputs.length; i++) {
 			var value = inputs[i].value;
 			var field = inputs[i].dataset.field;
 			if (!validatePatientData(field, value)) {
-				return;	
+				return;
 			}
 			patient[field] = value;
 		}
-		Patients.insert(patient,function(error,data){
-			if(!error){
-				Notifications.success('Success','Patient inserted!');
-				Session.set('patientFilter',data);
+		Patients.insert(patient, function(error, data) {
+			if (!error) {
+				Notifications.success('Success', 'Patient inserted!');
+				Session.set('patientFilter', data);
 				event.target.reset();
 				$('#patient').modal('hide');
 			}
 		});
-		
+
 	}
 });
 
@@ -262,6 +262,12 @@ Template.newJournal.destroyed = function() {
 	delete Session.keys['fileSelected'];
 };
 
+//newReminder
+Template.newReminder.rendered = function() {
+	var category = Categories.findOne({});
+	Session.set('inputCategory', category.name);
+};
+
 Template.newReminder.events({
 	'click .category' : function(event) {
 		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
@@ -317,7 +323,6 @@ Template.newReminder.events({
 				Notifications.success("Success", "New Reminder saved!");
 				$('#reminder').modal('hide');
 				event.target.reset();
-				Session.set('inputCategory', null);
 			}
 		});
 	}
@@ -349,4 +354,4 @@ Template.newReminder.helpers({
 			}]
 		});
 	}
-}); 
+});

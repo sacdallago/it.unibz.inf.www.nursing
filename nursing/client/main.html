@@ -252,7 +252,7 @@
 								<strong name="task">Task description</strong>&nbsp;
 								<br/>
 							</div>
-							<input id="remindermessage" type="text" name="message" value=""/>
+							<input id="remindermessage" type="text" name="message" value="" required/>
 							<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
 						</div>
 						<div class="input-block">
@@ -260,15 +260,11 @@
 								<strong>Pick a category</strong>
 								<br/>
 							</div>
-
 							{{#each categories}}
-
 							<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">
 								{{name}}
 							</button>
-
 							{{/each}}
-
 						</div>
 
 						<div class="input-block">
