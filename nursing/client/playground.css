@@ -373,3 +373,11 @@ body {
 .entry{
 	margin: 1%;
 }
+.free select{
+	background-color: green;
+	cursor: default;
+}
+.occupied select{
+	background-color: red;
+	cursor: default;
+}

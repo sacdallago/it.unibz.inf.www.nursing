@@ -5,6 +5,7 @@
 		<div class="row-fluid">
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
+				
 				{{> hospitalizationCard}}
 				<ul class="unstyled"> 
 				{{#each reminders}}
@@ -112,8 +113,43 @@
 	{{/with}}
 </template>
 
+<template name="bedCard">
+	<li class="card" style="padding-top: 5px;">
+		<div class="card-body" style="text-align: left;">
+			<h3>Accomodation Details:</h3>
+			<table class="table table-condensed patientUpdate">
+
+				<tbody>
+					<tr>
+						<td>
+							Current room:
+						</td>
+						<td>
+							{{getRoomAndBed}}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Assign new room:
+						</td>
+						<td>
+							<select class="" id="roomSelect">
+							
+							{{#each rooms}}
+								<option class="{{status}}" data-_id="{{_id}}" value="{{_id}}"><label>{{niceId}} - {{status}} </label></option>
+							{{/each}}
+						</select>
+						</td>
+					</tr>			
+				</tbody>
+			</table>
+		</div>
+	</li>
+</template>
+
 <template name="hospitalizationCard">
 	{{#with hospitalization}}
+	{{> bedCard}}
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
 			<h3>Hospitalization Details:</h3>

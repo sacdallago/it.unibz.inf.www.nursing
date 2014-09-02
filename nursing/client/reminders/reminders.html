@@ -85,7 +85,7 @@
             <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
         </label>
       
-      <div class="{{#if problemSubject}} twitter-orange  {{/if}}" style="padding:20px">
+      <div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:20px">
 
         <ul class="unstyled inline">
           <li>
