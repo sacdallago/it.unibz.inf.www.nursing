@@ -4,10 +4,6 @@
 Rooms = new Meteor.Collection('rooms');
 roomsHandle = Meteor.subscribe('rooms');
 
-//Load Journal at startup
-Journal = new Meteor.Collection("journal");
-journalHandle = Meteor.subscribe('journal');
-
 usersHandle = Meteor.subscribe('users');
 
 //Which page am I at?

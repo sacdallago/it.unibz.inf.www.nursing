@@ -1,6 +1,5 @@
 Measures = new Meteor.Collection("measures");
-
-measureslHandle = Meteor.subscribe('measures');
+measureslHandle = Meteor.subscribe('measures',{active:true},{});
 
 Template.chart.helpers({
 	graphTitle : function() {
@@ -160,7 +159,11 @@ Template.measures.measures = function() {
 		var room = Rooms.findOne({
 			'patientId' : element.patientId
 		});
-		element.bed = room.number + "" + room.bed;
+		if (room) {
+			element.bed = room.number + "" + room.bed;
+		} else {
+			element.bed = "NO BED ASSIGNED";
+		}
 
 		element.date = dateFormatter(element.timestamp);
 

@@ -4,17 +4,15 @@
 
 body {
 	font-size: 100%;
+	padding-bottom: 70px;
 }
 
 @media (max-width: 979px) {
 	body {
-		padding-bottom: 60px;
+		padding-bottom: 70px;
 	}
 	.navbar-fixed-bottom {
 		position: fixed;
-	}
-	.plusButton {
-		line-height: 44px;
 	}
 	.fixed {
 		position: fixed;
@@ -36,15 +34,14 @@ body {
 	cursor: pointer;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
 @media (min-width: 768px) {
 	.fixed {
 		position: fixed;
 	}
-	/*
-	 ::-webkit-scrollbar {
-	 display: none;
-	 }
-	 */
 }
 
 .card-heading {
@@ -171,7 +168,7 @@ body {
 .plusButton {
 	position: absolute;
 	right: 20px;
-	top: 0;
+	top: 10px;
 }
 
 .modal-backdrop {
@@ -230,6 +227,12 @@ body {
 .twitter-blue {
 	color: white;
 	background-color: #5bc0de;
+	
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	-ms-transition: all 1s ease;
+	transition: all 1s ease;
 }
 
 .twitter-red {
@@ -303,7 +306,6 @@ body {
 	font-size: 16pt;
 	margin-bottom: 0;
 	padding: 0;
-	
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
 	-o-transition: all .5s ease;
@@ -344,7 +346,6 @@ body {
 	min-height: 20px;
 	background: #E74C3C;
 	margin-left: 50px;
-	
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
 	-o-transition: all .5s ease;
@@ -356,17 +357,17 @@ body {
 	margin-left: -2px;
 }
 
-.input-block{
+.input-block {
 	padding: 2%;
 }
 
-.input-block label{
+.input-block label {
 	margin-bottom: 1%;
 	cursor: default;
 }
-.input-block-title{
+.input-block-title {
 	margin: 1%;
 }
-.reminder-items{
+.reminder-items {
 	margin: 0.666%;
 }

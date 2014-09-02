@@ -12,7 +12,7 @@
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (Meteor.userId())
 					this.redirect('home');
 			}
@@ -23,7 +23,7 @@
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (Meteor.userId())
 					this.redirect('home');
 			}
@@ -34,7 +34,7 @@
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
@@ -42,10 +42,15 @@
 		this.route('home', {
 			path : '/',
 			onBeforeAction : function() {
+				Meteor.subscribe('journal', {
+					subject : {
+						$exists : true
+					}
+				}, {});
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
@@ -58,7 +63,7 @@
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
@@ -66,13 +71,13 @@
 		this.route('journal', {
 			path : '/journal',
 			onBeforeAction : function() {
-				if (Meteor.userId()){
-					Session.set('newJournals',0);
+				if (Meteor.userId()) {
+					Session.set('newJournals', 0);
 				}
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
@@ -80,28 +85,29 @@
 		this.route('measures', {
 			path : '/measures',
 			onBeforeAction : function() {
-				if (Meteor.userId()){
-					
+				if (Meteor.userId()) {
+
 				}
 			},
 			onAfterAction : function() {
 			},
-			onRun: function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			}
 		});
-		this.route('problems',{
+		this.route('problems', {
 			path : '/problems',
-			onBeforeAction : function(){
+			onBeforeAction : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			},
-			onRun : function(){
+			onRun : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
 			},
-			onAfterAction : function(){}
+			onAfterAction : function() {
+			}
 		});
 	});
 })();

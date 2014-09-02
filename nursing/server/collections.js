@@ -30,30 +30,46 @@ Meteor.publish('favorites', function() {
 		return null;
 	}
 });
-Meteor.publish('measures', function() {
+Meteor.publish('measures', function(criteria,projection) {
 	if (this.userId) {
-		return Measures.find();
+		if (criteria && projection) {
+			return Measures.find(criteria,projection);
+		} else {
+			return Measures.find();
+		}
 	} else {
 		return null;
 	}
 });
-Meteor.publish('journal', function() {
+Meteor.publish('journal', function(criteria,projection) {
 	if (this.userId) {
-		return Journal.find();
+		if (criteria && projection) {
+			return Journal.find(criteria,projection);
+		} else {
+			return Journal.find();
+		}
 	} else {
 		return null;
 	}
 });
-Meteor.publish('hospitalizations', function() {
+Meteor.publish('hospitalizations', function(criteria,projection) {
 	if (this.userId) {
-		return Hospitalizations.find();
+		if (criteria && projection) {
+			return Hospitalizations.find(criteria,projection);
+		} else {
+			return Hospitalizations.find();
+		}
 	} else {
 		return null;
 	}
 });
-Meteor.publish('reminders', function() {
+Meteor.publish('reminders', function(criteria,projection) {
 	if (this.userId) {
-		return Reminders.find();
+		if (criteria && projection) {
+			return Reminders.find(criteria,projection);
+		} else {
+			return Reminders.find();
+		}
 	} else {
 		return null;
 	}
@@ -116,5 +132,19 @@ Meteor.methods({
 			}
 		});
 		return true;
+	},
+	updateProblems : function(patientId,hospitalizationId){
+		Journal.update({
+			patientId: patientId,
+			subject : {
+				$exists : true
+			},
+			$or: [{ solved: false}, {solved :{$exists: false}}]
+		},{
+			$set: {
+				hospitalizationId: hospitalizationId,
+				active:true
+			}
+		});
 	}
 });

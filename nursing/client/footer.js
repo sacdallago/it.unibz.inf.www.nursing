@@ -18,9 +18,12 @@ Template.footer.settings = function() {
 			},
 			callback : function(doc, element) {
 				Session.set('patientFilter', doc._id);
-				Session.set('hospitalizationFilter', Hospitalizations.findOne({
+				var hosp = Hospitalizations.findOne({
 					patientId : doc._id
-				})._id);
+				});
+				if(hosp){
+					Session.set('hospitalizationFilter', hosp._id);
+				}
 			}
 		}]
 	};
@@ -35,12 +38,24 @@ Template.patientPill.helpers({
 			return room.number + room.bed;
 		}
 		return null;
+	},
+	hospitalization : function(){
+		var hospitalization = Hospitalizations.findOne({
+			patientId : this._id
+		});
+		if (hospitalization) {
+			return hospitalization;
+		}
+		return null;
 	}
 });
 
 Template.footer.helpers({
 	nameSelected : function() {
 		return Session.get('patientFilter');
+	},
+	hasHospitalization : function() {
+		return Session.get('hospitalizationFilter');
 	},
 	patientName : function() {
 		var patient = Patients.findOne(Session.get('patientFilter'));
@@ -55,8 +70,25 @@ Template.footer.helpers({
 });
 
 Template.footer.events({
-	'click h4' : function() {
+	'click .pointer' : function() {
 		Session.set('patientFilter', null);
 		Session.set('hospitalizationFilter', null);
+	},
+	'click .newHospitalization' : function(){
+		Hospitalizations.insert({
+			active: true,
+			patientId: Session.get('patientFilter'),
+			timestamp: Date.now(),
+			nurseId: Meteor.userId()
+		},function(error,object){
+			if(!error){
+				Meteor.call('updateProblems',Session.get('patientFilter'),object,function(err){
+					if(!err){
+						Notifications.success('Success','Created a new hospitalization! Fill it out in the home!');
+						Session.set('hospitalizationFilter', object);
+					}
+				});
+			}
+		});
 	}
 });

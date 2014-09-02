@@ -59,13 +59,19 @@
 						{{/unless}}
 						{{/unless}}
 						{{#if subject}}
-						{{#unless solved}}
+						{{#if solved}}
+						<li>
+							<button type="button" class="btn btn-inverse unsolved">
+								<i class="fa fa-check"></i> Unsolve
+							</button>
+						</li>
+						{{else}}
 						<li>
 							<button type="button" class="btn btn-inverse solved">
 								<i class="fa fa-check"></i> Solved
 							</button>
 						</li>
-						{{/unless}}
+						{{/if}}
 						{{/if}}
 						<li>
 							<button type="button" class="btn btn-inverse delete">

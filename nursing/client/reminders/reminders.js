@@ -8,7 +8,6 @@ Session.setDefault('editing_categoryName', null);
 // When editing reminder text, ID of the reminder
 Session.setDefault('editing_reminderName', null);
 
-categoriesHandle = null;
 remindersHandle = Meteor.subscribe('reminders');
 
 ////////// Helpers for in-place editing //////////

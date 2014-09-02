@@ -38,23 +38,22 @@
 	<div id="footer" class="container">
 		<nav class="navbar navbar-default navbar-fixed-bottom">
 			<div class="navbar-inner navbar-content-center">
-				<div class="span2 offset5">
-					<p class="navbar-text" style="text-align: center;">
-						{{#if nameSelected}}
-						<div class="pointer">
-							<h4>{{patientName}} <i class="fa fa-times-circle-o alizarin"></i></h4>
-						</div>
-						{{else}}
-						{{> inputAutocomplete settings=settings type="text" class="search-query" placeholder="Patient"}}
-						{{/if}}
-					</p>
-				</div>
+				<p class="navbar-text" style="text-align: center; height: 60px;">
+					{{#if nameSelected}}
+					<div class="pointer" style="width: 300px; height: 60px; margin: 0 auto; overflow: scroll;">
+						<h3>{{patientName}} <i class="fa fa-times-circle-o alizarin"></i></h3>
+					</div>
+					{{else}}
+					{{> inputAutocomplete settings=settings type="text" class="search-query" placeholder="Patient" style="width: 300px; margin: 10px auto 0 auto;"}}
+					{{/if}}
+				</p>
 				<div class="btn-group dropup plusButton">
 					<button class="btn dropdown-toggle" style="	width: 100px;" data-toggle="dropdown">
 						<i class="fa fa-plus"></i>
 					</button>
 					<ul class="dropdown-menu pull-right">
 						{{#if nameSelected}}
+						{{#if hasHospitalization}}
 						<li>
 							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> New Measurement</a>
 						</li>
@@ -66,7 +65,12 @@
 						</li>
 						{{else}}
 						<li>
-							<a href="#" ><i class="fa fa-user"></i> Please select a patient</a>
+							<a href="#" class="newHospitalization"><i class="fa fa-h-square"></i> New Hospitalization</a>
+						</li>
+						{{/if}}
+						{{else}}
+						<li>
+							<a href="#" data-toggle="modal" data-target="#patient"><i class="fa fa-user"></i> Add a new patient</a>
 						</li>
 						{{/if}}
 					</ul>
@@ -77,7 +81,28 @@
 </template>
 
 <template name="patientPill">
-	<span><strong>{{last}}, {{first}}</strong> {{room}}</span>
+	<ul class="unstyled">
+		<li>
+			<strong>{{capitalize last}}, {{capitalize first}}</strong> <span class="badge badge-success">{{room}}</span> 
+		</li>
+		<li>
+			{{formatDate birthdate}}
+		</li>
+		{{#if residenceProvince}}
+			<li>
+				{{residenceProvince}}
+			</li>
+		{{/if}}
+		{{#if hospitalization}}
+			<li>
+				<span class="badge badge-success">{{trim hospitalization.reason}}</span>
+			</li>
+		{{else}}
+			<li>
+				<span class="badge badge-inverse">No hospitalization!</span>
+			</li>
+		{{/if}}
+	</ul>
 </template>
 
 <!-- Workaround to sort out logout issue -->
@@ -224,61 +249,63 @@
 					<div class="modal-body">
 						<div class="input-block">
 							<div class="input-block-title">
-							<strong name="task">Task description</strong>&nbsp;<br/>
+								<strong name="task">Task description</strong>&nbsp;
+								<br/>
 							</div>
 							<input id="remindermessage" type="text" name="message" value=""/>
 							<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
 						</div>
-						<div class="input-block">	
+						<div class="input-block">
 							<div class="input-block-title">
-							<strong>Pick a category</strong><br/>
+								<strong>Pick a category</strong>
+								<br/>
 							</div>
-					
+
 							{{#each categories}}
-								
-									<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">{{name}}</button>
-								
+
+							<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">
+								{{name}}
+							</button>
+
 							{{/each}}
-							
+
 						</div>
 
 						<div class="input-block">
 							<div class="input-block-title">
-								<strong>Pick a due date</strong><br/>
+								<strong>Pick a due date</strong>
+								<br/>
 							</div>
 							<ul class="unstyled inline">
-							<li>
-								<label class="radio">
-								<input type="radio" name="dueDate" value="today" checked="checked">
-								<em>Today</em>
-								</label>
-							</li>
 								<li>
-								<label class="radio">
-								<input type="radio" name="dueDate" value="tomorrow">
-								<em>Tomorrow</em>
-								</label>
-							</li>
-							<li>
-								<label class="radio">
-								<input type="radio" name="dueDate" value="day after tomorrow">
-								<em>Day after Tomorrow</em>
-								</label>
-							</li>
-							<li>
-								<label class="radio">
-								<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate"><em>Other</em>
-								</label>
-							</li>
+									<label class="radio">
+										<input type="radio" name="dueDate" value="today" checked="checked">
+										<em>Today</em> </label>
+								</li>
+								<li>
+									<label class="radio">
+										<input type="radio" name="dueDate" value="tomorrow">
+										<em>Tomorrow</em> </label>
+								</li>
+								<li>
+									<label class="radio">
+										<input type="radio" name="dueDate" value="day after tomorrow">
+										<em>Day after Tomorrow</em> </label>
+								</li>
+								<li>
+									<label class="radio">
+										<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate">
+										<em>Other</em> </label>
+								</li>
 							</ul>
 
 							<div class="otherdate collapse offset1" style="padding-top=10px;margin:auto">
 								<label class="offset1">
-								<input type="date" name="otherDueDate">
+									<input type="date" name="otherDueDate">
 								</label>
 
 							</div>
-						</div>	
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
@@ -304,15 +331,63 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-	
 </template>
 
+<template name="newPatient">
+	<div class="modal fade" id="patient" style="display:none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						<i class="fa fa-times"></i>
+					</button>
+					<h3 class="modal-title">New Patient</h3>
+				</div>
+				<form>
+					<div class="modal-body">
+						<table class="table table-condensed patientUpdate">
+							<tbody>
+								<tr>
+									<td> First name: </td>
+									<td>
+									<input class="newPatient" data-field="first" type="text" pattern="[a-zA-Z]+" required/>
+									</td>
+								</tr>
+								<tr>
+									<td> Last name: </td>
+									<td>
+									<input class="newPatient" data-field="last" type="text" pattern="[a-zA-Z]+" required/>
+									</td>
+								</tr>
+								<tr>
+									<td> Birthdate: </td>
+									<td>
+									<input class="newPatient" data-field="birthdate" type="date" required/>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-block send">
+							<strong><i class="fa fa-circle-o river"></i></strong> Create
+						</button>
+					</div>
+				</form>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</template>
 
 <template name="modals">
 	{{#if patientSelected}}
+	{{#if hasHospitalization}}
 	{{> newMeasurement}}
 	{{> newJournal}}
 	{{> newReminder}}
+	{{/if}}
+	{{else}}
+	{{> newPatient}}
 	{{/if}}
 </template>
 

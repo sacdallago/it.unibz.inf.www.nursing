@@ -1,5 +1,7 @@
 Hospitalizations = new Meteor.Collection('hospitalizations');
-hospitalizationsHandle = Meteor.subscribe('hospitalizations');
+hospitalizationsHandle = Meteor.subscribe('hospitalizations', {
+	active : true
+}, {});
 
 UI.registerHelper('enumProperties', function(context, options) {
 	if (context) {
@@ -11,6 +13,12 @@ UI.registerHelper('enumProperties', function(context, options) {
 			li += "\n";
 		}
 		return li;
+	}
+});
+
+UI.registerHelper('trim', function(context, options) {
+	if (context) {
+		return context.substring(0,20)+"...";
 	}
 });
 
@@ -49,63 +57,68 @@ Template.home.helpers({
 	}
 });
 
-Template.home.reminders = function () {
-  // Determine which reminders to display in main pane,
-  // selected based on category
-    var category = Session.get('categoryName');
-    var patientFilter = Session.get('patientFilter');
-    var reminders;
-    var sel = {};
-    if(category) {
-    sel.category = category;
-    }
-    if(patientFilter) {
-    sel.patientId = patientFilter;
-    }
+Template.home.reminders = function() {
+	// Determine which reminders to display in main pane,
+	// selected based on category
+	var category = Session.get('categoryName');
+	var patientFilter = Session.get('patientFilter');
+	var reminders;
+	var sel = {};
+	if (category) {
+		sel.category = category;
+	}
+	if (patientFilter) {
+		sel.patientId = patientFilter;
+	}
 
+	reminders = Reminders.find(sel, {
+		sort : {
+			done : 1,
+			journalId : -1,
+			dueDate : 1
+		}
+	});
 
-    reminders = Reminders.find(sel, {sort: {done:1,journalId:-1,dueDate:1}});
-    
-    var tempHandle = null;
-    return reminders.map(function(element) {
-      var patient = Patients.findOne({
-        _id : element.patientId
-      });
+	var tempHandle = null;
+	return reminders.map(function(element) {
+		var patient = Patients.findOne({
+			_id : element.patientId
+		});
 
-      var room = Rooms.findOne({
-        patientId : element.patientId
-      });
+		var room = Rooms.findOne({
+			patientId : element.patientId
+		});
 
-      var nurse = Meteor.users.findOne({
-        _id : element.nurseId
-      });
-      
-      if (element.journalId){
-        var journalentry = Journal.findOne(element.journalId);
-        element.problemSubject = journalentry.subject;
-        if (journalentry.solved){
-          element.solved = journalentry.solved;
-        }
-      }
-      
-      if (patient) {
-        element.patientName = niceName(patient.first, patient.last);
-      }
+		var nurse = Meteor.users.findOne({
+			_id : element.nurseId
+		});
 
-      if (room) {
-        element.roomNumber = room.number;
-        element.bed = room.bed;
-      }
+		if (element.journalId) {
+			var journalentry = Journal.findOne(element.journalId);
+			element.problemSubject = journalentry.subject;
+			if (journalentry.solved) {
+				element.solved = journalentry.solved;
+			}
+		}
 
-      if (nurse) {
-        element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-      }
-      //This adds a nice formatting of the date the message was written / modified
-      console.log("Remapping");
-      element.date = dateFormatter(element.timestamp);
-      element.niceDue = dateFormatter(element.dueDate);
-      return element;
-    });
+		if (patient) {
+			element.patientName = niceName(patient.first, patient.last);
+		}
+
+		if (room) {
+			element.roomNumber = room.number;
+			element.bed = room.bed;
+		}
+
+		if (nurse) {
+			element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+		}
+		//This adds a nice formatting of the date the message was written / modified
+
+		element.date = dateFormatter(element.timestamp);
+		element.niceDue = dateFormatter(element.dueDate);
+		return element;
+	});
 };
 
 Template.patientCard.helpers({
@@ -134,8 +147,10 @@ Template.patientCard.events({
 			var value = e.target.value;
 			var field = e.target.dataset.field;
 			var required = e.target.required;
-			if (!validatePatientData(field, value)) {
-				return;
+			if (required && field) {
+				if (!validatePatientData(field, value)) {
+					return;
+				}
 			}
 			if (field == "birthdate") {
 				value = new Date(value).getTime();
@@ -339,7 +354,12 @@ Template.home.entry = function() {
 		var room = Rooms.findOne({
 			'patientId' : element.patientId
 		});
-		element.bed = room.number + "" + room.bed;
+		
+		if (room) {
+			element.bed = room.number + "" + room.bed;
+		} else {
+			element.bed = "NO BED ASSIGNED";
+		}
 
 		element.date = dateFormatter(element.timestamp);
 

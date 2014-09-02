@@ -70,7 +70,7 @@ Meteor.startup(function() {
 			sex : "m",
 			height : 1.75,
 			maritalstatus : "married",
-			referencePhone: "04714736284"
+			referencePhone : "04714736284"
 		};
 
 		var pid = Patients.insert(patientData);
@@ -81,20 +81,20 @@ Meteor.startup(function() {
 			active : true,
 			timestamp : Date.now(),
 			allergies : "guacamole, something dark",
-			diabetes: "autonomous",
-			drugAllergies: "",
-			lucid: true,
-			oriented: true,
-			cooperative: true,
-			smoker: false,
-			diet: "fat",
-			lifestyle: "active",
-			urinationProblem: true,
-			defecationProblem: true,
-			prosthetics: false,
-			goods: true,
-			walkingAid: false,
-			reason: "She fucking continuously shits herself, goddamnit"
+			diabetes : "autonomous",
+			drugAllergies : "",
+			lucid : true,
+			oriented : true,
+			cooperative : true,
+			smoker : false,
+			diet : "fat",
+			lifestyle : "active",
+			urinationProblem : true,
+			defecationProblem : true,
+			prosthetics : false,
+			goods : true,
+			walkingAid : false,
+			reason : "She fucking continuously shits herself, goddamnit"
 		};
 
 		var hid = Hospitalizations.insert(hospitalizationData);
@@ -104,6 +104,18 @@ Meteor.startup(function() {
 		var dayAfterTomorrow = new Date();
 		tomorrow.setDate(today.getDate() + 1);
 		dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
+
+		var inactiveProblem = {
+			active : false,
+			hospitalizationId : hid,
+			message : "Inactive message",
+			nurseId : user._id,
+			patientId : pid,
+			subject : "Problem",
+			timestamp : (new Date()).getTime()
+		};
+
+		Journal.insert(inactiveProblem);
 
 		var dates = [];
 		dates.push(today);
@@ -119,7 +131,7 @@ Meteor.startup(function() {
 				category : names[i % names.length],
 				timestamp : (new Date()).getTime(),
 				dueDate : dates[i % dates.length].getTime(),
-				done:false
+				done : false
 			};
 			Reminders.insert(reminder);
 		}
@@ -203,5 +215,58 @@ Meteor.startup(function() {
 				'patientId' : pid1
 			}
 		});
+		
+		//Patient 3
+		var patientData3 = {
+			first : "without",
+			last : "hospitalization",
+			birthdate : (new Date(1920, 5, 7).getTime()),
+			residenceAddress : "via culoculo",
+			residenceNumber : "67",
+			residenceCity : "Bolzano",
+			residenceProvince : "BZ",
+			sex : "m",
+			height : 1.75,
+			maritalstatus : "married",
+			referencePhone : "04714736284"
+		};
+
+		var pid3 = Patients.insert(patientData3);
+
+		var hospitalizationData3 = {
+			patientId : pid3,
+			nurseId : user._id,
+			active : false,
+			timestamp : Date.now(),
+			allergies : "guacamole, something dark",
+			diabetes : "autonomous",
+			drugAllergies : "",
+			lucid : true,
+			oriented : true,
+			cooperative : true,
+			smoker : false,
+			diet : "fat",
+			lifestyle : "active",
+			urinationProblem : true,
+			defecationProblem : true,
+			prosthetics : false,
+			goods : true,
+			walkingAid : false,
+			reason : "She fucking continuously shits herself, goddamnit"
+		};
+
+		var hid3 = Hospitalizations.insert(hospitalizationData3);
+
+		var inactiveProblem3 = {
+			active : false,
+			hospitalizationId : hid3,
+			message : "Inactive message",
+			nurseId : user._id,
+			patientId : pid3,
+			subject : "Problem",
+			timestamp : (new Date()).getTime(),
+		};
+
+		Journal.insert(inactiveProblem3);
 	}
 });

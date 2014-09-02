@@ -4,9 +4,14 @@ JournalDocuments = new FS.Collection("journalDocuments", {
 });
 
 journalDocumentsHandle = Meteor.subscribe('journalDocuments');
-
 FS.HTTP.setBaseUrl('/attachments');
 
+//Load Journal at startup
+Journal = new Meteor.Collection("journal");
+journalHandle = Meteor.subscribe('journal',{active:true},{});
+
+
+//Template logic
 Template.journal.journals = function() {
 	var filter = {};
 	if(Session.get('patientFilter')){
@@ -24,8 +29,11 @@ Template.journal.journals = function() {
 		var room = Rooms.findOne({
 			'patientId' : element.patientId
 		});
-		element.bed = room.number + "" + room.bed;
-
+		
+		if(room){
+			element.bed = room.number + "" + room.bed;
+		}
+		
 		element.date = dateFormatter(element.timestamp);
 
 		if (element.journalId) {
@@ -86,6 +94,16 @@ Template.journalItems.events({
 		}, {
 			$set : {
 				solved : true
+			}
+		});
+	},
+	'click .unsolved' : function(event) {
+		event.preventDefault();
+		Journal.update({
+			_id : this._id
+		}, {
+			$unset : {
+				solved : ''
 			}
 		});
 	},

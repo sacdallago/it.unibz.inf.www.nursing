@@ -94,7 +94,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td> Marrital status: </td>
+						<td> Marital status: </td>
 						<td>
 						<input disabled="true" data-field="maritalstatus" type="text" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
 						</td>
@@ -144,6 +144,7 @@
 							<option value="no" {{findSelected diabetes "no"}}>No</option>
 							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomous</option>
 							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Decompensated</option>
+							{{#unless diabetes}}<option value="" selected="true">Select..</option>{{/unless}}
 						</select></td>
 					</tr>
 					<tr>
@@ -152,6 +153,7 @@
 						<select  data-field="diet">
 							<option value="healthy" {{findSelected diet "healthy"}}>Healthy</option>
 							<option value="fat" {{findSelected diet "fat"}}>Fat</option>
+							{{#unless diet}}<option value="" selected="true">Select..</option>{{/unless}}
 						</select></td>
 					</tr>
 
@@ -161,6 +163,7 @@
 						<select  data-field="lifestyle">
 							<option value="active" {{findSelected lifestyle "active"}}>Active</option>
 							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentary</option>
+							{{#unless lifestyle}}<option value="" selected="true">Select..</option>{{/unless}}
 						</select></td>
 					</tr>
 					<tr>
@@ -285,6 +288,10 @@
 					</tr>
 				</tbody>
 			</table>
+			<div style="margin-bottom: 20px;">
+			<div data-toggle="collapse" data-target=".dismiss"><button class="btn btn-inverse btn-block">Dismiss</button></div>
+			<div class="collapse dismiss"><button class="btn btn-danger btn-block">Sure you want to dismiss?</button></div>
+			</div>
 			<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
 				<li>
 					Hospitalized by: {{nurseNameFormatter nurseId}}
