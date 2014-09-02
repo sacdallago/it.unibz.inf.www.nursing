@@ -222,6 +222,12 @@ Template.newJournal.destroyed = function() {
 	delete Session.keys['fileSelected'];
 };
 
+ //newReminder
+Template.newReminder.rendered = function(){
+	var category = Categories.findOne({});
+	Session.set('inputCategory',category.name);
+};
+
 Template.newReminder.events({
 	'click .category' : function(event){
 		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
@@ -277,7 +283,6 @@ Template.newReminder.events({
         		Notifications.success("Success", "New Reminder saved!");
         		$('#reminder').modal('hide');
         		event.target.reset();
-				Session.set('inputCategory', null);
       		}
     	});
 	}
