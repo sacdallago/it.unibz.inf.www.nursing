@@ -133,21 +133,27 @@ Meteor.methods({
 			$unset : {
 				journalId : ""
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		Measures.update({
 			journalId : problemId
 		}, {
 			$unset : {
 				journalId : ""
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		Reminders.update({
 			journalId : problemId
 		}, {
 			$unset : {
 				journalId : ""
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		return true;
 	},
 	updateProblems : function(patientId, hospitalizationId) {
@@ -168,7 +174,9 @@ Meteor.methods({
 				hospitalizationId : hospitalizationId,
 				active : true
 			}
-		});
+		}, {
+     			multi: true
+   		});
 	},
 	dismissPatient : function(hospitalizationId, patientId) {
 		Reminders.remove({
@@ -180,28 +188,36 @@ Meteor.methods({
 			$unset : {
 				active : ''
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		Measures.update({
 			hospitalizationId : hospitalizationId
 		}, {
 			$unset : {
 				active : ''
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		Hospitalizations.update({
 			_id : hospitalizationId
 		}, {
 			$unset : {
 				active : ''
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		Rooms.update({
 			patientId : patientId
 		}, {
 			$unset : {
 				patientId : ''
 			}
-		});
+		}, {
+     			multi: true
+   		});
 		return;
 	}
 });

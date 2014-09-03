@@ -111,8 +111,11 @@ Template.journalItems.events({
 		event.preventDefault();
 		var id = this._id;
 		if (this.subject) {
-			var count = 1;
-			Meteor.call('deleteProblem', id);
+			Meteor.call('deleteProblem', id, function(error){
+				if(error){
+					alert(error);
+				}
+			});
 		}
 		if (this.attachment) {
 			JournalDocuments.remove({
