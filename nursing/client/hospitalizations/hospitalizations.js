@@ -18,7 +18,7 @@ UI.registerHelper('enumProperties', function(context, options) {
 
 UI.registerHelper('trim', function(context, options) {
 	if (context) {
-		return context.substring(0,20)+"...";
+		return context.substring(0, 20) + "...";
 	}
 });
 
@@ -54,6 +54,9 @@ UI.registerHelper('capitalize', function(context, options) {
 Template.home.helpers({
 	patient : function() {
 		return Session.get('patientFilter');
+	},
+	hasHospitalization : function() {
+		return Session.get('hospitalizationFilter');
 	}
 });
 
@@ -294,6 +297,15 @@ Template.hospitalizationCard.events({
 				Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
 			}
 		});
+	},
+	'click .dismiss' : function(e){
+		Meteor.call('dismissPatient',this._id,this.patientId,function(error){
+			if(!error){
+				Session.set('hospitalizationFilter',null);
+				delete Session.keys['hospitalizationFilter'];
+				Notifications.success('Success','Dismissed patient!');
+			}
+		});
 	}
 });
 
@@ -354,7 +366,7 @@ Template.home.entry = function() {
 		var room = Rooms.findOne({
 			'patientId' : element.patientId
 		});
-		
+
 		if (room) {
 			element.bed = room.number + "" + room.bed;
 		} else {
@@ -394,16 +406,15 @@ Template.home.entry = function() {
 };
 
 Template.bedCard.helpers({
-	rooms : function(){
+	rooms : function() {
 		var entries = [];
-		Rooms.find({}).map(function(room){
+		Rooms.find({}).map(function(room) {
 			room.niceId = room.number + room.bed;
-			console.log(room.niceId);
 
-			if(!room.hasOwnProperty("patientId")){
+			if (!room.hasOwnProperty("patientId")) {
 				room.status = "free";
-			} else{
-				if(room.patientId){
+			} else {
+				if (room.patientId) {
 					room.status = "occupied";
 				} else {
 					room.status = "free";
@@ -414,14 +425,16 @@ Template.bedCard.helpers({
 
 		return entries;
 	},
-	bedStatus : function(){
-		return (this.status)?'fa fa-circle':'fa fa-circle-thin';
+	bedStatus : function() {
+		return (this.status) ? 'fa fa-circle' : 'fa fa-circle-thin';
 	},
-	getRoomAndBed : function(){
+	getRoomAndBed : function() {
 		var patientId = Session.get('patientFilter');
-		var bed = Rooms.findOne({patientId:patientId});
+		var bed = Rooms.findOne({
+			patientId : patientId
+		});
 
-		if (bed){
+		if (bed) {
 			var niceId = bed.number + bed.bed;
 			return niceId;
 		} else {
@@ -431,22 +444,36 @@ Template.bedCard.helpers({
 });
 
 Template.bedCard.events({
-	'change #roomSelect' : function(){
+	'change #roomSelect' : function() {
 		var roomId = $(event.currentTarget).find(':selected').data("_id");
 		var patientId = Session.get('patientFilter');
-		var oldRoomId = Rooms.findOne({patientId: patientId});
-		Rooms.update({_id : oldRoomId._id},{$unset:{patientId: ""}},function(error) {
-								if (error) {
-									Notifications.error('Error', 'Something happened while saving updating the room');
-								} else {
-									Rooms.update({_id:roomId},{$set:{patientId:patientId}},function(error) {
-								if (error) {
-									Notifications.error('Error', 'Something happened while updating the room');
-								} else {
-									Notifications.info('Confirmation', 'Room updated successfully!');
-								}
-							});
-						}
-					});
+		var oldRoomId = Rooms.findOne({
+			patientId : patientId
+		});
+		Rooms.update({
+			_id : oldRoomId._id
+		}, {
+			$unset : {
+				patientId : ""
+			}
+		}, function(error) {
+			if (error) {
+				Notifications.error('Error', 'Something happened while saving updating the room');
+			} else {
+				Rooms.update({
+					_id : roomId
+				}, {
+					$set : {
+						patientId : patientId
+					}
+				}, function(error) {
+					if (error) {
+						Notifications.error('Error', 'Something happened while updating the room');
+					} else {
+						Notifications.info('Confirmation', 'Room updated successfully!');
+					}
+				});
+			}
+		});
 	}
 });

@@ -5,7 +5,9 @@
 		<div class="row-fluid">
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
-				
+				{{#if hasHospitalization}}
+				{{> bedCard}}
+				{{/if}}
 				{{> hospitalizationCard}}
 				<ul class="unstyled"> 
 				{{#each reminders}}
@@ -149,7 +151,6 @@
 
 <template name="hospitalizationCard">
 	{{#with hospitalization}}
-	{{> bedCard}}
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
 			<h3>Hospitalization Details:</h3>
