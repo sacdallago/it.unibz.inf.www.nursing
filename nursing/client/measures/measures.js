@@ -232,9 +232,9 @@ Template.measureItems.events({
 		event.preventDefault();
 		Measures.remove(this._id, function(error) {
 			if (error) {
-				Notifications.error("Whops", "Couldn't remove measurement");
+				Notifications.error("Whops", "Impossibile rimuovere la rilevazione");
 			} else {
-				Notifications.success("Success", "Removed measurement");
+				Notifications.success("Success", "Rilevazione rimossa");
 			}
 		});
 	}

@@ -10,19 +10,19 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Home' }}">
-							<a href="{{pathFor 'home'}}"><i class="fa fa-fw fa-table"></i> {{language.home}}</a>
+							<a href="{{pathFor 'home'}}"><i class="fa fa-fw fa-table"></i> Home</a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Reminders' }}">
-							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> {{language.reminders}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
+							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> Memo&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Journal' }}">
-							<a href="{{pathFor 'journal'}}"><i class="fa fa-fw fa-envelope"></i> {{language.journal}}&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>
+							<a href="{{pathFor 'journal'}}"><i class="fa fa-fw fa-envelope"></i> Diario&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>
 						</li>
 						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Measures' }}">
-							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> {{language.measures}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> Rilevazioni<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Problems' }}">
-							<a href="{{pathFor 'problems'}}"><i class="fa fa-fw fa-folder-open"></i> {{language.problems}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+							<a href="{{pathFor 'problems'}}"><i class="fa fa-fw fa-folder-open"></i> Problemi<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
 						<li>
 							<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> {{language.signout}}</a>
@@ -55,22 +55,22 @@
 						{{#if nameSelected}}
 						{{#if hasHospitalization}}
 						<li>
-							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> New Measurement</a>
+							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> Nuova Rilevazione</a>
 						</li>
 						<li>
-							<a href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> New Reminder</a>
+							<a href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> Nuovo Memo</a>
 						</li>
 						<li>
-							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> New Journal</a>
+							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> Nuova Nota</a>
 						</li>
 						{{else}}
 						<li>
-							<a href="#" class="newHospitalization"><i class="fa fa-h-square"></i> New Hospitalization</a>
+							<a href="#" class="newHospitalization"><i class="fa fa-h-square"></i> Nuovo Ricovero</a>
 						</li>
 						{{/if}}
 						{{else}}
 						<li>
-							<a href="#" data-toggle="modal" data-target="#patient"><i class="fa fa-user"></i> Add a new patient</a>
+							<a href="#" data-toggle="modal" data-target="#patient"><i class="fa fa-user"></i> Aggiungi un nuovo paziente</a>
 						</li>
 						{{/if}}
 					</ul>
@@ -99,7 +99,7 @@
 			</li>
 		{{else}}
 			<li>
-				<span class="badge badge-inverse">No hospitalization!</span>
+				<span class="badge badge-inverse">Nessun ricovero!</span>
 			</li>
 		{{/if}}
 	</ul>
@@ -118,13 +118,13 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">New Measurement</h3>
+					<h3 class="modal-title">Nuova Rilevazione</h3>
 				</div>
 				<form class="form">
 					<div class="modal-body">
-						<strong name="department">Type</strong>&nbsp;
+						<strong name="department">Tipo</strong>&nbsp;
 						<select id="measurementType">
-							<option data-_id="" value="">Select...</option>
+							<option data-_id="" value="">Seleziona...</option>
 							{{#each units}}
 							<option data-_id="{{_id}}" value="{{type}}">{{name}}</option>
 							{{/each}}
@@ -147,18 +147,18 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
-							<strong><i class="fa fa-circle-o river"></i></strong> Save
+							<strong><i class="fa fa-circle-o river"></i></strong> Salva
 						</button>
 
 						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".measureProblemCollapse">
-							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problema
 						</button>
 
 						<div class="input-group collapse measureProblemCollapse" style="margin-top: 20px;">
-							<strong>Select an existing problem:&nbsp;</strong>
+							<strong>Seleziona un problema esistente:&nbsp;</strong>
 							<br>
 							<select id="measurementProblemSelector" style="width: 100%">
-								<option data-problemId="" value="">Select...</option>
+								<option data-problemId="" value="">Seleziona...</option>
 								{{#each problems}}
 								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
 								{{/each}}
@@ -179,12 +179,12 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">New Journal</h3>
+					<h3 class="modal-title">Nuova Nota</h3>
 				</div>
 				<form>
 					<div class="modal-body">
 						<div class="input-group addmessage">
-							<strong>Message:&nbsp;</strong>
+							<strong>Messaggio:&nbsp;</strong>
 							<br>
 							<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
 							<p style="text-align: right; color: #555;" id="textCounter"></p>
@@ -198,11 +198,11 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
-							<strong><i class="fa fa-circle-o river"></i></strong> Save
+							<strong><i class="fa fa-circle-o river"></i></strong> Salva
 						</button>
 
 						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".journalProblemCollapse">
-							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problema
 						</button>
 
 						<div class="collapse journalProblemCollapse">
@@ -210,10 +210,10 @@
 								<tbody>
 									<td>
 									<div class="input-group addmessage">
-										<strong>Select an existing problem:&nbsp;</strong>
+										<strong>Seleziona un problema esistente:&nbsp;</strong>
 										<br>
 										<select id="journalProblemSelector">
-											<option data-problemId="" value="">Select...</option>
+											<option data-problemId="" value="">Seleziona...</option>
 											{{#each problems}}
 											<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
 											{{/each}}
@@ -221,7 +221,7 @@
 									</div></td>
 									<td>
 									<div class="input-group addmessage">
-										<strong>... Or define a new problem:&nbsp;</strong>
+										<strong>... O definisci un nuovo problema:&nbsp;</strong>
 										<br>
 										<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
 									</div></td>
@@ -243,21 +243,21 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">New Reminder</h3>
+					<h3 class="modal-title">Nuovo Memo</h3>
 				</div>
 				<form class="form">
 					<div class="modal-body">
 						<div class="input-block">
 							<div class="input-block-title">
-								<strong name="task">Task description</strong>&nbsp;
+								<strong name="task">Descrizione attività</strong>&nbsp;
 								<br/>
 							</div>
 							<input id="remindermessage" type="text" name="message" value="" required/>
-							<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
+							<em style="opacity: 0.5;font-size:10px;">Breve descrizione dell'attività per cui vuoi creare un memo</em>
 						</div>
 						<div class="input-block">
 							<div class="input-block-title">
-								<strong>Pick a category</strong>
+								<strong>Scegli una categoria</strong>
 								<br/>
 							</div>
 							{{#each categories}}
@@ -269,24 +269,24 @@
 
 						<div class="input-block">
 							<div class="input-block-title">
-								<strong>Pick a due date</strong>
+								<strong>Scegli una data di scadenza</strong>
 								<br/>
 							</div>
 							<ul class="unstyled inline">
 								<li>
 									<label class="radio">
 										<input type="radio" name="dueDate" value="today" checked="checked">
-										<em>Today</em> </label>
+										<em>Oggi</em> </label>
 								</li>
 								<li>
 									<label class="radio">
 										<input type="radio" name="dueDate" value="tomorrow">
-										<em>Tomorrow</em> </label>
+										<em>Domani</em> </label>
 								</li>
 								<li>
 									<label class="radio">
 										<input type="radio" name="dueDate" value="day after tomorrow">
-										<em>Day after Tomorrow</em> </label>
+										<em>Dopodomani</em> </label>
 								</li>
 								<li>
 									<label class="radio">
@@ -305,18 +305,18 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
-							<strong><i class="fa fa-circle-o river"></i></strong> Save
+							<strong><i class="fa fa-circle-o river"></i></strong> Salva
 						</button>
 
 						<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".reminderProblemCollapse">
-							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+							<strong><i class="fa fa-exclamation alizarin"></i></strong> Problema
 						</button>
 
 						<div class="input-group collapse reminderProblemCollapse" style="margin-top: 20px;">
-							<strong>Select an existing problem:&nbsp;</strong>
+							<strong>Seleziona un problema esistente:&nbsp;</strong>
 							<br>
 							<select id="reminderProblemSelector" style="width: 100%">
-								<option data-problemId="" value="">Select...</option>
+								<option data-problemId="" value="">Seleziona...</option>
 								{{#each problems}}
 								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
 								{{/each}}
@@ -337,26 +337,26 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">New Patient</h3>
+					<h3 class="modal-title">Nuovo Paziente</h3>
 				</div>
 				<form>
 					<div class="modal-body">
 						<table class="table table-condensed patientUpdate">
 							<tbody>
 								<tr>
-									<td> First name: </td>
+									<td> Nome: </td>
 									<td>
 									<input class="newPatient" data-field="first" type="text" pattern="[a-zA-Z]+" required/>
 									</td>
 								</tr>
 								<tr>
-									<td> Last name: </td>
+									<td> Cognome: </td>
 									<td>
 									<input class="newPatient" data-field="last" type="text" pattern="[a-zA-Z]+" required/>
 									</td>
 								</tr>
 								<tr>
-									<td> Birthdate: </td>
+									<td> Data di nascita: </td>
 									<td>
 									<input class="newPatient" data-field="birthdate" type="date" required/>
 									</td>
@@ -366,7 +366,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-block send">
-							<strong><i class="fa fa-circle-o river"></i></strong> Create
+							<strong><i class="fa fa-circle-o river"></i></strong> Crea
 						</button>
 					</div>
 				</form>
@@ -401,7 +401,7 @@
 	{{#AnimateWithVelocity}}
 	<div class="navbar-fixed-top fixed" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<div class="alert alert-error" style="text-align: center;">
-			<strong>Connection lost</strong>
+			<strong>Connessione persa</strong>
 		</div>
 	</div>
 	{{/AnimateWithVelocity}}
@@ -421,7 +421,7 @@
 	</div>
 	<div style="margin-left: auto; margin-right: auto; color:gray;">
 		<p style="text-align: center;">
-			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
+			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assistant 0.0.1
 		</p>
 	</div>
 </template>
@@ -429,9 +429,9 @@
 <template name="registrationform">
 	<div class="container">
 		<form id="register-form" class="form-signin">
-			<h2 class="form-signin-heading">Register</h2>
-			<input type="text" class="input-block-level" id="account-first" placeholder="{{language.firstname}}" />
-			<input type="text" class="input-block-level" id="account-last" placeholder="{{language.lastname}}" />
+			<h2 class="form-signin-heading">Registrazione</h2>
+			<input type="text" class="input-block-level" id="account-first" placeholder="Nome" />
+			<input type="text" class="input-block-level" id="account-last" placeholder="Cognome" />
 			<input type="text" class="input-block-level" id="account-username" placeholder="Username" />
 			<!-- <input type="email" class="input-block-level" id="account-email" placeholder="email" /> -->
 			<input type="password" class="input-block-level" id="account-password" placeholder="Password" />
@@ -448,7 +448,7 @@
 	</div>
 	<div style="margin-left: auto; margin-right: auto; color:gray;">
 		<p style="text-align: center;">
-			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
+			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assistant 0.0.1
 		</p>
 	</div>
 </template>

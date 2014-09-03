@@ -18,7 +18,7 @@
 				<ul class="unstyled">
 					{{#if problemSubject}}
 					<li>
-						<i class="fa fa-book"></i> <strong>Journal</strong>
+						<i class="fa fa-book"></i> <strong>Diario</strong>
 					</li>
 					<li>
 						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
@@ -30,7 +30,7 @@
 					</li>
 					{{else}}
 					<li>
-						<i class="fa fa-book"></i> <strong>Journal</strong>
+						<i class="fa fa-book"></i> <strong>Diario</strong>
 					</li>
 					{{/if}}
 					{{/if}}
@@ -50,7 +50,7 @@
 						{{#unless subject}}
 						<li>
 							<select data-native-menu="false">
-								<option data-problemId="" value="">Select...</option>
+								<option data-problemId="" value="">Seleziona...</option>
 								{{#each problems}}
 								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
 								{{/each}}
@@ -62,20 +62,20 @@
 						{{#if solved}}
 						<li>
 							<button type="button" class="btn btn-inverse unsolved">
-								<i class="fa fa-check"></i> Unsolve
+								<i class="fa fa-check"></i> Riapri
 							</button>
 						</li>
 						{{else}}
 						<li>
 							<button type="button" class="btn btn-inverse solved">
-								<i class="fa fa-check"></i> Solved
+								<i class="fa fa-check"></i> Risolto
 							</button>
 						</li>
 						{{/if}}
 						{{/if}}
 						<li>
 							<button type="button" class="btn btn-inverse delete">
-								<i class="fa fa-times"></i> Delete
+								<i class="fa fa-times"></i> Cancella
 							</button>
 						</li>
 					</div>
@@ -185,7 +185,7 @@
 											<label class="label label-important"><strong>{{subject}}</strong></label>
 											{{else}}
 											<select class="label label-important form-control" >
-												<option data-problemId="" value="">Select...</option>
+												<option data-problemId="" value="">Seleziona...</option>
 												{{#each problems}}
 												<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
 												{{/each}}

@@ -123,7 +123,7 @@ Template.journalItems.events({
 						_id : id
 					}, function(e) {
 						if (!e) {
-							Notifications.success("Success", "Removed Journal entry");
+							Notifications.success("Success", "Nota eliminata dal Diario");
 						}
 					});
 				}
@@ -133,7 +133,7 @@ Template.journalItems.events({
 				_id : id
 			}, function(e) {
 				if (!e) {
-					Notifications.success("Success", "Removed Journal entry");
+					Notifications.success("Success", "Nota eliminata dal Diario");
 				}
 			});
 		}

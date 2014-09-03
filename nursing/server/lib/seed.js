@@ -40,9 +40,9 @@ Meteor.startup(function() {
 		//Populate units
 		Units.remove({});
 		Units.insert({
-			type : 'weight',
+			type : 'peso',
 			fields : [{
-				preText: "Weight in kg",
+				preText: "Peso in kg",
 				type: "number",
 				step: "any",
 				unit: "kg",
@@ -50,16 +50,16 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'preassure',
+			type : 'pressione',
 			fields : [{
-				preText: "Maximum preassure",
+				preText: "Massima",
 				type: "number",
 				step: "any",
 				unit: "mmHg",
 				required: "required"
 			},
 			{
-				preText: "Minimum preassure",
+				preText: "Minima",
 				type: "number",
 				step: "any",
 				unit: "mmHg",
@@ -68,9 +68,9 @@ Meteor.startup(function() {
 			]
 		});
 		Units.insert({
-			type : 'temperature',
+			type : 'temperatura',
 			fields : [{
-				preText: "Temperature in Celsius",
+				preText: "Temperatura in Celsius",
 				type: "number",
 				step: "any",
 				unit: "C",
@@ -80,22 +80,22 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'edema',
 			fields : [{
-				preText: "Size of edema",
+				preText: "Dimensioni edema",
 				type: "number",
 				step: "any",
 				unit: "cm",
 				required: "required"
 			},
 			{
-				preText: "Is foveal?",
+				preText: "È foveale?",
 				type: "checkbox"
 			}
 			]
 		});
 		Units.insert({
-			type : 'glucose',
+			type : 'glucosio',
 			fields : [{
-				preText: "Level of glucose",
+				preText: "Livello di glucosio",
 				type: "number",
 				step: "any",
 				unit: "mg/dl",
@@ -103,9 +103,9 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'heart rate',
+			type : 'ritmo cardiaco',
 			fields : [{
-				preText: "Heart rate in bpm",
+				preText: "Ritmo cardiaco in bpm",
 				type: "number",
 				step: "any",
 				unit: "bpm",
@@ -113,16 +113,16 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'evacuated',
+			type : 'evacuato',
 			fields : [{
-				preText: "Has patient evacuated?",
+				preText: "Il paziente ha evacuato?",
 				type: "checkbox"
 			}]
 		});
 		Units.insert({
-			type : 'pain',
+			type : 'dolore',
 			fields : [{
-				preText: "Pain from 0 to 10",
+				preText: "Dolore da 0 a 10",
 				type: "number",
 				step: "1",
 				min: "0",
@@ -132,16 +132,16 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'respiratory difficulties',
+			type : 'difficoltà respiratoria',
 			fields : [{
-				preText: "Has the patient problems breathing?",
+				preText: "Il paziente ha difficoltà respiratorie?",
 				type: "checkbox"
 			}]
 		});
 		Units.insert({
 			type : 'urine',
 			fields : [{
-				preText: "Ml of urine produced",
+				preText: "Urine prodotte in ml",
 				type: "number",
 				step: "any",
 				unit: "ml",
@@ -149,9 +149,9 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'Intaken liquids',
+			type : 'liquidi consumati',
 			fields : [{
-				preText: "Ml of liquids taken in",
+				preText: "Liquidi consumati in ml",
 				type: "number",
 				step: "any",
 				unit: "ml",

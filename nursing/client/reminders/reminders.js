@@ -74,13 +74,13 @@ Template.reminders.events(okCancelEvents(
         timestamp: (new Date()).getTime()
       },function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore riprova");
       } else {
-        Notifications.success("", "New Reminder successfully inserted!");
+        Notifications.success("Success", "Nuovo memo inserito con successo");
       }
     });
     } else {
-      Notifications.error("Error", "Pick a Category");
+      Notifications.error("Error", "Seleziona una categoria!");
     }
       evt.target.value = '';
     }
@@ -192,9 +192,9 @@ var setDueDate = function(element){
   
   Reminders.update(element._id,{$set:{dueDate: element.dueDate, done: false}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore aggiornando il memo");
       } else {
-        Notifications.success("", "Due date updated!");
+        Notifications.success("Success", "Scadenza rimandata con successo");
       }
     });
 };
@@ -210,9 +210,9 @@ Template.reminderItem.events({
     console.log(set);
     Reminders.update(this._id,{$set:{done: set}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore aggiornando lo stato del memo");
       } else {
-        Notifications.success("", "Task updated!");
+        Notifications.success("Success", "Attività completata!");
       }
     });
 
@@ -245,18 +245,18 @@ Template.reminderItem.events({
   'click .delete': function(){
     Reminders.remove(this._id,function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore rimuovendo il memo");
       } else {
-        Notifications.success("", "Task removed!");
+        Notifications.success("Success", "Memo rimosso con successo");
       }
     });
   },
   'click .detach': function(){
     Reminders.update(this._id, {$set:{journalId:null}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore scollegando il memo dal problema");
       } else {
-        Notifications.success("", "Problem deattachment successful");
+        Notifications.success("Success", "Problema scollegato con successo");
       }
     });
   },
@@ -277,9 +277,9 @@ Template.reminderItem.events({
    
     Reminders.update(this._id,{$set:{journalId:problemId}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore collegando il problema");
       } else {
-        Notifications.success("", "Marked as Problem!");
+        Notifications.success("Success", "Memo collegato correttamente");
       }
     });
   }
@@ -291,9 +291,9 @@ Template.reminderItem.events(okCancelEvents(
     ok: function (value) {
       Reminders.update(this._id, {$set: {message: value}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore aggiornando il memo");
       } else {
-        Notifications.success("", "Reminder successfully updated!");
+        Notifications.success("Success", "Memo aggiornato correttamente");
       }
     });
       Session.set('editing_reminderName', null);
@@ -358,9 +358,9 @@ Template.categories.events(okCancelEvents(
     ok: function (text, evt) {
       var id = Categories.insert({name: text},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore aggiungendo la categoria");
       } else {
-        Notifications.success("", "New Category successfully inserted!");
+        Notifications.success("Success", "Nuova categoria inserita con successo");
       }
     });
       Session.set('categoryName', id.name);
@@ -374,9 +374,9 @@ Template.categories.events(okCancelEvents(
     ok: function (value) {
       Categories.update(this.name, {$set: {name: value}},function(error) {
       if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
+        Notifications.error("Error", "Si è verificato un errore aggiornando la categoria");
       } else {
-        Notifications.success("", "Category successfully updated!");
+        Notifications.success("Success", "Categoria aggiornata con successo");
       }
     });
       Session.set('editing_categoryName', null);

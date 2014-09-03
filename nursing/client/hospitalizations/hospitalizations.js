@@ -166,7 +166,7 @@ Template.patientCard.events({
 				$set : update
 			}, function(error) {
 				if (!error) {
-					Notifications.success('Updated', 'Updated ' + field + ' of patient');
+					Notifications.success('Updated', 'Aggiornato ' + field + ' del paziente');
 				}
 			});
 			//Codice per fare l'update sull'ogetto
@@ -199,7 +199,7 @@ Template.patientCard.events({
 				$set : update
 			}, function(error) {
 				if (!error) {
-					Notifications.success('Updated', 'Updated ' + field + ' of patient');
+					Notifications.success('Updated', 'Aggiornato ' + field + ' del paziente');
 				}
 			});
 			//Codice per fare l'update sull'ogetto
@@ -226,7 +226,7 @@ Template.hospitalizationCard.events({
 					$set : update
 				}, function(error) {
 					if (!error) {
-						Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+						Notifications.success('Updated', 'Aggiornato ' + field + ' del ricovero');
 					}
 				});
 				e.target.style.color = "";
@@ -254,7 +254,7 @@ Template.hospitalizationCard.events({
 				$set : update
 			}, function(error) {
 				if (!error) {
-					Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+					Notifications.success('Updated', 'Aggiornato ' + field + ' del ricovero');
 				}
 			});
 			e.target.style.color = "";
@@ -276,7 +276,7 @@ Template.hospitalizationCard.events({
 				$set : update
 			}, function(error) {
 				if (!error) {
-					Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+					Notifications.success('Updated', 'Aggiornato ' + field + ' del ricovero');
 				}
 			});
 		}
@@ -294,7 +294,7 @@ Template.hospitalizationCard.events({
 			$set : update
 		}, function(error) {
 			if (!error) {
-				Notifications.success('Updated', 'Updated ' + field + ' of hospitalization');
+				Notifications.success('Updated', 'Aggiornato ' + field + ' del ricovero');
 			}
 		});
 	},
@@ -303,7 +303,7 @@ Template.hospitalizationCard.events({
 			if(!error){
 				Session.set('hospitalizationFilter',null);
 				delete Session.keys['hospitalizationFilter'];
-				Notifications.success('Success','Dismissed patient!');
+				Notifications.success('Success','Paziente!');
 			}
 		});
 	}
@@ -460,7 +460,7 @@ Template.bedCard.events({
 				}
 			}, function(error) {
 				if (error) {
-					Notifications.error('Error', 'Something happened while saving updating the room');
+					Notifications.error('Error', 'Si è verificato un errore aggiornando la stanza');
 				} else {
 					Rooms.update({
 						_id : roomId
@@ -470,9 +470,9 @@ Template.bedCard.events({
 						}
 					}, function(error) {
 						if (error) {
-							Notifications.error('Error', 'Something happened while updating the room');
+							Notifications.error('Error', 'Si è verificato un errore aggiornando la stanza');
 						} else {
-							Notifications.info('Confirmation', 'Room updated successfully!');
+							Notifications.info('Confirmation', 'Stanza aggiornata con successo');
 						}
 					});
 				}
@@ -487,9 +487,9 @@ Template.bedCard.events({
 					}
 				}, function(error) {
 						if (error) {
-							Notifications.error('Error', 'Something happened while updating the room');
+							Notifications.error('Error', 'Si è verificato un errore aggiornando la stanza');
 						} else {
-							Notifications.info('Confirmation', 'Room updated successfully!');
+							Notifications.info('Confirmation', 'Stanza aggiornata con successo');
 						}
 					});
 		}

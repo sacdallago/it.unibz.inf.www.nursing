@@ -10,7 +10,7 @@
           <div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
             <div class="card-heading-header">
               <p style="font-size: 22.75px;">
-                <strong><i class="fa fa-tags"></i>Categories</strong>
+                <strong><i class="fa fa-tags"></i>Categorie</strong>
               </p>
             </div>
           </div>
@@ -30,7 +30,7 @@
 
     
       {{#if loading}}
-        Loading...
+        Caricamento...
       {{else}}
         <ul class="unstyled">
           {{#each reminders}}
@@ -82,7 +82,7 @@
   
       <li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <label class="check" style="margin-right:0;margin-top:0;float:right"> 
-            <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
+            <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Fatto <i class="fa {{doneCheck}}"></i></button>
         </label>
       
       <div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:20px">
@@ -127,16 +127,16 @@
             <i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
           </li>
           <li>       
-            postpone by:
+            rimanda di:
           </li>
           <li>
-            <button class="btn btn-default postpone1"><i class="fa fa-repeat"> 1 day</i></button>
+            <button class="btn btn-default postpone1"><i class="fa fa-repeat"> 1 giorno</i></button>
           </li>
           <li>
-            <button class="btn btn-default postpone2"><i class="fa fa-repeat"> 2 days</i></button>
+            <button class="btn btn-default postpone2"><i class="fa fa-repeat"> 2 giorni</i></button>
           </li>
           <li>
-            <button class="btn btn-default postpone3"><i class="fa fa-repeat"> 3 days</i></button>
+            <button class="btn btn-default postpone3"><i class="fa fa-repeat"> 3 giorni</i></button>
           </li>
         </ul>
       </div>
@@ -157,12 +157,12 @@
                 <label class="label label-important"><strong>{{problemSubject}}</strong></label>
               </li>
               <li>
-                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"> detach problem</i></button>
+                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"> rimuovi dal problema</i></button>
               </li>
             </ul>
             {{else}}
             <select class="label label-important form-control" >
-              <option data-problemId="" value="">Attach to a problem</option>
+              <option data-problemId="" value="">Collega ad un problema</option>
               {{#each problems}}
               <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
               {{/each}}
@@ -180,7 +180,7 @@
             <i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
           </li>
           <li>
-            <button class="btn btn-inverse {{#unless done}} invisible {{/unless}}"><i class="fa fa-times delete"> delete</i></button>
+            <button class="btn btn-inverse {{#unless done}} invisible {{/unless}}"><i class="fa fa-times delete"> cancella</i></button>
           </li>
         </ul>
         
@@ -191,7 +191,7 @@
       <ul class="unstyled inline" > 
        <li> 
           <div>   
-            <i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i> 
+            <i style="opacity: 0.5;" class="fa fa-clock-o"> creato in data: {{date}}, da: {{nurseName}}</i> 
           </div>
         </li>
         <li>    

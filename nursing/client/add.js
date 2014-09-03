@@ -25,7 +25,7 @@ Template.newPatient.events({
 		}
 		Patients.insert(patient, function(error, data) {
 			if (!error) {
-				Notifications.success('Success', 'Patient inserted!');
+				Notifications.success('Success', 'Paziente inserito!');
 				Session.set('patientFilter', data);
 				event.target.reset();
 				$('#patient').modal('hide');
@@ -84,19 +84,19 @@ Template.newMeasurement.events({
 			if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {
 				Measures.insert(entry, function(error) {
 					if (error) {
-						Notifications.error('Error', 'Something happened while saving your measurement.. :(');
+						Notifications.error('Error', 'Si è verificato un errore inserendo la rilevazione');
 					} else {
-						Notifications.info('Confirmation', 'New measurement inserted!');
+						Notifications.info('Confirmation', 'Nuova rilevazione inserita con successo');
 					}
 				});
 				$('#measurement').modal('hide');
 				event.target.reset();
 
 			} else {
-				Notifications.error('Error', 'Please select a patient first!!');
+				Notifications.error('Error', 'Per favora prima seleziona un paziente');
 			}
 		} else {
-			Notifications.warn('Wohps', 'Please fill out all fields correctly');
+			Notifications.warn('Wohps', 'Per favore compila tutti i campi correttamente');
 		}
 	}
 });
@@ -163,7 +163,7 @@ Template.newJournal.events({
 
 		//Mark entry as problem if it is one, or add the problem id if it is problem-related
 		if (newProblem && problemId) {
-			Notifications.warn("Whops", "Please, either select an existing problem or define a new one!");
+			Notifications.warn("Whops", "Per favore, seleziona un problema esistente o definiscine uno nuovo");
 			return;
 		} else if (newProblem) {
 			entry.subject = newProblem;
@@ -176,25 +176,25 @@ Template.newJournal.events({
 			if (files[0]) {
 				JournalDocuments.insert(files[0], function(err, fileObj) {
 					if (err) {
-						Notifications.error('Error', 'There was an error saving the file!');
+						Notifications.error('Error', 'Si è verificato un errore salvando il file');
 					} else {
 						if (message) {
 							entry.message = message;
 							entry.attachment = fileObj._id;
 							Journal.insert(entry, function(error) {
 								if (error) {
-									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
+									Notifications.error('Error', 'Si è verificato un errore salvando la nota');
 								} else {
-									Notifications.info('Confirmation', 'New journal entry inserted!');
+									Notifications.info('Confirmation', 'Nuova nota inserita correttamente nel Diario');
 								}
 							});
 						} else {
 							entry.attachment = fileObj._id;
 							Journal.insert(entry, function(error) {
 								if (error) {
-									Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
+									Notifications.error('Error', 'Si è verificato un errore salvando la nota');
 								} else {
-									Notifications.info('Confirmation', 'New journal entry inserted!');
+									Notifications.info('Confirmation', 'Nuova nota inserita correttamente nel Diario');
 								}
 							});
 						}
@@ -204,17 +204,17 @@ Template.newJournal.events({
 				entry.message = message;
 				Journal.insert(entry, function(error) {
 					if (error) {
-						Notifications.error('Error', 'Something happened while saving your journal entry.. :(');
+						Notifications.error('Error', 'Si è verificato un errore salvando la nota');
 					} else {
-						Notifications.info('Confirmation', 'New journal entry inserted!');
+						Notifications.info('Confirmation', 'Nuova nota inserita correttamente nel Diario');
 					}
 				});
 			} else {
-				Notifications.warn('Whops', 'Please, either attach a file or write a message!');
+				Notifications.warn('Whops', 'Per favore, inserisci un testo per la nota o allega un file');
 				return;
 			}
 		} else {
-			Notifications.error('Error', 'Please select a patient first!!');
+			Notifications.error('Error', 'Per favore, prima seleziona un paziente');
 		}
 
 		//cleanup
@@ -318,9 +318,9 @@ Template.newReminder.events({
 		console.log(entry);
 		Reminders.insert(entry, function(error) {
 			if (error) {
-				Notifications.error("Error", "An error occoured. Please try again");
+				Notifications.error("Error", "Si è verificato un errore inserendo il nuovo Memo");
 			} else {
-				Notifications.success("Success", "New Reminder saved!");
+				Notifications.success("Success", "Nuovo Memo salvato");
 				$('#reminder').modal('hide');
 				event.target.reset();
 			}

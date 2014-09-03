@@ -84,7 +84,7 @@ Template.footer.events({
 			if(!error){
 				Meteor.call('updateProblems',Session.get('patientFilter'),object,function(err){
 					if(!err){
-						Notifications.success('Success','Created a new hospitalization! Fill it out in the home!');
+						Notifications.success('Success','Creato nuovo ricovero! Vai nella Home per completare il documento di ricovero');
 						Session.set('hospitalizationFilter', object);
 					}
 				});

@@ -19,7 +19,7 @@
 		<div class="card-heading pointer">
 			<div class="card-heading-header">
 				<p style="font-size: 22.75px;">
-					<strong><i class="fa fa-tags"></i> Graph {{#if graphTitle}}- {{graphTitle}} {{/if}}</strong>
+					<strong><i class="fa fa-tags"></i> Grafico {{#if graphTitle}}- {{graphTitle}} {{/if}}</strong>
 				</p>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 		<div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
 			<div class="card-heading-header">
 				<p style="font-size: 22.75px;">
-					<strong><i class="fa fa-tags"></i> Measures</strong>
+					<strong><i class="fa fa-tags"></i> Rilevazioni </strong>
 				</p>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 				{{#if type}}
 				<span class="label label-sea tag {{active}}"><strong>{{type}}</strong> ({{count}})</span>
 				{{else}}
-				<span class="label label-sea tag {{active}}"><strong>All</strong> ({{count}})</span>
+				<span class="label label-sea tag {{active}}"><strong>Tutte</strong> ({{count}})</span>
 				{{/if}}
 				{{/each}}
 			</div>
@@ -80,7 +80,7 @@
 						{{/unless}}
 						<li>
 							<button type="button" class="btn btn-inverse delete">
-								<i class="fa fa-times"></i> Delete
+								<i class="fa fa-times"></i> Cancella
 							</button>
 						</li>
 					</div>

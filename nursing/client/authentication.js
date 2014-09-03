@@ -11,7 +11,7 @@ Template.loginform.events({
 
 		Meteor.loginWithPassword(username, password, function(err) {
 			if (err) {
-				Notifications.warn('Could not login!', 'Please check your credentials.');
+				Notifications.warn('Errore di login', 'Controlla le tue credenziali di accesso');
 			} else {
 				Router.go('registrationform');
 			}
@@ -59,7 +59,7 @@ Template.registrationform.events({
 							password : password
 						}, function(err) {
 							if (err) {
-								Notifications.error('Error!', 'Failed to create user. Please contact administrators.');
+								Notifications.error('Error!', "Tentativo di creare l'utente fallito contattare gli amministratori");
 							} else {
 								//autoroute
 							}
@@ -67,20 +67,20 @@ Template.registrationform.events({
 
 						return false;
 					} else {
-						Notifications.warn('Warning:', 'Username must have at least 3 characters and not more than 15!');
-						throw new Meteor.Error(403, "Username must have at least 3 characters and not more than 15!");
+						Notifications.warn('Warning:', 'Username deve avere almeno 3 caratteri e non più di 15!');
+						throw new Meteor.Error(403, "Username deve avere almeno 3 caratteri e non più di 15!");
 					}
 				} else {
-					Notifications.warn('Warning:', 'Sorry, you are not authorized to register!');
-					throw new Meteor.Error(403, "Sorry, you are not authorized to register!");
+					Notifications.warn('Warning:', 'Ci dispiace, ma non è autorizzato a registrarsi');
+					throw new Meteor.Error(403, "Ci dispiace, ma non è autorizzato a registrarsi");
 				}
 			} else {
-				Notifications.warn('Warning:', 'The password and its check do not match!');
-				throw new Meteor.Error(403, "The password and its check do not match!");
+				Notifications.warn('Warning:', 'La password e la conferma non corrispondono');
+				throw new Meteor.Error(403, "La password e la conferma non corrispondono");
 			}
 		} else {
-			Notifications.warn('Warning:', 'Please fill out all fields');
-			throw new Meteor.Error(403, "Please fill out all fields");
+			Notifications.warn('Warning:', 'Per favore compilare tutti i campi');
+			throw new Meteor.Error(403, "Per favore compilare tutti i campi");
 		}
 	},
 	'click #account-signin' : function(e, t) {

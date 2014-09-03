@@ -28,7 +28,7 @@
 	{{else}}
 	<div >
 		<p class="noPatientSelected">
-			<i class="fa fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-arrow-circle-o-down"></i>
+			<i class="fa fa-arrow-circle-o-down"></i> Seleziona un paziente <i class="fa fa-arrow-circle-o-down"></i>
 			<br />
 		</p>
 	</div>
@@ -39,71 +39,71 @@
 	{{#with patient}}
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
-			<h3>Patient Details:</h3>
+			<h3> Dettagli Paziente </h3>
 			<table class="table table-condensed patientUpdate">
 				<tbody>
 					<tr>
-						<td> First name: </td>
+						<td> Nome: </td>
 						<td>
 						<input disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Last name: </td>
+						<td> Cognome: </td>
 						<td>
 						<input disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Birthdate: </td>
+						<td> Data di nascita: </td>
 						<td>
 						<input disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Street: </td>
+						<td> Indirizzo: </td>
 						<td>
 						<input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" pattern="[a-zA-Z ]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Number: </td>
+						<td> Numero: </td>
 						<td>
 						<input disabled="true" data-field="residenceNumber" type="number" value="{{residenceNumber}}" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> City: </td>
+						<td> Città: </td>
 						<td>
 						<input disabled="true" data-field="residenceCity" type="text" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Province: </td>
+						<td> Provincia: </td>
 						<td>
 						<input disabled="true" data-field="residenceProvince" type="text" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Sex: </td>
+						<td> Sesso: </td>
 						<td>
 						<input disabled="true" data-field="sex" type="text" value="{{sex}}" pattern="[m|f|M|F]" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Height: </td>
+						<td> Altezza: </td>
 						<td>
 						<input disabled="true" data-field="height" type="number" value="{{height}}" step="any" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Marital status: </td>
+						<td> Stato civile: </td>
 						<td>
 						<input disabled="true" data-field="maritalstatus" type="text" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
 						</td>
 					</tr>
 					<tr>
-						<td> Reference phone: </td>
+						<td> Telefono di riferimento: </td>
 						<td>
 						<input disabled="true" data-field="referencePhone" type="tel" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
 						</td>
@@ -118,13 +118,13 @@
 <template name="bedCard">
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
-			<h3>Accomodation Details:</h3>
+			<h3> Dettagli Sistemazione: </h3>
 			<table class="table table-condensed patientUpdate">
 
 				<tbody>
 					<tr>
 						<td>
-							Current room:
+							Stanza e letto correnti:
 						</td>
 						<td>
 							{{getRoomAndBed}}
@@ -132,7 +132,7 @@
 					</tr>
 					<tr>
 						<td>
-							Assign new room:
+							Assegna nuova sistemazione:
 						</td>
 						<td>
 							<select class="" id="roomSelect">
@@ -153,65 +153,65 @@
 	{{#with hospitalization}}
 	<li class="card" style="padding-top: 5px;">
 		<div class="card-body" style="text-align: left;">
-			<h3>Hospitalization Details:</h3>
+			<h3> Dettagli Ricovero: </h3>
 			<table class="table table-condensed addmessage patientUpdate">
 				<tbody>
 					<tr>
-						<td> Reason: </td>
+						<td> Motivo: </td>
 						<td>
 						<input data-field="reason" type="text" disabled="true" value="{{reason}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
-						<td> Allergies: </td>
+						<td> Allergie: </td>
 						<td>
 						<input data-field="allergies" type="text" disabled="true" value="{{allergies}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
-						<td> Allergies to drugs: </td>
+						<td> Allergie ai farmaci: </td>
 						<td>
 						<input data-field="drugAllergies" type="text" disabled="true" value="{{drugAllergies}}" pattern="[a-zA-Z,. ]+"/>
 						</td>
 					</tr>
 					<tr>
-						<td> Diabetes: </td>
+						<td> Diabete: </td>
 						<td>
 						<select data-field="diabetes">
 							<option value="no" {{findSelected diabetes "no"}}>No</option>
-							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomous</option>
-							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Decompensated</option>
-							{{#unless diabetes}}<option value="" selected="true">Select..</option>{{/unless}}
+							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomo</option>
+							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Scompensato</option>
+							{{#unless diabetes}}<option value="" selected="true">Seleziona..</option>{{/unless}}
 						</select></td>
 					</tr>
 					<tr>
-						<td> Diet: </td>
+						<td> Dieta: </td>
 						<td>
 						<select  data-field="diet">
-							<option value="healthy" {{findSelected diet "healthy"}}>Healthy</option>
-							<option value="fat" {{findSelected diet "fat"}}>Fat</option>
-							{{#unless diet}}<option value="" selected="true">Select..</option>{{/unless}}
+							<option value="healthy" {{findSelected diet "healthy"}}>Sana</option>
+							<option value="fat" {{findSelected diet "fat"}}>Grassa</option>
+							{{#unless diet}}<option value="" selected="true">Seleziona..</option>{{/unless}}
 						</select></td>
 					</tr>
 
 					<tr>
-						<td> Active or sedentary: </td>
+						<td> Stile di vita: </td>
 						<td>
 						<select  data-field="lifestyle">
-							<option value="active" {{findSelected lifestyle "active"}}>Active</option>
-							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentary</option>
-							{{#unless lifestyle}}<option value="" selected="true">Select..</option>{{/unless}}
+							<option value="active" {{findSelected lifestyle "active"}}>Attivo</option>
+							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentario</option>
+							{{#unless lifestyle}}<option value="" selected="true">Seleziona..</option>{{/unless}}
 						</select></td>
 					</tr>
 					<tr>
-						<td> Lucid: </td>
+						<td> Lucido: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="lucid" checked="{{lucid}}" id="lucid" name="" />
@@ -219,14 +219,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Oriented: </td>
+						<td> Orientato: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="oriented" checked="{{oriented}}" id="oriented" name="" />
@@ -234,14 +234,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Cooperative: </td>
+						<td> Collaborativo: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="cooperative" checked="{{cooperative}}" id="cooperative" name="" />
@@ -249,14 +249,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Smoker: </td>
+						<td> Fumatore: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="smoker" checked="{{smoker}}" id="smoker" name="" />
@@ -264,14 +264,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Problems urinating: </td>
+						<td> Problemi minzione: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="urinationProblem" checked="{{urinationProblem}}" id="urinationProblem" name="" />
@@ -279,14 +279,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Wears prosethics: </td>
+						<td> Protesi: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="prosthetics" checked="{{prosthetics}}" id="prosthetics" name="" />
@@ -294,14 +294,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Carries goods: </td>
+						<td> Beni personali: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="goods" checked="{{goods}}" id="goods" name="" />
@@ -309,14 +309,14 @@
 						</div></td>
 					</tr>
 					<tr>
-						<td> Utilizes a walking aid: </td>
+						<td> Sostegni: </td>
 						<td>
 						<div class="switch">
 							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
 								<tr>
 									<td style="padding-left: 5px;"><strong>NO</strong></td>
 									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
+									<td style="text-align: right; padding-right: 3px;"><strong>SÌ</strong></td>
 								</tr>
 							</table>
 							<input type="checkbox"  data-field="walkingAid" checked="{{walkingAid}}" id="walkingAid" name="" />
@@ -326,15 +326,15 @@
 				</tbody>
 			</table>
 			<div style="margin-bottom: 20px;">
-			<div data-toggle="collapse" data-target=".dismiss"><button class="btn btn-inverse btn-block">Dismiss</button></div>
-			<div class="collapse dismiss"><button class="btn btn-danger btn-block">Sure you want to dismiss?</button></div>
+			<div data-toggle="collapse" data-target=".dismiss"><button class="btn btn-inverse btn-block">Dimetti</button></div>
+			<div class="collapse dismiss"><button class="btn btn-danger btn-block">Conferma la dimissione?</button></div>
 			</div>
 			<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
 				<li>
-					Hospitalized by: {{nurseNameFormatter nurseId}}
+					Ricoverata/o da: {{nurseNameFormatter nurseId}}
 				</li>
 				<li>
-					Hospitalized on: {{formatDate timestamp}}
+					in data: {{formatDate timestamp}}
 				</li>
 			</ul>
 		</div>
