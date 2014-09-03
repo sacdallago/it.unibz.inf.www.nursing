@@ -415,7 +415,8 @@ Template.bedCard.helpers({
 				room.status = "free";
 			} else {
 				if (room.patientId) {
-					room.status = "occupied";
+					var patient = Patients.findOne({_id:room.patientId});
+					room.status = niceName(patient.first,patient.last);
 				} else {
 					room.status = "free";
 				}
@@ -450,30 +451,47 @@ Template.bedCard.events({
 		var oldRoomId = Rooms.findOne({
 			patientId : patientId
 		});
-		Rooms.update({
-			_id : oldRoomId._id
-		}, {
-			$unset : {
-				patientId : ""
-			}
-		}, function(error) {
-			if (error) {
-				Notifications.error('Error', 'Something happened while saving updating the room');
-			} else {
-				Rooms.update({
+		if(oldRoomId){
+			Rooms.update({
+				_id : oldRoomId._id
+			}, {
+				$unset : {
+					patientId : ""
+				}
+			}, function(error) {
+				if (error) {
+					Notifications.error('Error', 'Something happened while saving updating the room');
+				} else {
+					Rooms.update({
+						_id : roomId
+					}, {
+						$set : {
+							patientId : patientId
+						}
+					}, function(error) {
+						if (error) {
+							Notifications.error('Error', 'Something happened while updating the room');
+						} else {
+							Notifications.info('Confirmation', 'Room updated successfully!');
+						}
+					});
+				}
+			});
+		} else {
+			Rooms.update({
 					_id : roomId
-				}, {
-					$set : {
+				},
+				{
+					$set: {
 						patientId : patientId
 					}
 				}, function(error) {
-					if (error) {
-						Notifications.error('Error', 'Something happened while updating the room');
-					} else {
-						Notifications.info('Confirmation', 'Room updated successfully!');
-					}
-				});
-			}
-		});
+						if (error) {
+							Notifications.error('Error', 'Something happened while updating the room');
+						} else {
+							Notifications.info('Confirmation', 'Room updated successfully!');
+						}
+					});
+		}
 	}
 });
