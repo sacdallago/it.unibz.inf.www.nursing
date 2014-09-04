@@ -21,8 +21,10 @@ Template.navigation.helpers({
 
 Template.navigation.events({
 	'click #logout-toggle' : function(e, t) {
-		Meteor.logout();
 		e.preventDefault();
+		Meteor.logout();
+		//This implemented intelligently can destroy all session variables!
+		//Session.keys = {};
 		var name = Meteor.user().profile.first;
 		Notifications.success('', 'Bye bye ' + name.capitalize() + '.');
 		Router.go('goodbye');

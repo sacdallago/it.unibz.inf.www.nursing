@@ -32,7 +32,14 @@ Template.registrationform.events({
 	'submit #register-form' : function(e, t) {
 		e.preventDefault();
 		// retrieve the input field values
-		var first = t.find('#account-first').value, last = t.find('#account-last').value, username = t.find('#account-username').value, email = t.find('#account-email').value, password = t.find('#account-password').value, passwordCheck = t.find('#account-password-repeat').value, admin = t.find('#admin-password').value, department = t.find('#account-department').value;
+		var first = t.find('#account-first').value,
+		last = t.find('#account-last').value,
+		username = t.find('#account-username').value,
+		//email = t.find('#account-email').value,
+		password = t.find('#account-password').value,
+		passwordCheck = t.find('#account-password-repeat').value,
+		admin = t.find('#admin-password').value,
+		department = t.find('#account-department').value;
 
 		if (first && last && username && password && passwordCheck && admin && department) {
 			if (password == passwordCheck) {
