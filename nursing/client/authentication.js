@@ -62,7 +62,7 @@ Template.registrationform.events({
 								}
 							},
 							username : username,
-							email : email,
+							//email : email,
 							password : password
 						}, function(err) {
 							if (err) {
