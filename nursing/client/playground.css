@@ -271,7 +271,8 @@ body {
 	border-radius: 5px;
 }
 .submenu {
-	margin: 5px;
+	margin: 0.666%;
+	margin-left: 10%;
 }
 .reminder-item-footer {
 	position: relative;
@@ -368,9 +369,7 @@ body {
 .input-block-title {
 	margin: 1%;
 }
-.reminder-items {
-	margin: 0.666%;
-}
+
 .entry{
 	margin: 1%;
 }

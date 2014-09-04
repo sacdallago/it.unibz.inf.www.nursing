@@ -412,13 +412,13 @@ Template.bedCard.helpers({
 			room.niceId = room.number + room.bed;
 
 			if (!room.hasOwnProperty("patientId")) {
-				room.status = "free";
+				room.status = "disponibile";
 			} else {
 				if (room.patientId) {
 					var patient = Patients.findOne({_id:room.patientId});
 					room.status = niceName(patient.first,patient.last);
 				} else {
-					room.status = "free";
+					room.status = "disponibile";
 				}
 			}
 			entries.push(room);
@@ -439,7 +439,7 @@ Template.bedCard.helpers({
 			var niceId = bed.number + bed.bed;
 			return niceId;
 		} else {
-			return "NO ROOM OR BED ASSIGNED";
+			return "NESSUNA SISTEMAZIONE ASSEGNATA";
 		}
 	}
 });

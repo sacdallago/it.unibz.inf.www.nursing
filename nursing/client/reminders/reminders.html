@@ -3,7 +3,7 @@
 
     <div class="container-fluid">
     <div class="row-fluid">
-      <div class="span6 offset3">
+      <div class="span8 offset2">
         
         <div class="card">
 
@@ -89,10 +89,7 @@
 
         <ul class="unstyled inline">
           <li>
-            <div class="pointer" data-toggle="collapse" data-target=".{{_id}}">
-              <i class="fa fa-angle-down collapse in {{_id}}"></i>
-              <i class="fa fa-angle-right collapse {{_id}}"></i>
-            </div>
+            <i class="fa fa-tasks"></i>
           </li>
           <li>
             <ul class="unstyled inline">
@@ -121,10 +118,10 @@
         </ul>
       </div>
 
-      <div class="offset1 collapse submenu postponesubmenu{{_id}}">
+      <div class="submenu">
         <ul class="unstyled inline">
           <li>
-            <i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
+            <i class="fa fa-angle-right" ></i>
           </li>
           <li>       
             rimanda di:
@@ -141,10 +138,10 @@
         </ul>
       </div>
         
-      <div class="offset1 collapse submenu {{_id}}">
+      <div class="submenu">
         <ul class="unstyled inline">
           <li>
-            <i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
+            <i class="fa fa-angle-right"></i>
           </li>
           <li>
 
@@ -157,7 +154,7 @@
                 <label class="label label-important"><strong>{{problemSubject}}</strong></label>
               </li>
               <li>
-                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"> rimuovi dal problema</i></button>
+                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"></i> rimuovi dal problema</button>
               </li>
             </ul>
             {{else}}
@@ -173,11 +170,11 @@
         </ul>
       </div>
 
-      <div class="offset1 collapse submenu {{_id}}">
+      <div class="submenu">
         
         <ul class="unstyled inline ">
           <li>
-            <i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
+            <i class="fa fa-angle-right {{#unless done}} invisible {{/unless}}"></i>
           </li>
           <li>
             <button class="btn btn-inverse {{#unless done}} invisible {{/unless}}"><i class="fa fa-times delete"> cancella</i></button>

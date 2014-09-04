@@ -13,13 +13,13 @@
 							<a href="{{pathFor 'home'}}"><i class="fa fa-fw fa-table"></i> Home</a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Reminders' }}">
-							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> Memo&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
+							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> Promemoria&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Journal' }}">
 							<a href="{{pathFor 'journal'}}"><i class="fa fa-fw fa-envelope"></i> Diario&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>
 						</li>
 						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Measures' }}">
-							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> Rilevazioni<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> Misurazioni<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
 						</li>
 						<li id="home-navigation" class="{{ activeIfTemplateIs 'Problems' }}">
 							<a href="{{pathFor 'problems'}}"><i class="fa fa-fw fa-folder-open"></i> Problemi<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
@@ -44,7 +44,7 @@
 						<h3>{{patientName}} <i class="fa fa-times-circle-o alizarin"></i></h3>
 					</div>
 					{{else}}
-					{{> inputAutocomplete settings=settings type="text" class="search-query" placeholder="Patient" style="width: 300px; margin: 10px auto 0 auto;"}}
+					{{> inputAutocomplete settings=settings type="text" class="search-query" placeholder="Paziente" style="width: 300px; margin: 10px auto 0 auto;"}}
 					{{/if}}
 				</p>
 				<div class="btn-group dropup plusButton">
@@ -55,13 +55,13 @@
 						{{#if nameSelected}}
 						{{#if hasHospitalization}}
 						<li>
-							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> Nuova Rilevazione</a>
+							<a href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> Nuova Misurazione</a>
 						</li>
 						<li>
-							<a href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> Nuovo Memo</a>
+							<a href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> Nuovo Promemoria</a>
 						</li>
 						<li>
-							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> Nuova Nota</a>
+							<a href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> Nuova Diario</a>
 						</li>
 						{{else}}
 						<li>
@@ -118,7 +118,7 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">Nuova Rilevazione</h3>
+					<h3 class="modal-title">Nuova Misurazione</h3>
 				</div>
 				<form class="form">
 					<div class="modal-body">
@@ -179,7 +179,7 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">Nuova Nota</h3>
+					<h3 class="modal-title">Nuova Diario</h3>
 				</div>
 				<form>
 					<div class="modal-body">
@@ -243,7 +243,7 @@
 					<button style="text-align: right;" type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						<i class="fa fa-times"></i>
 					</button>
-					<h3 class="modal-title">Nuovo Memo</h3>
+					<h3 class="modal-title">Nuovo Promemoria</h3>
 				</div>
 				<form class="form">
 					<div class="modal-body">
@@ -253,7 +253,7 @@
 								<br/>
 							</div>
 							<input id="remindermessage" type="text" name="message" value="" required/>
-							<em style="opacity: 0.5;font-size:10px;">Breve descrizione dell'attività per cui vuoi creare un memo</em>
+							<em style="opacity: 0.5;font-size:10px;">Breve descrizione dell'attività per cui vuoi creare un Promemoria</em>
 						</div>
 						<div class="input-block">
 							<div class="input-block-title">
@@ -291,7 +291,7 @@
 								<li>
 									<label class="radio">
 										<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate">
-										<em>Other</em> </label>
+										<em>Altra</em> </label>
 								</li>
 							</ul>
 
