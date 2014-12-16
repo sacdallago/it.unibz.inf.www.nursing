@@ -2,19 +2,19 @@
 	<div class="ui sidebar">
     
   	</div>
-  	<div class="ui top fixed menu">
-  		{{> connectionStatus}}
-  		{{> notifications}}
+  	<div class="ui top fixed menu grid">
     	{{> yield "navigation"}}
   	</div>
   	<div class="pusher">
+  		{{> notifications}}
+  		{{> connectionStatus}}
     	{{> yield}}
   	</div>
 	{{> yield "modals"}}
 </template>
 
 <template name="navigation">
-	<div class="ui menu">
+	<div class="ui green inverted large menu">
 		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Home' }}" href="{{pathFor 'home'}}"><i class="icon table"></i> {{language.home}}</a>
 		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Reminders' }}" href="{{pathFor 'reminders'}}"><i class="icon warning"></i> {{language.reminders}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
 		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Journal' }}" href="{{pathFor 'journal'}}"><i class="icon envelope"></i> {{language.journal}}&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>

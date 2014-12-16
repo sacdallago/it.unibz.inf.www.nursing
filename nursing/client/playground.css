@@ -4,12 +4,14 @@
 
 body {
 	font-size: 100%;
-	padding-bottom: 70px;
+}
+
+.pusher{
+	padding-top: 60px;
 }
 
 @media (max-width: 979px) {
 	body {
-		padding-bottom: 70px;
 	}
 	.navbar-fixed-bottom {
 		position: fixed;
