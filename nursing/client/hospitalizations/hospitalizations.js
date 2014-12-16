@@ -158,6 +158,9 @@ Template.patientCard.events({
 			if (field == "birthdate") {
 				value = new Date(value).getTime();
 			}
+			if (field == "residenceNumber"){
+				value = value.replace(/\s+/g, ' ');
+			}
 			var update = {};
 			update[field] = value;
 			Patients.update({
@@ -190,6 +193,9 @@ Template.patientCard.events({
 			}
 			if (field == "birthdate") {
 				value = new Date(value).getTime();
+			}
+			if (field == "residenceNumber"){
+				value = value.replace(/\s+/g, ' ');
 			}
 			var update = {};
 			update[field] = value;

@@ -64,7 +64,7 @@ validatePatientData = function(field, value) {
 			Notifications.warn('Whops','Address should be a combination of only words');
 			return false;
 		case "residenceNumber" :
-			if (/^[0-9]+$/.test(value)) {
+			if (/^[0-9]+ *[a-zA-Z]?$/.test(value)) {
 				return true;
 			}
 			Notifications.warn('Whops','Residence number should be a number');

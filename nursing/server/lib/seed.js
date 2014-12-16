@@ -4,13 +4,13 @@ Meteor.startup(function() {
 		// if the database is empty on server start, create some sample data.
 
 		//Rooms
-		var roomNumber = 10;
+		var roomNumber = 11;
 		var bedsPerRoom = 2;
 		var bedIds = ['A', 'B'];
 		Rooms.remove({});
 
 		var bedlist = [];
-		for (var i = 0; i < roomNumber; i++) {
+		for (var i = 1; i <= roomNumber; i++) {
 			var data = {
 				'patientId' : null,
 				'bed' : 'A',
@@ -30,7 +30,7 @@ Meteor.startup(function() {
 
 		//Categories
 		Categories.remove({});
-		names = ['prelivevi', 'digiuni', 'diabetici', 'medicazioni', 'urine', 'peso', 'pic-midline-cvc', 'echi-ecg','igiene intima','igiene personale','controllo accessi venosi periferici'];
+		names = ['blood tests', 'fasts', 'diabetics', 'dressings', 'urine', 'weight', 'pic-midline-cvc', 'echi-ecg','hygiene','personal hygiene','peripheral venous access control'];
 		for ( i = 0; i < names.length; i++) {
 			Categories.insert({
 				'name' : names[i]
