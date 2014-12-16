@@ -5,12 +5,13 @@ Meteor.startup(function() {
 
 		//Rooms
 		var roomNumber = 10;
+		var starter = 1;
 		var bedsPerRoom = 2;
 		var bedIds = ['A', 'B'];
 		Rooms.remove({});
 
 		var bedlist = [];
-		for (var i = 0; i < roomNumber; i++) {
+		for (var i = starter; i <= roomNumber+starter; i++) {
 			var data = {
 				'patientId' : null,
 				'bed' : 'A',

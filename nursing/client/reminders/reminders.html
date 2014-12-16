@@ -3,10 +3,10 @@
 
     <div class="container-fluid">
     <div class="row-fluid">
+     <!-- 
       <div class="span8 offset2">
-        
+       
         <div class="card">
-
           <div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
             <div class="card-heading-header">
               <p style="font-size: 22.75px;">
@@ -14,17 +14,20 @@
               </p>
             </div>
           </div>
-
+ 
           <div class="card-body in collapse tagcollapse" style="text-align: left;">
-            
+        -->    
               {{>categories}}
-           
+        <!-- 
           </div>
-    </div>
+          
+
   </div>
+      </div>
+    -->
   </div>
   <div class="row-fluid">
-  <div class="span8 offset2">
+  
     
     <div id="items-view">
 
@@ -32,16 +35,19 @@
       {{#if loading}}
         Caricamento...
       {{else}}
-        <ul class="unstyled">
+        
           {{#each reminders}}
+   
+            <div class="span3">
             {{> reminderItem}}
+            </div>
           
           {{/each}}
           
-        </ul>
+    
       {{/if}}
    
-    </div>
+  
     </div>
     </div>
     

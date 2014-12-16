@@ -282,7 +282,7 @@ Template.newReminder.events({
 
 		var problemId = $("#reminderProblemSelector option:selected").attr("data-problemId");
 
-		var category = Session.get('inputCategory');
+		var category = Session.get('categoryName');
 		var dueDate = $('input[name="dueDate"]:checked').val();
 		var message = document.getElementById('remindermessage').value;
 		var done = false;
@@ -337,7 +337,7 @@ Template.newReminder.helpers({
 		return list;
 	},
 	categorySelected : function() {
-		return (Session.equals('inputCategory', this.name)) ? 'label-info' : '';
+		return (Session.equals('categoryName', this.name)) ? 'label-info' : '';
 	},
 	problems : function() {
 		return Journal.find({

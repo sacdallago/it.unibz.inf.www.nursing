@@ -7,7 +7,7 @@ roomsHandle = Meteor.subscribe('rooms');
 usersHandle = Meteor.subscribe('users');
 
 //Which page am I at?
-//Session.setDefault('pageName','login');
+Session.setDefault('pageName','login');
 categoriesHandle = Meteor.subscribe('categories');
 
 //Badges counter. These show up in the menu next to the relevant menu item

@@ -2,7 +2,7 @@ Reminders = new Meteor.Collection("reminders");
 Categories = new Meteor.Collection("categories");
 
 // ID of currently selected category
-Session.setDefault('categoryName', null);
+//Session.setDefault('categoryName', null);
 // When editing a category name, ID of the category
 Session.setDefault('editing_categoryName', null);
 // When editing reminder text, ID of the reminder
