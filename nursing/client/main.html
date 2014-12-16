@@ -459,18 +459,6 @@
 	<!--320-->
 </head>
 
-<template name="body">
-	{{> notifications}}
-	{{#if currentUser}}
-	{{> modals}}
-	{{> navigation}}
-	{{/if}}
-	{{> yield}}
-	{{#if currentUser}}
-	{{> footer}}
-	{{/if}}
-</template>
-
 <body>
 	{{> notifications}}
 	{{#if currentUser}}

@@ -3,21 +3,26 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+meteor-platform
 standard-app-packages
 insecure
 accounts-base
 accounts-password
 accounts-ui
-iron-router
+iron:router
 blaze
 backbone
 less
 coffeescript
-paginated-subscription
-animation-helper-velocity
-autocomplete
-npm
-collectionFS
-cfs-filesystem
-notifications
-flot
+tmeasday:paginated-subscription
+frozeman:animation-helper-velocity
+mizzao:autocomplete
+meteorhacks:npm
+mrt:flot
+gfk:notifications
+cfs:standard-packages
+cfs:filesystem
+
+
+
+npm-container

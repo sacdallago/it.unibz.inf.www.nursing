@@ -9,6 +9,7 @@
 		this.route('registrationform', {
 			path : '/signup',
 			onBeforeAction : function() {
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -20,6 +21,7 @@
 		this.route('loginform', {
 			path : '/signin',
 			onBeforeAction : function() {
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -31,6 +33,7 @@
 		this.route('goodbye', {
 			path : '/goodbye',
 			onBeforeAction : function() {
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -47,6 +50,7 @@
 						$exists : true
 					}
 				}, {});
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -60,6 +64,7 @@
 			onBeforeAction : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -74,6 +79,7 @@
 				if (Meteor.userId()) {
 					Session.set('newJournals', 0);
 				}
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -88,6 +94,7 @@
 				if (Meteor.userId()) {
 
 				}
+				this.next();
 			},
 			onAfterAction : function() {
 			},
@@ -101,6 +108,7 @@
 			onBeforeAction : function() {
 				if (!Meteor.userId())
 					this.redirect('loginform');
+				this.next();
 			},
 			onRun : function() {
 				if (!Meteor.userId())
