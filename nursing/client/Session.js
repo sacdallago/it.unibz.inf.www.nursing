@@ -32,6 +32,7 @@ Session.setDefault('problemFilter',null);
 
  //How to structure return statement for dynamically called handles:
 //( messagesHandle ? !messagesHandle.ready() : false)
+/*
 Template.loading.helpers({
 	notReady : function() {
 		if(Meteor.user()){
@@ -40,4 +41,4 @@ Template.loading.helpers({
 		return false;
 	}
 });
-
+*/

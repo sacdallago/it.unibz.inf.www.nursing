@@ -1,52 +1,66 @@
+<template name="scheleton">
+	<div class="ui sidebar">
+    
+  	</div>
+  	<div class="ui top fixed menu">
+  		{{> connectionStatus}}
+  		{{> notifications}}
+    	{{> yield "navigation"}}
+  	</div>
+  	<div class="pusher">
+    	{{> yield}}
+  	</div>
+	{{> yield "modals"}}
+</template>
+
 <template name="navigation">
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<div class="nav-collapse collapse">
-					<ul class="nav">
-						<li id="home-navigation" class="{{ activeIfTemplateIs 'Home' }}">
-							<a href="{{pathFor 'home'}}"><i class="fa fa-fw fa-table"></i> {{language.home}}</a>
-						</li>
-						<li id="home-navigation" class="{{ activeIfTemplateIs 'Reminders' }}">
-							<a href="{{pathFor 'reminders'}}"><i class="fa fa-fw fa-warning"></i> {{language.reminders}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
-						</li>
-						<li id="home-navigation" class="{{ activeIfTemplateIs 'Journal' }}">
-							<a href="{{pathFor 'journal'}}"><i class="fa fa-fw fa-envelope"></i> {{language.journal}}&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>
-						</li>
-						<li id="rooms-navigation" class="{{ activeIfTemplateIs 'Measures' }}">
-							<a href="{{pathFor 'measures'}}"><i class="fa fa-fw fa-table"></i> {{language.measures}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
-						</li>
-						<li id="home-navigation" class="{{ activeIfTemplateIs 'Problems' }}">
-							<a href="{{pathFor 'problems'}}"><i class="fa fa-fw fa-folder-open"></i> {{language.problems}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
-						</li>
-						<li>
-							<a href="#" id="logout-toggle"><i class="fa fa-sign-out"></i> {{language.signout}}</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
+	<div class="ui menu">
+		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Home' }}" href="{{pathFor 'home'}}"><i class="icon table"></i> {{language.home}}</a>
+		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Reminders' }}" href="{{pathFor 'reminders'}}"><i class="icon warning"></i> {{language.reminders}}&nbsp;&nbsp;<span class="badge alert-danger">{{deadlineReminders}}</span></a>
+		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Journal' }}" href="{{pathFor 'journal'}}"><i class="icon envelope"></i> {{language.journal}}&nbsp;&nbsp;<span class="badge alert-info">{{newJournals}}</span></a>
+		<a id="rooms-navigation" class="item {{ activeIfTemplateIs 'Measures' }}" href="{{pathFor 'measures'}}"><i class="icon table"></i> {{language.measures}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+		<a id="home-navigation" class="item {{ activeIfTemplateIs 'Problems' }}" href="{{pathFor 'problems'}}"><i class="icon folder open"></i> {{language.problems}}<!--&nbsp;&nbsp;<span class="badge alert-info">{{language.}}</span>--></a>
+		<a href="#" id="logout-toggle" class="item"><i class="icon sign out"></i> {{language.signout}}</a>
+		{{> yield "footer"}}
+	</div>
 </template>
 
 <template name="footer">
-	<div id="footer" class="container">
-		<nav class="navbar navbar-default navbar-fixed-bottom">
-			<div class="navbar-inner navbar-content-center">
-				<p class="navbar-text" style="text-align: center; height: 60px;">
-					{{#if nameSelected}}
-					<div class="pointer" style="width: 300px; height: 60px; margin: 0 auto; overflow: scroll;">
-						<h3>{{patientName}} <i class="fa fa-times-circle-o alizarin"></i></h3>
-					</div>
-					{{else}}
-					{{> inputAutocomplete settings=settings type="text" class="search-query" placeholder="Patient" style="width: 300px; margin: 10px auto 0 auto;"}}
-					{{/if}}
-				</p>
+	<div class="right menu">
+		{{#if nameSelected}}
+		<div class="item pointer">
+			{{patientName}} <i class="fa fa-times-circle-o alizarin"></i>
+		</div>
+		{{else}}
+		<div class="item">   
+		    <div class="ui transparent icon input">
+		        {{> inputAutocomplete settings=settings type="text" placeholder="Patient name"}}
+		        <i class="search link icon"></i>
+		    </div>
+		</div>
+		{{/if}}
+	
+		<div class="item ui icon pointing dropdown button">
+				<i class="plus icon"></i>
+				<div class="menu">
+				{{#if nameSelected}}
+				{{#if hasHospitalization}}
+					<a class="item" href="#" data-toggle="modal" data-target="#measurement"><i class="fa fa-sliders"></i> New Measurement</a>
+					<a class="item" href="#" data-toggle="modal" data-target="#reminder"><i class="fa fa-bell"></i> New Reminder</a>
+					<a class="item" href="#" data-toggle="modal" data-target="#journal"><i class="fa fa-envelope"></i> New Journal</a>
+				{{else}}
+					<a class="item newHospitalization" href="#"><i class="fa fa-h-square"></i> New Hospitalization</a>
+				{{/if}}
+				{{else}}
+					<a class="item" href="#" data-toggle="modal" data-target="#patient"><i class="fa fa-user"></i> Add a new patient</a>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+		
+
+		<!--
+		
 				<div class="btn-group dropup plusButton">
 					<button class="btn dropdown-toggle" style="	width: 100px;" data-toggle="dropdown">
 						<i class="fa fa-plus"></i>
@@ -75,9 +89,7 @@
 						{{/if}}
 					</ul>
 				</div>
-			</div>
-		</nav>
-	</div>
+				-->	
 </template>
 
 <template name="patientPill">
@@ -388,28 +400,28 @@
 </template>
 
 <template name="loading">
-	{{#if notReady}}
-	<div class="spinner">
-		<div class="cube1"></div>
-		<div class="cube2"></div>
+	<div class="ui active dimmer">
+	    <div class="ui large text loader">Loading</div>
 	</div>
-	{{/if}}
 </template>
 
 <template name="connectionStatus">
 	{{#if connectionLost}}
 	{{#AnimateWithVelocity}}
-	<div class="navbar-fixed-top fixed" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div class="alert alert-error" style="text-align: center;">
-			<strong>Connection lost</strong>
-		</div>
+	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="ui negative message">
+		  <i class="close icon"></i>
+		  <div class="header">
+		    Connection lost
+		  </div>
+		  <p>It appears the connection to the server has been lost. Please wait for this message to disappear before editing data!
+		</p></div>
 	</div>
 	{{/AnimateWithVelocity}}
 	{{/if}}
 </template>
 
 <template name="loginform">
-	<div class="container">
 		<form id="login-form" class="form-signin">
 			<h2 class="form-signin-heading">Login</h2>
 			<input type="text" class="input-block-level" id="login-username" placeholder="Username" />
@@ -417,8 +429,6 @@
 			<input type="submit" id="login-button" value="Sign in" class="btn btn-info btn-block" />
 			<input id="create-account" value="Create an Account" class="btn btn-info btn-block" style="margin-top: 20px;"/>
 		</form>
-
-	</div>
 	<div style="margin-left: auto; margin-right: auto; color:gray;">
 		<p style="text-align: center;">
 			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
@@ -427,7 +437,6 @@
 </template>
 
 <template name="registrationform">
-	<div class="container">
 		<form id="register-form" class="form-signin">
 			<h2 class="form-signin-heading">Register</h2>
 			<input type="text" class="input-block-level" id="account-first" placeholder="{{language.firstname}}" />
@@ -445,7 +454,6 @@
 			<input type="submit" id="create-account" value="{{language.createaccount}}" class="btn btn-info btn-block" />
 			<input id="account-signin" value="{{language.backtosignin}}" class="btn btn-info btn-block" style="margin-top: 30px;"/>
 		</form>
-	</div>
 	<div style="margin-left: auto; margin-right: auto; color:gray;">
 		<p style="text-align: center;">
 			&copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
@@ -458,13 +466,3 @@
 	<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=no" />
 	<!--320-->
 </head>
-
-<body>
-	{{> notifications}}
-	{{#if currentUser}}
-	{{> modals}}
-	{{> navigation}}
-	{{> connectionStatus}}
-	{{> footer}}
-	{{/if}}
-</body>

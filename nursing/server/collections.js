@@ -34,14 +34,12 @@ Meteor.publish('patients', function(criteria, projection) {
 			return Patients.find();
 		}
 	} else {
-		return null;
 	}
 });
 Meteor.publish('favorites', function() {
 	if (this.userId) {
 		return Favorites.find();
 	} else {
-		return null;
 	}
 });
 Meteor.publish('measures', function(criteria, projection) {
@@ -52,7 +50,7 @@ Meteor.publish('measures', function(criteria, projection) {
 			return Measures.find();
 		}
 	} else {
-		return null;
+		return;
 	}
 });
 Meteor.publish('journal', function(criteria, projection) {
@@ -63,7 +61,6 @@ Meteor.publish('journal', function(criteria, projection) {
 			return Journal.find();
 		}
 	} else {
-		return null;
 	}
 });
 Meteor.publish('hospitalizations', function(criteria, projection) {
@@ -74,7 +71,7 @@ Meteor.publish('hospitalizations', function(criteria, projection) {
 			return Hospitalizations.find();
 		}
 	} else {
-		return null;
+		return;
 	}
 });
 Meteor.publish('reminders', function(criteria, projection) {
@@ -85,28 +82,24 @@ Meteor.publish('reminders', function(criteria, projection) {
 			return Reminders.find();
 		}
 	} else {
-		return null;
 	}
 });
 Meteor.publish('rooms', function() {
 	if (this.userId) {
 		return Rooms.find();
 	} else {
-		return null;
 	}
 });
 Meteor.publish('units', function() {
 	if (this.userId) {
 		return Units.find();
 	} else {
-		return null;
 	}
 });
 Meteor.publish('categories', function() {
 	if (this.userId) {
 		return Categories.find();
 	} else {
-		return null;
 	}
 });
 Meteor.publish('users', function() {
@@ -116,7 +109,6 @@ Meteor.publish('users', function() {
 			'profile.last' : 1
 		});
 	} else {
-		return null;
 	}
 });
 /* by activating the following publication, all users can see each other!

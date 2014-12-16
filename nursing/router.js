@@ -1,77 +1,85 @@
 (function() {
 	Router.configure({
-		templateNameConverter : 'upperCamelCase'
+		templateNameConverter : 'upperCamelCase',
+		layoutTemplate: 'scheleton',
+		loadingTemplate: 'loading'
 	});
-
-	//Router.onBeforeAction('loading');
-
 	Router.map(function() {
-		this.route('registrationform', {
-			path : '/signup',
-			onBeforeAction : function() {
+		this.route('home', {
+			path : '/',
+			waitOn: function () {
+		      return Meteor.subscribe('journal', {
+		          subject : {
+		            $exists : true
+		          }
+		        }, {});
+		    },
+			onRun : function() {
+				if (!Meteor.userId()){
+					this.redirect('/signin');
+				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
-			onRun : function() {
-				if (Meteor.userId())
-					this.redirect('home');
-			}
+			action: function () {
+    			//regions
+    			this.render('modals', {to: 'modals'});
+    			this.render('navigation', {to: 'navigation'});
+    			this.render('footer', {to: 'footer'});
+    			//main
+    			this.render('home');
+  			}
 		});
 		this.route('loginform', {
 			path : '/signin',
-			onBeforeAction : function() {
+			onRun : function() {
+				if (Meteor.userId()){
+						this.redirect('/');
+				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
+			action: function () {
+    			this.render('loginform');
+  			}
+		});
+		this.route('registrationform', {
+			path : '/signup',
 			onRun : function() {
-				if (Meteor.userId())
-					this.redirect('home');
-			}
+				if (Meteor.userId()){
+						this.redirect('/');
+				}
+				this.next();
+			},
+			action: function () {
+    			this.render('registrationform');
+  			}
 		});
 		this.route('goodbye', {
 			path : '/goodbye',
-			onBeforeAction : function() {
+			onRun : function() {
+				if (!Meteor.userId()){
+					this.redirect('/signin');
+				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
-			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			}
-		});
-		this.route('home', {
-			path : '/',
-			onBeforeAction : function() {
-				Meteor.subscribe('journal', {
-					subject : {
-						$exists : true
-					}
-				}, {});
-				this.next();
-			},
-			onAfterAction : function() {
-			},
-			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			}
+			action: function () {
+    			this.render('goodbye');
+  			}
 		});
 		this.route('reminders', {
 			path : '/reminders',
-			onBeforeAction : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
+			onRun : function() {
+				if (!Meteor.userId()){
+					this.redirect('/signin');
+				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
-			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			}
+			action: function () {
+    			this.render('reminders');
+    			//regions
+    			this.render('modals', {to: 'modals'});
+    			this.render('navigation', {to: 'navigation'});
+    			this.render('footer', {to: 'footer'});
+  			}
 		});
 		this.route('journal', {
 			path : '/journal',
@@ -81,41 +89,51 @@
 				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
 			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			}
-		});
-		this.route('measures', {
-			path : '/measures',
-			onBeforeAction : function() {
-				if (Meteor.userId()) {
-
+				if (!Meteor.userId()){
+					this.redirect('/signin');
 				}
 				this.next();
 			},
-			onAfterAction : function() {
-			},
+			action: function () {
+    			this.render('journal');
+    			//regions
+    			this.render('modals', {to: 'modals'});
+    			this.render('navigation', {to: 'navigation'});
+    			this.render('footer', {to: 'footer'});
+  			}
+		});
+		this.route('measures', {
+			path : '/measures',
 			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			}
+				if (!Meteor.userId()){
+					this.redirect('/signin');
+				}
+				this.next();
+			},
+			action: function () {
+    			this.render('measures');
+    			//regions
+    			this.render('modals', {to: 'modals'});
+    			this.render('navigation', {to: 'navigation'});
+    			this.render('footer', {to: 'footer'});
+  			}
 		});
 		this.route('problems', {
 			path : '/problems',
-			onBeforeAction : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
+			onRun : function() {
+				if (!Meteor.userId()){
+					this.redirect('/signin');
+				}
 				this.next();
 			},
-			onRun : function() {
-				if (!Meteor.userId())
-					this.redirect('loginform');
-			},
-			onAfterAction : function() {
-			}
+			action: function () {
+    			this.render('problems');
+    			//regions
+    			this.render('modals', {to: 'modals'});
+    			this.render('navigation', {to: 'navigation'});
+    			this.render('footer', {to: 'footer'});
+  			}
 		});
 	});
 })();

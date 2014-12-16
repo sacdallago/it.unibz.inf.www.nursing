@@ -1,34 +1,3 @@
-Template.footer.settings = function() {
-	return {
-		position : "top",
-		limit : 5,
-		rules : [{
-			collection : Patients,
-			field : "first",
-			template : Template.patientPill,
-			selector : function(match) {
-				var regex = new RegExp("^" + match, 'i');
-				return {
-					$or : [{
-						'first' : regex
-					}, {
-						'last' : regex
-					}]
-				};
-			},
-			callback : function(doc, element) {
-				Session.set('patientFilter', doc._id);
-				var hosp = Hospitalizations.findOne({
-					patientId : doc._id
-				});
-				if(hosp){
-					Session.set('hospitalizationFilter', hosp._id);
-				}
-			}
-		}]
-	};
-};
-
 Template.patientPill.helpers({
 	room : function() {
 		var room = Rooms.findOne({
@@ -50,6 +19,11 @@ Template.patientPill.helpers({
 	}
 });
 
+Template.footer.rendered = function(){
+	this.$('.ui.icon.pointing.dropdown.button').dropdown({transition: 'drop'})
+;
+};
+
 Template.footer.helpers({
 	nameSelected : function() {
 		return Session.get('patientFilter');
@@ -66,6 +40,36 @@ Template.footer.helpers({
 			return niceName(patient.first, patient.last) + ", " + room.number + "" + room.bed;
 		}
 		return niceName(patient.first, patient.last);
+	},
+	settings : function() {
+		return {
+			position : "top",
+			limit : 5,
+			rules : [{
+				collection : Patients,
+				field : "first",
+				template : Template.patientPill,
+				selector : function(match) {
+					var regex = new RegExp("^" + match, 'i');
+					return {
+						$or : [{
+							'first' : regex
+						}, {
+							'last' : regex
+						}]
+					};
+				},
+				callback : function(doc, element) {
+					Session.set('patientFilter', doc._id);
+					var hosp = Hospitalizations.findOne({
+						patientId : doc._id
+					});
+					if(hosp){
+						Session.set('hospitalizationFilter', hosp._id);
+					}
+				}
+			}]
+		};
 	}
 });
 
