@@ -29,6 +29,8 @@ Template.navigation.events({
 	}
 });
 
-Template.connectionStatus.connectionLost = function(){
-	return !Meteor.status().connected;
-};
+Template.connectionStatus.helpers({
+	connectionLost : function(){
+		return !Meteor.status().connected;
+	}
+});

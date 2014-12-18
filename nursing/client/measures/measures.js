@@ -139,7 +139,8 @@ Deps.autorun(function(c) {
 	}
 });
 
-Template.measures.measures = function() {
+Template.measures.helpers({
+	measures : function() {
 	var filter = {};
 	if (Session.get('patientFilter')) {
 		filter.patientId = Session.get('patientFilter');
@@ -184,7 +185,8 @@ Template.measures.measures = function() {
 
 		return element;
 	});
-};
+	}
+}); 
 
 Template.measureItems.helpers({
 	noPatientSelected : function() {
@@ -240,11 +242,11 @@ Template.measureItems.events({
 	}
 });
 
-Template.measureTags.destroyed = function() {
+Template.measureTags.helpers({
+	destroyed : function() {
 	delete Session.keys['measureFilter'];
-};
-
-Template.measureTags.tags = function() {
+	},
+	tags : function() {
 	var tag_infos = [];
 	var total_count = 0;
 
@@ -278,7 +280,8 @@ Template.measureTags.tags = function() {
 	});
 
 	return tag_infos;
-};
+	}
+});
 
 Template.measureTags.events({
 	'click .tag' : function(event) {

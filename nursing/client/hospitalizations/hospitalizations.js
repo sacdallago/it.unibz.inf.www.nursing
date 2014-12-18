@@ -57,10 +57,8 @@ Template.home.helpers({
 	},
 	hasHospitalization : function() {
 		return Session.get('hospitalizationFilter');
-	}
-});
-
-Template.home.reminders = function() {
+	},
+	reminders : function() {
 	// Determine which reminders to display in main pane,
 	// selected based on category
 	var category = Session.get('categoryName');
@@ -122,7 +120,92 @@ Template.home.reminders = function() {
 		element.niceDue = dateFormatter(element.dueDate);
 		return element;
 	});
-};
+	},
+	entry : function() {
+	var filter = {};
+	if (Session.get('patientFilter')) {
+		filter.patientId = Session.get('patientFilter');
+	}
+
+	var entries = [];
+
+	Journal.find(filter).forEach(function(element) {
+
+		var patient = Patients.findOne(element.patientId);
+		element.patientName = niceName(patient.first, patient.last);
+
+		var room = Rooms.findOne({
+			'patientId' : element.patientId
+		});
+		if (room) {
+			element.bed = room.number + "" + room.bed;
+		} else {
+			element.bed = "NO BED ASSIGNED";
+		}
+
+		element.date = dateFormatter(element.timestamp);
+
+		if (element.journalId) {
+			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
+		}
+
+		element.subject ? (element.subject = ((String)(element.subject)).capitalize()) : null;
+
+		var nurse = Meteor.users.findOne(element.nurseId);
+		element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+
+		element.attachment = JournalDocuments.findOne(element.attachment);
+
+		entries.push(element);
+	});
+
+	Measures.find(filter).map(function(element) {
+
+		var patient = Patients.findOne(element.patientId);
+		element.patientName = niceName(patient.first, patient.last);
+
+		var room = Rooms.findOne({
+			'patientId' : element.patientId
+		});
+
+		if (room) {
+			element.bed = room.number + "" + room.bed;
+		} else {
+			element.bed = "NO BED ASSIGNED";
+		}
+
+		element.date = dateFormatter(element.timestamp);
+
+		if (element.journalId) {
+			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
+		}
+
+		_.each(element.fields, function(field) {
+			if (!field.unit) {
+				field.checkbox = field.value == 0 ? "No" : "Yes";
+			}
+		});
+
+		element.type = element.type.capitalize();
+
+		var nurse = Meteor.users.findOne(element.nurseId);
+		element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+
+		entries.push(element);
+	});
+
+	entries.sort(function(a, b) {
+		if (a.timestamp < b.timestamp) {
+			return 1;
+		} else if (a.timestamp > b.timestamp) {
+			return -1;
+		}
+		return 0;
+	});
+
+	return entries;
+	}
+});
 
 Template.patientCard.helpers({
 	patient : function() {
@@ -326,90 +409,7 @@ Template.hospitalizationCard.helpers({
 	}
 });
 
-Template.home.entry = function() {
-	var filter = {};
-	if (Session.get('patientFilter')) {
-		filter.patientId = Session.get('patientFilter');
-	}
-
-	var entries = [];
-
-	Journal.find(filter).forEach(function(element) {
-
-		var patient = Patients.findOne(element.patientId);
-		element.patientName = niceName(patient.first, patient.last);
-
-		var room = Rooms.findOne({
-			'patientId' : element.patientId
-		});
-		if (room) {
-			element.bed = room.number + "" + room.bed;
-		} else {
-			element.bed = "NO BED ASSIGNED";
-		}
-
-		element.date = dateFormatter(element.timestamp);
-
-		if (element.journalId) {
-			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
-		}
-
-		element.subject ? (element.subject = ((String)(element.subject)).capitalize()) : null;
-
-		var nurse = Meteor.users.findOne(element.nurseId);
-		element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-
-		element.attachment = JournalDocuments.findOne(element.attachment);
-
-		entries.push(element);
-	});
-
-	Measures.find(filter).map(function(element) {
-
-		var patient = Patients.findOne(element.patientId);
-		element.patientName = niceName(patient.first, patient.last);
-
-		var room = Rooms.findOne({
-			'patientId' : element.patientId
-		});
-
-		if (room) {
-			element.bed = room.number + "" + room.bed;
-		} else {
-			element.bed = "NO BED ASSIGNED";
-		}
-
-		element.date = dateFormatter(element.timestamp);
-
-		if (element.journalId) {
-			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
-		}
-
-		_.each(element.fields, function(field) {
-			if (!field.unit) {
-				field.checkbox = field.value == 0 ? "No" : "Yes";
-			}
-		});
-
-		element.type = element.type.capitalize();
-
-		var nurse = Meteor.users.findOne(element.nurseId);
-		element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-
-		entries.push(element);
-	});
-
-	entries.sort(function(a, b) {
-		if (a.timestamp < b.timestamp) {
-			return 1;
-		} else if (a.timestamp > b.timestamp) {
-			return -1;
-		}
-		return 0;
-	});
-
-	return entries;
-};
+	
 
 Template.bedCard.helpers({
 	rooms : function() {

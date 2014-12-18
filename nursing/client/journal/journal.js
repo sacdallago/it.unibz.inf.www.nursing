@@ -12,7 +12,8 @@ journalHandle = Meteor.subscribe('journal',{active:true},{});
 
 
 //Template logic
-Template.journal.journals = function() {
+Template.journal.helpers({
+	journals : function() {
 	var filter = {};
 	if(Session.get('patientFilter')){
 		filter.patientId = Session.get('patientFilter');
@@ -49,7 +50,8 @@ Template.journal.journals = function() {
 
 		return element;
 	});
-};
+	}
+});
 
 Template.journalItems.helpers({
 	noPatientSelected : function() {
