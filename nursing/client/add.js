@@ -125,12 +125,13 @@ Template.newMeasurement.helpers({
 	},
 	measures : function() {
 		return Session.get('measures');
+	},
+	destroyed : function() {
+	delete Session.keys['measures'];
 	}
 });
 
-Template.newMeasurement.destroyed = function() {
-	delete Session.keys['measures'];
-};
+
 
 Template.newJournal.events({
 	'change #journalFile' : function(event) {
@@ -255,18 +256,15 @@ Template.newJournal.helpers({
 				}
 			}]
 		});
+	},
+	destroyed : function() {
+	delete Session.keys['fileSelected'];
 	}
 });
 
-Template.newJournal.destroyed = function() {
-	delete Session.keys['fileSelected'];
-};
 
 //newReminder
-Template.newReminder.rendered = function() {
-	var category = Categories.findOne({});
-	Session.set('inputCategory', category.name);
-};
+
 
 Template.newReminder.events({
 	'click .category' : function(event) {
@@ -353,5 +351,9 @@ Template.newReminder.helpers({
 				}
 			}]
 		});
+	},
+	rendered : function() {
+	var category = Categories.findOne({});
+	Session.set('inputCategory', category.name);
 	}
 });
