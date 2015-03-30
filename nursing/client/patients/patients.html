@@ -1,0 +1,91 @@
+<template name="patientItemList">
+    <div class="ui four doubling cards">
+        {{#each patients}}
+        {{> patientElement}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="patientElement">
+    <div class="card">
+        <div class="content">
+            <div class="header">{{capitalize first}} {{capitalize last}}</div>
+            <div class="meta">
+                <span class="date">{{formatDate birthdate}}</span>
+            </div>
+            <div class="description">
+                {{#if hospitalization}}
+                <p>{{hospitalization.reason}}</p>
+                <p>Hospitalization of <strong>{{formatDate hospitalization.timestamp}}</strong></p>
+                <p>Room <strong>{{room.number}}/{{room.bed}}</strong></p>
+                {{else}}
+                <p>No hospitalization</p>
+                {{/if}}
+            </div>
+            {{#if reminders}}
+            <div class="extra content">
+                {{#each reminders}}
+                <div>
+                    <i class="bell icon"></i>
+                    {{category}}
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+        </div>
+    </div> 
+</template>
+
+<template name="hospitalizedPatientItemList">
+    <div class="ui three doubling cards">
+        {{#each patients}}
+        {{> patientElement }}
+        {{/each}}
+    </div>
+</template>
+
+<template name="addPatientOption">
+    <a class="item" style="font-size: 2rem;"><i class="icon user"></i> Add a new patient</a>
+</template>
+
+<template name="newPatient">
+    <div id="newPatientModal" class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            New Patient
+        </div>
+        <div class="content">
+            <div class="description">
+                <table class="table table-condensed patientUpdate">
+                    <tbody>
+                        <tr>
+                            <td> First name: </td>
+                            <td>
+                                <input class="newPatient" data-field="first" type="text" pattern="[a-zA-Z]+" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Last name: </td>
+                            <td>
+                                <input class="newPatient" data-field="last" type="text" pattern="[a-zA-Z]+" required/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Birthdate: </td>
+                            <td>
+                                <input class="newPatient" data-field="birthdate" type="date" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-block send">
+                    <strong><i class="fa fa-circle-o river"></i></strong> Create
+                </button>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui button">Cancel</div>
+            <div class="ui button">OK</div>
+        </div>
+    </div>
+</template>

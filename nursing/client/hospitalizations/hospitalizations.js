@@ -3,54 +3,6 @@ hospitalizationsHandle = Meteor.subscribe('hospitalizations', {
 	active : true
 }, {});
 
-UI.registerHelper('enumProperties', function(context, options) {
-	if (context) {
-		var li = "";
-		for (var property in context) {
-			li += property;
-			li += ": ";
-			li += context[property];
-			li += "\n";
-		}
-		return li;
-	}
-});
-
-UI.registerHelper('trim', function(context, options) {
-	if (context) {
-		return context.substring(0, 20) + "...";
-	}
-});
-
-UI.registerHelper('formatDate', function(context, options) {
-	if (context) {
-		return dayYearFormatter(context);
-	}
-});
-
-UI.registerHelper('findSelected', function(context, paragon) {
-	return context == paragon ? 'selected' : '';
-});
-
-UI.registerHelper('htmlDate', function(context, options) {
-	if (context) {
-		return htmlDate(context);
-	}
-});
-
-UI.registerHelper('nurseNameFormatter', function(context, options) {
-	if (context) {
-		var user = Meteor.users.findOne(context);
-		return niceName(user.profile.first, user.profile.last);
-	}
-});
-
-UI.registerHelper('capitalize', function(context, options) {
-	if (context) {
-		return context.capitalize();
-	}
-});
-
 Template.home.helpers({
 	patient : function() {
 		return Session.get('patientFilter');

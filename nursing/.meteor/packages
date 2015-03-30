@@ -26,3 +26,4 @@ cfs:filesystem
 
 
 npm-container
+momentjs:moment

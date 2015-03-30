@@ -1,7 +1,7 @@
 <template name="home">
+    <div class="row">
+		<div class="sixteen wide column">
 	{{#if patient}}
-	<div class="container-fluid">
-		<div class="row-fluid">
 			<ul class="span7 offset3 unstyled">
 				{{> patientCard}}
 				{{#if hasHospitalization}}
@@ -22,16 +22,12 @@
 				{{/if}}
 				{{/each}}
 			</ul>
-		</div>
-	</div>
+		
 	{{else}}
-	<div >
-		<p class="noPatientSelected">
-			<i class="fa fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-arrow-circle-o-down"></i>
-			<br />
-		</p>
-	</div>
+    {{> patientItemList}}
 	{{/if}}
+            </div>
+	</div>
 </template>
 
 <template name="patientCard">
