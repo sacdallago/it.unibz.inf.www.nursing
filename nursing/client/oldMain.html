@@ -292,46 +292,6 @@
     {{/if}}
 </template>
 
-<template name="loginform">
-    <form id="login-form" class="form-signin">
-        <h2 class="form-signin-heading">Login</h2>
-        <input type="text" class="input-block-level" id="login-username" placeholder="Username" />
-        <input type="password" class="input-block-level" id="login-password" placeholder="password" />
-        <input type="submit" id="login-button" value="Sign in" class="btn btn-info btn-block" />
-        <input id="create-account" value="Create an Account" class="btn btn-info btn-block" style="margin-top: 20px;"/>
-    </form>
-    <div style="margin-left: auto; margin-right: auto; color:gray;">
-        <p style="text-align: center;">
-            &copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
-        </p>
-    </div>
-</template>
-
-<template name="registrationform">
-    <form id="register-form" class="form-signin">
-        <h2 class="form-signin-heading">Register</h2>
-        <input type="text" class="input-block-level" id="account-first" placeholder="{{language.firstname}}" />
-        <input type="text" class="input-block-level" id="account-last" placeholder="{{language.lastname}}" />
-        <input type="text" class="input-block-level" id="account-username" placeholder="Username" />
-        <!-- <input type="email" class="input-block-level" id="account-email" placeholder="email" /> -->
-        <input type="password" class="input-block-level" id="account-password" placeholder="Password" />
-        <input type="password" class="input-block-level" id="account-password-repeat" placeholder="Password" />
-        <input type="password" class="input-block-level" id="admin-password" placeholder="Admin Password" />
-        <select name="department" id="account-department" class="form-control input-block-level" style="margin-top: 10px; margin-bottom: 10px;">
-            {{#each departments}}
-            <option value="{{this}}">{{this}}</option>
-            {{/each}}
-        </select>
-        <input type="submit" id="create-account" value="{{language.createaccount}}" class="btn btn-info btn-block" />
-        <input id="account-signin" value="{{language.backtosignin}}" class="btn btn-info btn-block" style="margin-top: 30px;"/>
-    </form>
-    <div style="margin-left: auto; margin-right: auto; color:gray;">
-        <p style="text-align: center;">
-            &copy; 2014 - Christian Dallago, Riccardo Buttarelli - Nursing assisstance 101
-        </p>
-    </div>
-</template>
-
 <head>
     <title>Nursing</title>
     <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width,height=device-height,target-densitydpi=device-dpi,user-scalable=no" />
