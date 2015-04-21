@@ -10,31 +10,6 @@ Template.modals.helpers({
 	}
 });
 
-Template.newPatient.events({
-	'submit' : function(event) {
-		event.preventDefault();
-		var inputs = document.getElementsByClassName('newPatient');
-		var patient = {};
-		for (var i = 0; i < inputs.length; i++) {
-			var value = inputs[i].value;
-			var field = inputs[i].dataset.field;
-			if (!validatePatientData(field, value)) {
-				return;
-			}
-			patient[field] = value;
-		}
-		Patients.insert(patient, function(error, data) {
-			if (!error) {
-				Notifications.success('Success', 'Patient inserted!');
-				Session.set('patientFilter', data);
-				event.target.reset();
-				$('#patient').modal('hide');
-			}
-		});
-
-	}
-});
-
 Template.newMeasurement.events({
 	'change #measurementType' : function(event) {
 		var id = $(event.currentTarget).find(':selected').data("_id");
@@ -125,12 +100,13 @@ Template.newMeasurement.helpers({
 	},
 	measures : function() {
 		return Session.get('measures');
+	},
+	destroyed : function() {
+	delete Session.keys['measures'];
 	}
 });
 
-Template.newMeasurement.destroyed = function() {
-	delete Session.keys['measures'];
-};
+
 
 Template.newJournal.events({
 	'change #journalFile' : function(event) {
@@ -255,18 +231,15 @@ Template.newJournal.helpers({
 				}
 			}]
 		});
+	},
+	destroyed : function() {
+	delete Session.keys['fileSelected'];
 	}
 });
 
-Template.newJournal.destroyed = function() {
-	delete Session.keys['fileSelected'];
-};
 
 //newReminder
-Template.newReminder.rendered = function() {
-	var category = Categories.findOne({});
-	Session.set('inputCategory', category.name);
-};
+
 
 Template.newReminder.events({
 	'click .category' : function(event) {
@@ -353,5 +326,9 @@ Template.newReminder.helpers({
 				}
 			}]
 		});
+	},
+	rendered : function() {
+	var category = Categories.findOne({});
+	Session.set('inputCategory', category.name);
 	}
 });

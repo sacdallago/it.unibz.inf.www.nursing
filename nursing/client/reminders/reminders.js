@@ -46,47 +46,16 @@ var activateInput = function (input) {
 };
 
 // Reminders
-
-Template.reminders.loading = function () {
-  return remindersHandle && !remindersHandle.ready();
-};
-
-Template.reminders.any_category_selected = function () {
-  return !Session.equals('categoryName', null);
-};
-
 Template.reminders.helpers({
-  
-});
+  loading : function () {
+      return remindersHandle && !remindersHandle.ready();
+  },
 
-Template.reminders.events(okCancelEvents(
-  '#new-reminder',
-  {
-    ok: function (text, evt) {
-    var tmpCategory = Session.get('categoryName');
+  any_category_selected : function () {
+    return !Session.equals('categoryName', null);
+  },
 
-    if (Categories.findOne({name : tmpCategory})) {
-   
-      Reminders.insert({
-        message: text,
-        category: tmpCategory,
-        done: false,
-        timestamp: (new Date()).getTime()
-      },function(error) {
-      if (error) {
-        Notifications.error("Error", "An error occoured. Please try again");
-      } else {
-        Notifications.success("", "New Reminder successfully inserted!");
-      }
-    });
-    } else {
-      Notifications.error("Error", "Pick a Category");
-    }
-      evt.target.value = '';
-    }
-  }));
-
-reminders = function () {
+  reminders : function () {
   // Determine which reminders to display in main pane,
   // selected based on category
     var category = Session.get('categoryName');
@@ -143,9 +112,39 @@ reminders = function () {
       element.niceDue = dateFormatter(element.dueDate);
       return element;
     });
-};
+  },
+  destroyed : function(){
+    delete Session.keys['categoryName'];
+  }
+});
 
-Template.reminders.reminders = reminders;
+
+Template.reminders.events(okCancelEvents(
+  '#new-reminder',
+  {
+    ok: function (text, evt) {
+    var tmpCategory = Session.get('categoryName');
+
+    if (Categories.findOne({name : tmpCategory})) {
+   
+      Reminders.insert({
+        message: text,
+        category: tmpCategory,
+        done: false,
+        timestamp: (new Date()).getTime()
+      },function(error) {
+      if (error) {
+        Notifications.error("Error", "An error occoured. Please try again");
+      } else {
+        Notifications.success("", "New Reminder successfully inserted!");
+      }
+    });
+    } else {
+      Notifications.error("Error", "Pick a Category");
+    }
+      evt.target.value = '';
+    }
+  }));
  
 
 Template.reminderItem.helpers({
@@ -305,24 +304,41 @@ Template.reminderItem.events(okCancelEvents(
 
 //Categories
 
-Template.categories.loading = function () {
-  return !categoriesHandle.ready();
-};
-
-Template.categories.categories = function () {
-  var categories = Categories.find();
-  return categories.map(function(element){
-    var sel ={};
-    sel.category = element.name;
+Template.categories.helpers({
+  loading : function () {
+    return !categoriesHandle.ready();
+  },
+  categories : function () {
+    var categories = Categories.find();
+    return categories.map(function(element){
+      var sel ={};
+      sel.category = element.name;
+      var pid = Session.get('patientFilter');
+      if (pid){
+        sel.patientId = pid;
+      }
+      element.count = Reminders.find(sel).count();
+      return element;
+    });
+  },
+  selected : function () {
+    return Session.equals('categoryName', this.name) ? 'label-info' : '';
+  },  
+  editing : function () {
+    return Session.equals('editing_categoryName', this.name);
+  },
+  allSelected : function (){
+    return (!Session.get('categoryName'))?'label-info':'';
+  },
+  totalReminders : function(){
+    var sel = {};
     var pid = Session.get('patientFilter');
-    if (pid){
+    if(pid){
       sel.patientId = pid;
     }
-    element.count = Reminders.find(sel).count();
-    return element;
-  });
-
-};
+    return Reminders.find(sel).count();
+  }
+});
 
 Template.categories.events({
   'mousedown .category': function (evt) { // select category
@@ -385,26 +401,3 @@ Template.categories.events(okCancelEvents(
       Session.set('editing_categoryName', null);
     }
   }));
-
-Template.categories.selected = function () {
-  return Session.equals('categoryName', this.name) ? 'label-info' : '';
-};
-
-Template.categories.editing = function () {
-  return Session.equals('editing_categoryName', this.name);
-};
-Template.categories.allSelected = function (){
-  return (!Session.get('categoryName'))?'label-info':'';
-};
-Template.categories.totalReminders = function(){
-  var sel = {};
-  var pid = Session.get('patientFilter');
-  if(pid){
-    sel.patientId = pid;
-  }
-  return Reminders.find(sel).count();
-};
-
-Template.reminders.destroyed = function(){
-  delete Session.keys['categoryName'];
-};

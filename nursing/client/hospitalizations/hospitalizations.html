@@ -1,39 +1,3 @@
-<template name="home">
-	{{#if patient}}
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<ul class="span7 offset3 unstyled">
-				{{> patientCard}}
-				{{#if hasHospitalization}}
-				{{> bedCard}}
-				{{/if}}
-				{{> hospitalizationCard}}
-				<ul class="unstyled"> 
-				{{#each reminders}}
-					{{> reminderItem}}
-				{{/each}}
-				</ul>
-				<li style="margin-bottom: 20px;"></li>
-				{{#each entry}}
-				{{#if fields}}
-				{{> measureItems}}
-				{{else}}
-				{{> journalItems}}
-				{{/if}}
-				{{/each}}
-			</ul>
-		</div>
-	</div>
-	{{else}}
-	<div >
-		<p class="noPatientSelected">
-			<i class="fa fa-arrow-circle-o-down"></i> Select a patient <i class="fa fa-arrow-circle-o-down"></i>
-			<br />
-		</p>
-	</div>
-	{{/if}}
-</template>
-
 <template name="patientCard">
 	{{#with patient}}
 	<li class="card" style="padding-top: 5px;">
@@ -122,26 +86,19 @@
 
 				<tbody>
 					<tr>
-						<td>
-							Current room:
-						</td>
-						<td>
-							{{getRoomAndBed}}
-						</td>
+						<td> Current room: </td>
+						<td> {{getRoomAndBed}} </td>
 					</tr>
 					<tr>
+						<td> Assign new room: </td>
 						<td>
-							Assign new room:
-						</td>
-						<td>
-							<select class="" id="roomSelect">
-							
+						<select class="" id="roomSelect">
+
 							{{#each rooms}}
-								<option class="{{status}}" data-_id="{{_id}}" value="{{_id}}"><label>{{niceId}} - {{status}} </label></option>
+							<option class="{{status}}" data-_id="{{_id}}" value="{{_id}}"><label>{{niceId}} - {{status}} </label></option>
 							{{/each}}
-						</select>
-						</td>
-					</tr>			
+						</select></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -158,8 +115,16 @@
 				</li>
 				<li>
 					<div >
-						<div data-toggle="collapse" data-target=".dismiss"><button class="btn btn-inverse btn-block">Dismiss</button></div>
-						<div class="collapse dismiss"><button class="btn btn-danger btn-block">Sure you want to dismiss?</button></div>
+						<div data-toggle="collapse" data-target=".dismiss">
+							<button class="btn btn-inverse btn-block">
+								Dismiss
+							</button>
+						</div>
+						<div class="collapse dismiss">
+							<button class="btn btn-danger btn-block">
+								Sure you want to dismiss?
+							</button>
+						</div>
 					</div>
 				</li>
 			</ul>
@@ -334,7 +299,7 @@
 					</tr>
 				</tbody>
 			</table>
-		<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
+			<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
 				<li>
 					Hospitalized by: {{nurseNameFormatter nurseId}}
 				</li>

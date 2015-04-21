@@ -182,11 +182,11 @@ Template.problems.helpers({
 	},
 	problemSelected : function(){
 		return !Session.equals('problemFilter',null);
+	},
+	destroyed : function(){
+	delete Session.keys['problemFilter'];
 	}
 });
-Template.problems.destroyed = function(){
-	delete Session.keys['problemFilter'];
-};
 
 Template.problems.events({});
 

@@ -105,6 +105,19 @@ Meteor.startup(function() {
 		tomorrow.setDate(today.getDate() + 1);
 		dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
 
+		for (var i = 0; i < 10; i++) {
+			var journal = {
+				active : true,
+				hospitalizationId : hid,
+				message : msg[i%6],
+				nurseId : user._id,
+				patientId : pid,
+				timestamp : (new Date()).getTime()
+			};
+
+			Journal.insert(journal);
+		}
+
 		var inactiveProblem = {
 			active : false,
 			hospitalizationId : hid,
@@ -215,7 +228,7 @@ Meteor.startup(function() {
 				'patientId' : pid1
 			}
 		});
-		
+
 		//Patient 3
 		var patientData3 = {
 			first : "without",

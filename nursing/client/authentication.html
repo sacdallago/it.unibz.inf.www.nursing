@@ -1,0 +1,98 @@
+<template name="registrationform">
+    <div class="row">
+        <div class="column">
+            <div class="ui form">
+                <h4 class="ui dividing header">Personal Info</h4>
+                <div class="field">
+                    <label>Name</label>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" id="first" placeholder="{{language.firstname}}">
+                        </div>
+                        <div class="field">
+                            <input type="text" id="last" placeholder="{{language.lastname}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Department</label>
+                    <select id="department" class="ui search dropdown">
+                        {{#each departments}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <h4 class="ui dividing header">Account Info</h4>
+                <div class="required field">
+                    <label>Username</label>
+                    <div class="ui icon input">
+                        <input id="username" type="text" placeholder="Username">
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label>Password</label>
+                    <div class="ui icon input">
+                        <input id="password" type="password" placeholder="Password">
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label>Password Repeat</label>
+                    <div class="ui icon input">
+                        <input id="passwordRepeat" type="password" placeholder="Password">
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                <h4 class="ui dividing header">Admin section</h4>
+                <div class="required field">
+                    <label>Authorization Password</label>
+                    <div class="ui icon input">
+                        <input id="authPassword" type="password" placeholder="Password">
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                <div class="ui error message">
+                    <div class="header">We noticed some issues</div>
+                </div>
+                <div class="ui buttons">
+                    <div class="ui submit green button">Register</div>
+                    <div class="or"></div>
+                    <div class="ui blue button">Login</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="loginform">
+    <div class="row">
+        <div class="column">
+            <div class="ui form">
+                <h4 class="ui dividing header">Account Info</h4>
+                <div class="required field">
+                    <label>Username</label>
+                    <div class="ui icon input">
+                        <input id="username" type="text" placeholder="Username">
+                        <i class="user icon"></i>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label>Password</label>
+                    <div class="ui icon input">
+                        <input id="password" type="password" placeholder="Password">
+                        <i class="lock icon"></i>
+                    </div>
+                </div>
+                <div class="ui error message">
+                    <div class="header">We noticed some issues</div>
+                </div>
+                <div class="ui buttons">
+                    <div class="ui submit green button">Login</div>
+                    <div class="or"></div>
+                    <div class="ui blue button">Register</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

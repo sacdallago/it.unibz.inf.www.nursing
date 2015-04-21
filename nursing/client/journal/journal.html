@@ -1,19 +1,18 @@
 <template name="journal">
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<ul class="span7 offset3 unstyled">
+	<div class="row">
+		<div class="sixteen wide column">
 				{{#each journals}}
 					{{> journalItems}}
 				{{/each}}
-			</ul>
 		</div>
 	</div>
+	{{> space}}
 </template>
 
 <template name="journalItems">
 	{{#AnimateWithVelocity}}
-	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div class="twitter" style="border-bottom:1px solid #e5e5e5;">
+	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<div class="row twitter" style="border-bottom:1px solid #e5e5e5;">
 			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
 				<ul class="unstyled">
 					{{#if problemSubject}}
@@ -126,7 +125,7 @@
 				</div>
 			</div>
 		</div>
-	</li>
+	</div>
 	{{/AnimateWithVelocity}}
 </template>
 

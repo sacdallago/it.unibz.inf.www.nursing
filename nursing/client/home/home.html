@@ -1,0 +1,30 @@
+<template name="home">
+	<div class="row">
+		<div class="sixteen wide column">
+			{{#if patient}}
+			<ul class="span7 offset3 unstyled">
+				{{> patientCard}}
+				{{#if hasHospitalization}}
+				{{> bedCard}}
+				{{/if}}
+				{{> hospitalizationCard}}
+				<ul class="unstyled">
+					{{#each reminders}}
+					{{> reminderItem}}
+					{{/each}}
+				</ul>
+				<li style="margin-bottom: 20px;"></li>
+				{{#each entry}}
+				{{#if fields}}
+				{{> measureItems}}
+				{{else}}
+				{{> journalItems}}
+				{{/if}}
+				{{/each}}
+			</ul>
+			{{else}}
+			{{> patientItemList}}
+			{{/if}}
+		</div>
+	</div>
+</template>

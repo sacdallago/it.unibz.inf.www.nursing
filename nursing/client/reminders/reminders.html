@@ -1,200 +1,210 @@
 <template name="reminders">
-    
 
-    <div class="container-fluid">
-    <div class="row-fluid">
-      <div class="span6 offset3">
-        
-        
+	<div class="row">
+		<div class="sixteen wide column">
+			<div class="span6 offset3">
 
-          <div class="card-body in collapse tagcollapse" style="text-align: left;">
-            
-              {{>categories}}
-           
-          </div>
-   
-  </div>
-  </div>
-  <div class="row-fluid">
-  <div class="span8 offset2">
-    
-    <div id="items-view">
+				<div class="card-body in collapse tagcollapse" style="text-align: left;">
 
-    
-      {{#if loading}}
-        Loading...
-      {{else}}
-        <ul class="unstyled">
-          {{#each reminders}}
-            {{> reminderItem}}
-          
-          {{/each}}
-          
-        </ul>
-      {{/if}}
-   
-    </div>
-    </div>
-    </div>
-    
-    </div>
-  
+					{{>categories}}
+
+				</div>
+
+			</div>
+			<div class="span8 offset2">
+
+				<div id="items-view">
+
+					{{#if loading}}
+					Loading...
+					{{else}}
+					<ul class="unstyled">
+						{{#each reminders}}
+						{{> reminderItem}}
+
+						{{/each}}
+
+					</ul>
+					{{/if}}
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
 </template>
 
 <template name="categories">
-  
-  <div id="categories" class=" btn-group-lg">
-  <p>
-    <button type="button" id="all-categories" class="btn btn-default category pointer {{allSelected}}"><strong>All</strong> ({{totalReminders}})</button>
-  {{#each categories}}
-          {{#if editing}}
-            <div class="edit">
-              <input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
-            </div>
-          {{else}}
-              <button type="button" class="btn btn-default pointer category {{selected}}">{{name}} ({{count}})</button>
-          {{/if}}        
-  {{/each}}
-  </p>
-  <p>
-  <div id="createCategory" class="invisible">
-    
-        <input type="text" id="new-category" placeholder="New category" />
 
-  </div>
-  </p>
-  </div>
+	<div id="categories" class=" btn-group-lg">
+		<p>
+			<button type="button" id="all-categories" class="btn btn-default category pointer {{allSelected}}">
+				<strong>All</strong> ({{totalReminders}})
+			</button>
+			{{#each categories}}
+			{{#if editing}}
+			<div class="edit">
+				<input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
+			</div>
+			{{else}}
+			<button type="button" class="btn btn-default pointer category {{selected}}">
+				{{name}} ({{count}})
+			</button>
+			{{/if}}
+			{{/each}}
+		</p>
+		<p>
+			<div id="createCategory" class="invisible">
+
+				<input type="text" id="new-category" placeholder="New category" />
+
+			</div>
+		</p>
+	</div>
 
 </template>
-      
-
 
 <template name="reminderItem">
-  {{#AnimateWithVelocity}}
-  
-      <li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-        <label class="check" style="margin-right:0;margin-top:0;float:right"> 
-            <button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >Done <i class="fa {{doneCheck}}"></i></button>
-        </label>
-      
-      <div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:20px">
+	{{#AnimateWithVelocity}}
 
-        <ul class="unstyled inline">
-          <li>
-            <div class="pointer" data-toggle="collapse" data-target=".{{_id}}">
-              <i class="fa fa-angle-down collapse in {{_id}}"></i>
-              <i class="fa fa-angle-right collapse {{_id}}"></i>
-            </div>
-          </li>
-          <li>
-            <ul class="unstyled inline">
-              <li>
-                {{#if editing}}
-                  <div class="edit">
-                    <input id="reminder-input" type="text" value="{{message}}" />
-                  </div>
-                {{else}}
-                  <div class="display">
-                    <span class="reminder-text">{{message}}</span>              
-                  </div>
-                {{/if}}
-              </li>
-              <li>
-                <strong>{{patientName}}</strong> 
-              </li>
-              <li>
-                {{roomNumber}}{{bed}}
-              </li>
-              <li>
-                <button class="btn btn-default" data-toggle="collapse" data-target=".postponesubmenu{{_id}}"><strong>{{niceDue}}</strong></button>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+	<li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+		<label class="check" style="margin-right:0;margin-top:0;float:right">
+			<button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >
+				Done <i class="fa {{doneCheck}}"></i>
+			</button> </label>
 
-      <div class="offset1 collapse submenu postponesubmenu{{_id}}">
-        <ul class="unstyled inline">
-          <li>
-            <i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
-          </li>
-          <li>       
-            postpone by:
-          </li>
-          <li>
-            <button class="btn btn-default postpone1"><i class="fa fa-repeat"> 1 day</i></button>
-          </li>
-          <li>
-            <button class="btn btn-default postpone2"><i class="fa fa-repeat"> 2 days</i></button>
-          </li>
-          <li>
-            <button class="btn btn-default postpone3"><i class="fa fa-repeat"> 3 days</i></button>
-          </li>
-        </ul>
-      </div>
-        
-      <div class="offset1 collapse submenu {{_id}}">
-        <ul class="unstyled inline">
-          <li>
-            <i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
-          </li>
-          <li>
+		<div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:20px">
 
-            {{#if problemSubject}}
-            <ul class="unstyled inline">
-              <li>
-                <i class="fa fa-warning"></i>
-              </li>
-              <li> 
-                <label class="label label-important"><strong>{{problemSubject}}</strong></label>
-              </li>
-              <li>
-                <button class="btn btn-default twitter-red detach"><i class="fa fa-times"> detach problem</i></button>
-              </li>
-            </ul>
-            {{else}}
-            <select class="label label-important form-control" >
-              <option data-problemId="" value="">Attach to a problem</option>
-              {{#each problems}}
-              <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-              {{/each}}
-            </select>
-            {{/if}}
-           
-          </li>
-        </ul>
-      </div>
+			<ul class="unstyled inline">
+				<li>
+					<div class="pointer" data-toggle="collapse" data-target=".{{_id}}">
+						<i class="fa fa-angle-down collapse in {{_id}}"></i>
+						<i class="fa fa-angle-right collapse {{_id}}"></i>
+					</div>
+				</li>
+				<li>
+					<ul class="unstyled inline">
+						<li>
+							{{#if editing}}
+							<div class="edit">
+								<input id="reminder-input" type="text" value="{{message}}" />
+							</div>
+							{{else}}
+							<div class="display">
+								<span class="reminder-text">{{message}}</span>
+							</div>
+							{{/if}}
+						</li>
+						<li>
+							<strong>{{patientName}}</strong>
+						</li>
+						<li>
+							{{roomNumber}}{{bed}}
+						</li>
+						<li>
+							<button class="btn btn-default" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">
+								<strong>{{niceDue}}</strong>
+							</button>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
 
-      <div class="offset1 collapse submenu {{_id}}">
-        
-        <ul class="unstyled inline ">
-          <li>
-            <i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
-          </li>
-          <li>
-            <button class="btn btn-inverse {{#unless done}} invisible {{/unless}}"><i class="fa fa-times delete"> delete</i></button>
-          </li>
-        </ul>
-        
-      </div>
-      
+		<div class="offset1 collapse submenu postponesubmenu{{_id}}">
+			<ul class="unstyled inline">
+				<li>
+					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
+				</li>
+				<li>
+					postpone by:
+				</li>
+				<li>
+					<button class="btn btn-default postpone1">
+						<i class="fa fa-repeat"> 1 day</i>
+					</button>
+				</li>
+				<li>
+					<button class="btn btn-default postpone2">
+						<i class="fa fa-repeat"> 2 days</i>
+					</button>
+				</li>
+				<li>
+					<button class="btn btn-default postpone3">
+						<i class="fa fa-repeat"> 3 days</i>
+					</button>
+				</li>
+			</ul>
+		</div>
 
-      <div class="reminder-item-footer">  
-      <ul class="unstyled inline" > 
-       <li> 
-          <div>   
-            <i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i> 
-          </div>
-        </li>
-        <li>    
-          <div>
-            <button type="button" class="btn btn-default pointer category {{selected}}">{{category}}</button>    
-          </div>
-        </li>    
-      </ul>
-      </div>
+		<div class="offset1 collapse submenu {{_id}}">
+			<ul class="unstyled inline">
+				<li>
+					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
+				</li>
+				<li>
 
-  </li>
-  
-  {{/AnimateWithVelocity}}
+					{{#if problemSubject}}
+					<ul class="unstyled inline">
+						<li>
+							<i class="fa fa-warning"></i>
+						</li>
+						<li>
+							<label class="label label-important"><strong>{{problemSubject}}</strong></label>
+						</li>
+						<li>
+							<button class="btn btn-default twitter-red detach">
+								<i class="fa fa-times"> detach problem</i>
+							</button>
+						</li>
+					</ul>
+					{{else}}
+					<select class="label label-important form-control" >
+						<option data-problemId="" value="">Attach to a problem</option>
+						{{#each problems}}
+						<option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+						{{/each}}
+					</select>
+					{{/if}}
+
+				</li>
+			</ul>
+		</div>
+
+		<div class="offset1 collapse submenu {{_id}}">
+
+			<ul class="unstyled inline ">
+				<li>
+					<i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
+				</li>
+				<li>
+					<button class="btn btn-inverse {{#unless done}} invisible {{/unless}}">
+						<i class="fa fa-times delete"> delete</i>
+					</button>
+				</li>
+			</ul>
+
+		</div>
+
+		<div class="reminder-item-footer">
+			<ul class="unstyled inline" >
+				<li>
+					<div>
+						<i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<button type="button" class="btn btn-default pointer category {{selected}}">
+							{{category}}
+						</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+	</li>
+
+	{{/AnimateWithVelocity}}
 </template>
