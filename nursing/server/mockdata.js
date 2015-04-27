@@ -106,6 +106,7 @@ Meteor.startup(function() {
 		dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
 
 		for (var i = 0; i < 10; i++) {
+			// Insert some mock journal data
 			var journal = {
 				active : true,
 				hospitalizationId : hid,
@@ -116,6 +117,57 @@ Meteor.startup(function() {
 			};
 
 			Journal.insert(journal);
+			
+			// Insert some mock measure data
+			var weight = {
+				patientId : pid,
+				hospitalizationId : hid,
+				nurseId : user._id,
+				timestamp : (new Date()).getTime()+i,
+				type : "weight",
+				active : true,
+				fields : [{
+					type: "Weight in kg",
+					value: 45+2*i,
+					unit: "kg"
+				}]
+			};
+			Measures.insert(weight);
+			var pressure = {
+				patientId : pid,
+				hospitalizationId : hid,
+				nurseId : user._id,
+				timestamp : (new Date()).getTime()+i,
+				type : "pressure",
+				active : true,
+				fields : [{
+					type: "Minimum pressure",
+					value: 90-2*i,
+					unit: "mmHg"
+				}, {
+					type: "Maximum pressure",
+					value: 120+2*i,
+					unit: "mmHg"
+				}]
+			};
+			Measures.insert(pressure);
+			var edema = {
+				patientId : pid,
+				hospitalizationId : hid,
+				nurseId : user._id,
+				timestamp : (new Date()).getTime()+i,
+				type : "edema",
+				active : true,
+				fields : [{
+					type: "Size of edema",
+					value: 2+i,
+					unit: "cm"
+				}, {
+					type: "Is foveal?",
+					value: i%2,
+				}]
+			};
+			Measures.insert(edema);
 		}
 
 		var inactiveProblem = {
@@ -148,7 +200,7 @@ Meteor.startup(function() {
 			};
 			Reminders.insert(reminder);
 		}
-
+		
 		Rooms.update({
 			number : 4,
 			bed : 'A'

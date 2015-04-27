@@ -21,25 +21,52 @@ function showTooltip(x, y, contents, z) {
 
 function showGraph() {
 	var filter = {};
+	//If I have selected a patient and ONE kind of measure
 	if (Session.get('patientFilter')) {
 		filter.patientId = Session.get('patientFilter');
 	}
 	if (Session.get('measureFilter')) {
 		filter.type = Session.get('measureFilter');
 	}
-	var labels = [];
+	/*  I find out the NAME of the measure and set it to some session variable
+	 *  Here the structure of a measure in the database is helpful:
+	 * 	
+	 *	Measure: {
+	 * 	  type : 'preassure',
+	 *		fields : [{
+	 *			preText: "Maximum preassure",
+	 *			type: "number",
+	 *			step: "any",
+	 *			unit: "mmHg",
+	 *			required: "required"
+	 *		},
+	 *		{
+	 *			preText: "Minimum preassure",
+	 *			type: "number",
+	 *			step: "any",
+	 *			unit: "mmHg",
+	 *			required: "required"
+	 *		}
+	 *		]  }
+	 */
 	var measure = Measures.findOne(filter);
 	Session.set('graphTitle',measure.type);
-	var charts = measure.fields;
+	
+	var labels = [];
+	
+	var charts = measure.fields; // Is an array, look above. This is used later to determine how many lines I have to draw
+	
 	var dataset = [];
-	for (var i = 0; i < charts.length; i++) {
+	for (var i = 0; i < charts.length; i++) { //In weight I have one chart, in pressure I have two, aso...
+		// USELESS--
 		color = (100 + ((i + 1) * 10)) % 220;
+		// --USELESS
 		var obj = {
 			label : charts[i].type,
-			color : getRandomColor(),
+			color : getRandomColor(), // Defined in client/lib/helpers.js
 			data : []
 		};
-		if (!charts[i].unit) {
+		if (!charts[i].unit) { //Measures can have no unit, like "YES/NO". For yes or no a line graph doesn't make sense, se we only display bar graphs, 1 meaning yes, 0 meaning no
 			obj.bars = {
 				show : true,
 				align : "center",
@@ -53,7 +80,7 @@ function showGraph() {
 				radius : 20,
 				show : true
 			};
-			obj.yaxis = 2;
+			obj.yaxis = 2; // Axis 2 is defined as yes or no, se below
 		} else {
 			obj.lines = {
 				show : true,
@@ -64,36 +91,38 @@ function showGraph() {
 				show : true,
 				fill : true
 			};
-			obj.yaxis = 1;
+			obj.yaxis = 1; // This is conventional Y axis that adapts to the data
 		}
 		dataset.push(obj);
 	}
+	//The next find will find ALL elements (not just one like above) of that measure type for that patient
 	Measures.find(filter, {
 		sort : {
 			timestamp : 1
 		}
 	}).forEach(function(element) {
+		// For each of this elements, format the date and put it on the X axis...
 		labels.push(dayTimeFormatter(element.timestamp));
 		var count = 0;
+		// ...and push the right data to the right graph (remember, I can have one measure with multiple lines)
 		_.each(element.fields, function(field) {
 			dataset[count].data.push([element.timestamp, field.value]);
 			count++;
 		});
 	});
 
+	// Plot is a library. These are just some settings
 	$.plot($("#placeholder"), dataset, {
 		xaxis : {
 			mode : "time"
 		},
 		yaxes : [{
-			axisLabel : "Right",
-
+			axisLabel : "Right", //Conventional Y axis, adapts minumum and maximum to data
 		}, {
-			ticks : [[0, "No"], [1, "Yes"]],
+			ticks : [[0, "No"], [1, "Yes"]], //The famous yes or no axis, where max is 1 == yes and min is 0 == no
 			max : 1,
 			min : 0
 		}],
-
 		grid : {
 			hoverable : true,
 			clickable : true
@@ -104,6 +133,7 @@ function showGraph() {
 		}
 	});
 	var previousPoint = null;
+	// This is some fancy code that is responsible for clicks on points (dots). It basically just shows a box if you click on a point, and in the box there is a repetition of that data attribute
 	$("#placeholder").bind("plotclick", function(event, pos, item) {
 		if (item) {
 			if ((previousPoint != item.dataIndex) || (previousLabel != item.series.label)) {
@@ -129,8 +159,11 @@ function showGraph() {
 }
 
 Deps.autorun(function(c) {
+	// The following big IF is the one responsible for the drawing of the graph if all conditions are met: patient selected, measure selected, all measures are loaded
 	if (Session.get('patientFilter') && Session.get('measureFilter') && typeof measureslHandle !== 'undefined' && measureslHandle.ready()) {
 		showGraph();
+		// This next guy tells us to observe if I insert new data in the collection, I need to redraw the graph. Do you see a problem here?
+		// EXACTLY! what happens if data is deleted? I should also redraw! This kinds of "mistakes" are the ones that need to be refactored! (but I'm not gonna add it, just to show you :D)
 		Measures.find({}).observeChanges({
 			added : function(item) {
 				showGraph();

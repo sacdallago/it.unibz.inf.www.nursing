@@ -50,16 +50,16 @@ Meteor.startup(function() {
 			}]
 		});
 		Units.insert({
-			type : 'preassure',
+			type : 'pressure',
 			fields : [{
-				preText: "Maximum preassure",
+				preText: "Maximum pressure",
 				type: "number",
 				step: "any",
 				unit: "mmHg",
 				required: "required"
 			},
 			{
-				preText: "Minimum preassure",
+				preText: "Minimum pressure",
 				type: "number",
 				step: "any",
 				unit: "mmHg",

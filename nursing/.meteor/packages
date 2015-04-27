@@ -22,9 +22,8 @@ mrt:flot
 gfk:notifications
 cfs:standard-packages
 cfs:filesystem
-
+momentjs:moment
+reactive-var
 
 
 npm-container
-momentjs:moment
-reactive-var
