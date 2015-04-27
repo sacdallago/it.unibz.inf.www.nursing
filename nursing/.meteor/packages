@@ -27,3 +27,4 @@ cfs:filesystem
 
 npm-container
 momentjs:moment
+reactive-var

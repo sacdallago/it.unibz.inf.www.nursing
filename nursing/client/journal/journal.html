@@ -14,119 +14,122 @@
 	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<div class="row twitter" style="border-bottom:1px solid #e5e5e5;">
 			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
-				<ul class="unstyled">
+				<div class="ui list">
 					{{#if problemSubject}}
-					<li>
-						<i class="fa fa-book"></i> <strong>Journal</strong>
-					</li>
-					<li>
+					<div class="item" style="font-size: 14pt;">
+						<i class="fa fa-book"></i> <strong>Diario</strong>
+					</div>
+					<div class="item">
 						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
-					</li>
+					</div>
 					{{else}}
 					{{#if subject}}
-					<li>
+					<div class="item">
 						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
-					</li>
+					</div>
 					{{else}}
-					<li>
-						<i class="fa fa-book"></i> <strong>Journal</strong>
-					</li>
+					<div class="item" style="font-size: 14pt;">
+						<i class="fa fa-book"></i> <strong>Diario</strong>
+					</div>
 					{{/if}}
 					{{/if}}
 					{{#if attachment.isImage}}
-					<li>
+					<div class="item">
 						<i class="fa fa-file-image-o" style="font-size: 16pt;"></i>
-					</li>
+					</div>
 					{{else}}
 					{{#if attachment}}
-					<li>
+					<div class="item">
 						<i class="fa fa-file-archive-o" style="font-size: 16pt;"></i>
-					</li>
+					</div>
 					{{/if}}
 					{{/if}}
-					<div class="collapse {{_id}}" >
-						{{#unless problemSubject}}
-						{{#unless subject}}
-						<li>
-							<select data-native-menu="false">
-								<option data-problemId="" value="">Select...</option>
-								{{#each problems}}
-								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-								{{/each}}
-							</select>
-						</li>
-						{{/unless}}
-						{{/unless}}
-						{{#if subject}}
-						{{#if solved}}
-						<li>
-							<button type="button" class="btn btn-inverse unsolved">
-								<i class="fa fa-check"></i> Unsolve
-							</button>
-						</li>
-						{{else}}
-						<li>
-							<button type="button" class="btn btn-inverse solved">
-								<i class="fa fa-check"></i> Solved
-							</button>
-						</li>
-						{{/if}}
-						{{/if}}
-						<li>
-							<button type="button" class="btn btn-inverse delete">
-								<i class="fa fa-times"></i> Delete
-							</button>
-						</li>
+					<div class="item">
+						{{> accordion}}
 					</div>
-					<div class="pointer" data-toggle="collapse" data-target=".{{_id}}" style="padding-bottom: 10px; padding-top: 20px;">
-						<li class="collapse in {{_id}}" style="font-size: 19pt;" >
-							<i class="fa fa-angle-down"></i>
-						</li>
-						<li class="collapse {{_id}}" style="font-size: 18pt;">
-							<i class="fa fa-angle-up"></i>
-						</li>
-					</div>
-				</ul>
+				</div>
 			</div>
 			<div class="twitter-right">
-				<div  style="padding-bottom: 10px; ">
+				<div  style="padding-bottom: 10px; font-size: 12pt">
 					<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
 				</div>
 				{{#if attachment.isImage}}
-				<div class="collapse {{_id}}">
-					<div style="padding-bottom: 10px;">
-						<p style="text-align: center;">
-							<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
-						</p>
-					</div>
-				</div>
+					{{#if opened}}
+						<div style="padding-bottom: 10px;">
+							<p style="text-align: center;">
+								<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
+							</p>
+						</div>
+					{{/if}}
 				{{else}}
-				{{#if attachment}}
-				<div class="collapse {{_id}}">
-					<div style="padding-bottom: 10px;">
-						<p style="text-align: center;">
-							<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
-						</p>
-					</div>
-				</div>
-				{{/if}}
+					{{#if attachment}}
+						{{#if opened}}
+							<div style="padding-bottom: 10px;">
+								<p style="text-align: center;">
+									<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+								</p>
+							</div>
+						{{/if}}
+					{{/if}}
 				{{/if}}
 				<div style=" opacity: 0.5;">
-					<ul class="unstyled inline" style="text-align: right;">
+					<div class="ui list" style="text-align: right; font-size: 13pt">
 						{{#if noPatientSelected}}
-						<li>
+						<div class="item">
 							<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
-						</li>
+						</div>
 						{{/if}}
-						<li>
+						<div class="item">
 							<i class="fa fa-clock-o"></i> {{date}}
-						</li>
-					</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	{{/AnimateWithVelocity}}
+</template>
+
+<template name="accordion">
+	<div class="ui accordion">
+		<div class="title">
+			{{#if opened}}
+			<i class="angle double down icon" style="overflow: hidden; white-space: nowrap; align-self:auto; font-size: 17pt; color: #FFFFFF">
+			</i>	
+			{{else}}
+			<i class="angle double right icon" style="font-size: 17pt; color: #FFFFFF">
+			</i>
+			{{/if}}
+		</div>
+		<div class="content" style="padding-bottom: 10px;">
+			{{#unless problemSubject}}
+			{{#unless subject}}
+			<select data-native-menu="false">
+				<option data-problemId="" value="">Seleziona...</option>
+				{{#each problems}}
+				<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+				{{/each}}
+			</select>
+			{{/unless}}
+			{{/unless}}
+			<div class="item">
+				{{#if subject}}
+				{{#if solved}}
+				<div class="ui button unsolved">
+					<i class="fa fa-check"></i> Non Risolto
+				</div>
+				{{else}}
+				<div class="ui button solved">
+					<i class="fa fa-check"></i> Risolto
+				</div>
+				{{/if}}
+				{{/if}}
+				<div class="ui button delete">
+					<i class="fa fa-times"></i> Elimina
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="journalItems2">
