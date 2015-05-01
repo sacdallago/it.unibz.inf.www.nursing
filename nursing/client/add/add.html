@@ -1,0 +1,224 @@
+<template name="newMeasurement">
+	<div id="newMeasurementModal" class="ui modal">
+		<i class="close icon"></i>
+		<div class="header">
+			New Measurement
+		</div>
+		<div class="content">
+			<div class="description">
+				{{> newMeasurementContent}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="newJournal">
+	<div id="newJournalModal" class="ui modal">
+		<i class="close icon"></i>
+		<div class="header">
+			New Journal
+		</div>
+		<div class="content">
+			<div class="description">
+				{{> newJournalContent}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="newReminder">
+	<div id="newReminderModal" class="ui modal">
+		<i class="close icon"></i>
+		<div class="header">
+			New Measurement
+		</div>
+		<div class="content">
+			<div class="description">
+				{{> newReminderContent}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="newMeasurementContent">
+	<form class="form">
+		<div class="modal-body">
+			<strong name="department">Type</strong>&nbsp;
+			<select id="measurementType">
+				<option data-_id="" value="">Select...</option>
+				{{#each units}}
+				<option data-_id="{{_id}}" value="{{type}}">{{name}}</option>
+				{{/each}}
+			</select>
+			<div >
+				<table class="table measures">
+					<tbody>
+						{{#each measures.fields}}
+						<tr>
+							<td>{{preText}}&nbsp;</td>
+							<td>
+							<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
+							</td>
+							<td>{{unit}}&nbsp;</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-block send">
+				<strong><i class="fa fa-circle-o river"></i></strong> Save
+			</button>
+
+			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".measureProblemCollapse">
+				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+			</button>
+
+			<div class="input-group collapse measureProblemCollapse" style="margin-top: 20px;">
+				<strong>Select an existing problem:&nbsp;</strong>
+				<br>
+				<select id="measurementProblemSelector" style="width: 100%">
+					<option data-problemId="" value="">Select...</option>
+					{{#each problems}}
+					<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</div>
+	</form>
+</template>
+
+<template name="newJournalContent">
+	<form>
+		<div class="modal-body">
+			<div class="input-group addmessage">
+				<strong>Message:&nbsp;</strong>
+				<br>
+				<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
+				<p style="text-align: right; color: #555;" id="textCounter"></p>
+			</div>
+		</div>
+		<div class="input-group addmessage">
+			<button class="btn btn-default btn-file">
+				<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
+				<input id="journalFile" type="file">
+			</button>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-block send">
+				<strong><i class="fa fa-circle-o river"></i></strong> Save
+			</button>
+
+			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".journalProblemCollapse">
+				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+			</button>
+
+			<div class="collapse journalProblemCollapse">
+				<table class="table">
+					<tbody>
+						<td>
+						<div class="input-group addmessage">
+							<strong>Select an existing problem:&nbsp;</strong>
+							<br>
+							<select id="journalProblemSelector">
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</div></td>
+						<td>
+						<div class="input-group addmessage">
+							<strong>... Or define a new problem:&nbsp;</strong>
+							<br>
+							<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
+						</div></td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</template>
+
+<template name="newReminderContent">
+	<form class="form">
+		<div class="modal-body">
+			<div class="input-block">
+				<div class="input-block-title">
+					<strong name="task">Task description</strong>&nbsp;
+					<br/>
+				</div>
+				<input id="remindermessage" type="text" name="message" value="" required/>
+				<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
+			</div>
+			<div class="input-block">
+				<div class="input-block-title">
+					<strong>Pick a category</strong>
+					<br/>
+				</div>
+				{{#each categories}}
+				<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">
+					{{name}}
+				</button>
+				{{/each}}
+			</div>
+
+			<div class="input-block">
+				<div class="input-block-title">
+					<strong>Pick a due date</strong>
+					<br/>
+				</div>
+				<ul class="unstyled inline">
+					<li>
+						<label class="radio">
+							<input type="radio" name="dueDate" value="today" checked="checked">
+							<em>Today</em> </label>
+					</li>
+					<li>
+						<label class="radio">
+							<input type="radio" name="dueDate" value="tomorrow">
+							<em>Tomorrow</em> </label>
+					</li>
+					<li>
+						<label class="radio">
+							<input type="radio" name="dueDate" value="day after tomorrow">
+							<em>Day after Tomorrow</em> </label>
+					</li>
+					<li>
+						<label class="radio">
+							<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate">
+							<em>Other</em> </label>
+					</li>
+				</ul>
+
+				<div class="otherdate collapse offset1" style="padding-top=10px;margin:auto">
+					<label class="offset1">
+						<input type="date" name="otherDueDate">
+					</label>
+
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="submit" class="btn btn-block send">
+				<strong><i class="fa fa-circle-o river"></i></strong> Save
+			</button>
+
+			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".reminderProblemCollapse">
+				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
+			</button>
+
+			<div class="input-group collapse reminderProblemCollapse" style="margin-top: 20px;">
+				<strong>Select an existing problem:&nbsp;</strong>
+				<br>
+				<select id="reminderProblemSelector" style="width: 100%">
+					<option data-problemId="" value="">Select...</option>
+					{{#each problems}}
+					<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+					{{/each}}
+				</select>
+			</div>
+		</div>
+	</form>
+</template>

@@ -10,7 +10,7 @@ Template.modals.helpers({
 	}
 });
 
-Template.newMeasurement.events({
+Template.newMeasurementContent.events({
 	'change #measurementType' : function(event) {
 		var id = $(event.currentTarget).find(':selected').data("_id");
 		Session.set("measures", Units.findOne(id));
@@ -76,7 +76,7 @@ Template.newMeasurement.events({
 	}
 });
 
-Template.newMeasurement.helpers({
+Template.newMeasurementContent.helpers({
 	units : function() {
 		return Units.find().map(function(element) {
 			element.name = element.type.capitalize();
@@ -102,13 +102,11 @@ Template.newMeasurement.helpers({
 		return Session.get('measures');
 	},
 	destroyed : function() {
-	delete Session.keys['measures'];
+		delete Session.keys['measures'];
 	}
 });
 
-
-
-Template.newJournal.events({
+Template.newJournalContent.events({
 	'change #journalFile' : function(event) {
 		document.getElementById('journalFile').value != "" ? Session.set('fileSelected', true) : Session.set('fileSelected', null);
 	},
@@ -210,7 +208,7 @@ Template.newJournal.events({
 	}
 });
 
-Template.newJournal.helpers({
+Template.newJournalContent.helpers({
 	fileSelected : function() {
 		return Session.get('fileSelected') ? 'river' : '';
 	},
@@ -233,15 +231,13 @@ Template.newJournal.helpers({
 		});
 	},
 	destroyed : function() {
-	delete Session.keys['fileSelected'];
+		delete Session.keys['fileSelected'];
 	}
 });
 
-
 //newReminder
 
-
-Template.newReminder.events({
+Template.newReminderContent.events({
 	'click .category' : function(event) {
 		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
 		event.preventDefault();
@@ -301,7 +297,7 @@ Template.newReminder.events({
 	}
 });
 
-Template.newReminder.helpers({
+Template.newReminderContent.helpers({
 	loading : function() {
 		return !categoriesHandle.ready();
 	},
@@ -328,7 +324,7 @@ Template.newReminder.helpers({
 		});
 	},
 	rendered : function() {
-	var category = Categories.findOne({});
-	Session.set('inputCategory', category.name);
+		var category = Categories.findOne({});
+		Session.set('inputCategory', category.name);
 	}
 });

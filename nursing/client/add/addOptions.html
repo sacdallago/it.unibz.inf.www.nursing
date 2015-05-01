@@ -1,0 +1,35 @@
+<template name="addOptions">
+    <div id="addOptions" class="ui modal">
+        <div class="content">
+            <div class="center">
+                <div class="row">
+                <div class="ui vertical menu" style="width: 100%;">
+                    {{#if patientFilter}}
+                    {{#if hospitalizationFilter}}
+                    	{{> newEntries}}
+                    {{else}}
+                    	{{> newHospitalizationOption}}
+                    {{/if}}
+                    {{else}}
+                        {{> newPatientOption}}
+                    {{/if}}
+                </div>
+             </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="newEntries">
+    <a class="item measurementModal" style="font-size: 2rem;"><i class="icon crosshairs"></i> New Measurement</a>
+    <a class="item reminderModal" style="font-size: 2rem;"><i class="icon checkmark"></i> New Reminder</a>
+    <a class="item journalModal" style="font-size: 2rem;"><i class="icon file text"></i> New Journal</a>
+</template>
+
+<template name="newPatientOption">
+    <a class="item" style="font-size: 2rem;"><i class="icon child"></i> Add a new patient</a>
+</template>
+
+<template name="newHospitalizationOption">
+	<a class="item" style="font-size: 2rem;"><i class="icon grid layout"></i> New Hospitalization</a>
+</template>

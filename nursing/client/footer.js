@@ -23,9 +23,6 @@ Template.footer.helpers({
     nameSelected : function() {
         return Session.get('patientFilter');
     },
-    hasHospitalization : function() {
-        return Session.get('hospitalizationFilter');
-    },
     patientName : function() {
         var patient = Patients.findOne(Session.get('patientFilter'));
         var room = Rooms.findOne({
@@ -66,23 +63,6 @@ Template.footer.events({
     },
     'click .plus.icon' : function(event) {
        $('#addOptions').modal('show');
-    },
-    'click .newHospitalization' : function(){
-        Hospitalizations.insert({
-            active: true,
-            patientId: Session.get('patientFilter'),
-            timestamp: Date.now(),
-            nurseId: Meteor.userId()
-        },function(error,object){
-            if(!error){
-                Meteor.call('updateProblems',Session.get('patientFilter'),object,function(err){
-                    if(!err){
-                        Notifications.success('Success','Created a new hospitalization! Fill it out in the home!');
-                        Session.set('hospitalizationFilter', object);
-                    }
-                });
-            }
-        });
     },
     "autocompleteselect input": function(event, template, doc) {
         Session.set('patientFilter', doc._id);

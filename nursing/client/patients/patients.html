@@ -44,10 +44,6 @@
     </div>
 </template>
 
-<template name="addPatientOption">
-    <a class="item" style="font-size: 2rem;"><i class="icon user"></i> Add a new patient</a>
-</template>
-
 <template name="newPatient">
     <div id="newPatientModal" class="ui modal">
         <i class="close icon"></i>
@@ -56,36 +52,25 @@
         </div>
         <div class="content">
             <div class="description">
-                <table class="table table-condensed patientUpdate">
-                    <tbody>
-                        <tr>
-                            <td> First name: </td>
-                            <td>
-                                <input class="newPatient" data-field="first" type="text" pattern="[a-zA-Z]+" required/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Last name: </td>
-                            <td>
-                                <input class="newPatient" data-field="last" type="text" pattern="[a-zA-Z]+" required/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Birthdate: </td>
-                            <td>
-                                <input class="newPatient" data-field="birthdate" type="date" required/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit" class="btn btn-block send">
-                    <strong><i class="fa fa-circle-o river"></i></strong> Create
-                </button>
+            	<div class="ui form">
+	                <div class="required field">
+	                    <label>Fist name</label>
+	                        <input id="first" type="text" placeholder="Michele">
+	                </div>
+	                <div class="required field">
+	                    <label>Last name</label>
+	                    	<input id="last" type="text" placeholder="Rossi">
+	                </div>
+	                <div class="required field">
+	                    <label>Birthdate</label>
+	                    	<input id="birthday" type="date"/>
+	                </div>
+	                <div class="ui error message">
+	                    <div class="header">We noticed some issues</div>
+	                </div>
+	                <div class="ui submit positive button">Insert</div>
+	            </div>
             </div>
-        </div>
-        <div class="actions">
-            <div class="ui button">Cancel</div>
-            <div class="ui button">OK</div>
         </div>
     </div>
 </template>
