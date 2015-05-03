@@ -16,10 +16,10 @@
 			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
 				<div class="ui list">
 					{{#if problemSubject}}
-					<div class="item" style="font-size: 14pt;">
+					<div class="item" style="font-size: 12pt;">
 						<i class="fa fa-book"></i> <strong>Diario</strong>
 					</div>
-					<div class="item">
+					<div class="item" style="font-size: 12pt;">
 						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
 					</div>
 					{{else}}
@@ -28,7 +28,7 @@
 						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
 					</div>
 					{{else}}
-					<div class="item" style="font-size: 14pt;">
+					<div class="item" style="font-size: 12pt;">
 						<i class="fa fa-book"></i> <strong>Diario</strong>
 					</div>
 					{{/if}}
@@ -45,7 +45,7 @@
 					{{/if}}
 					{{/if}}
 					<div class="item">
-						{{> accordion}}
+						{{> journalAccordion}}
 					</div>
 				</div>
 			</div>
@@ -72,17 +72,11 @@
 						{{/if}}
 					{{/if}}
 				{{/if}}
-				<div style=" opacity: 0.5;">
-					<div class="ui list" style="text-align: right; font-size: 13pt">
-						{{#if noPatientSelected}}
-						<div class="item">
-							<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
-						</div>
-						{{/if}}
-						<div class="item">
-							<i class="fa fa-clock-o"></i> {{date}}
-						</div>
-					</div>
+				<div style=" opacity: 0.5;text-align: right; font-size: 12pt">
+					{{#if noPatientSelected}}
+					<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					{{/if}}
+					<i class="fa fa-clock-o"></i> {{date}}
 				</div>
 			</div>
 		</div>
@@ -90,7 +84,7 @@
 	{{/AnimateWithVelocity}}
 </template>
 
-<template name="accordion">
+<template name="journalAccordion">
 	<div class="ui accordion">
 		<div class="title">
 			{{#if opened}}
@@ -104,7 +98,7 @@
 		<div class="content" style="padding-bottom: 10px;">
 			{{#unless problemSubject}}
 			{{#unless subject}}
-			<select data-native-menu="false">
+			<select data-native-menu="false" style="color:#000000">
 				<option data-problemId="" value="">Seleziona...</option>
 				{{#each problems}}
 				<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>

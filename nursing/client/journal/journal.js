@@ -11,12 +11,12 @@ Journal = new Meteor.Collection("journal");
 journalHandle = Meteor.subscribe('journal',{active:true},{});
 
 //Accordion management
-Template.accordion.onCreated(function(){
+Template.journalAccordion.onCreated(function(){
   // you'll need to meteor add reactive-var to use this
   this.opened = new ReactiveVar(false);
 });
 
-Template.accordion.onRendered(function(){
+Template.journalAccordion.onRendered(function(){
   // store a reference to the template instance to use it later
   // in functions where the this keyword will be bound to something else
   var template = this;
@@ -32,7 +32,7 @@ Template.accordion.onRendered(function(){
   });
 });
 
-Template.accordion.helpers({
+Template.journalAccordion.helpers({
   opened:function(){
     // Template.instance().opened is a reactive data source
     // this helper will get re-executed whenever its value is modified
