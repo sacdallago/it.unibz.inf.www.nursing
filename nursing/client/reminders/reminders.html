@@ -1,66 +1,80 @@
 <template name="reminders">
 
-	<div class="row">
-		<div class="sixteen wide column">
-			<div class="span6 offset3">
 
-				<div class="card-body in collapse tagcollapse" style="text-align: left;">
+					<!--<div class="card-body in collapse tagcollapse" style="text-align: left;">
 
-					{{>categories}}
+						{{>categories}}
 
-				</div>
+					</div> -->
 
-			</div>
-			<div class="span8 offset2">
+							{{>categories}}
 
-				<div id="items-view">
 
-					{{#if loading}}
-					Loading...
-					{{else}}
-					<ul class="unstyled">
-						{{#each reminders}}
-						{{> reminderItem}}
 
-						{{/each}}
 
-					</ul>
-					{{/if}}
+	<div class="ui grid">
+		<div class="row">
+			<div class="column">
+				<div class="span8 offset2">
 
+					<div id="items-view">
+
+						{{#if loading}}
+						Loading...
+						{{else}}
+						<ul class="unstyled">
+							{{#each reminders}}
+							{{> reminderItem}}
+
+							{{/each}}
+
+						</ul>
+						{{/if}}
+
+					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 </template>
 
 <template name="categories">
 
-	<div id="categories" class=" btn-group-lg">
-		<p>
-			<button type="button" id="all-categories" class="btn btn-default category pointer {{allSelected}}">
-				<strong>All</strong> ({{totalReminders}})
-			</button>
-			{{#each categories}}
-			{{#if editing}}
-			<div class="edit">
-				<input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
-			</div>
-			{{else}}
-			<button type="button" class="btn btn-default pointer category {{selected}}">
-				{{name}} ({{count}})
-			</button>
-			{{/if}}
-			{{/each}}
-		</p>
-		<p>
-			<div id="createCategory" class="invisible">
+<div id="categories" class="ui grid">
+<div class="row">
+	<div class="column">
+	<div class="ui green labels">
+		<div type="button" id="all-categories" class="label category pointer {{allSelected}}" style="width:fit-content">
+			<strong>All</strong> ({{totalReminders}})
+		</div>
+		</div>
+	</div>
 
-				<input type="text" id="new-category" placeholder="New category" />
+		{{#each categories}}
+		<div class="column">
+		<div class="ui green labels">
+		{{#if editing}}
 
-			</div>
-		</p>
+		<div class="edit">
+			<input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
+		</div>
+
+		{{else}}
+
+		<div type="button" class="ui label pointer category {{selected}}" style="width:fit-content">
+			{{name}} <div class="detail">{{count}}</div>
+		</div>
+
+		{{/if}}
+		</div>
+		</div>
+		{{/each}}
+
+		<div id="createCategory" class="invisible">
+			<input type="text" id="new-category" placeholder="New category" />
+		</div>
+
+</div>
 	</div>
 
 </template>
@@ -68,7 +82,7 @@
 <template name="reminderItem">
 	{{#AnimateWithVelocity}}
 
-	<li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+	<li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" style="background-color: #FFFFFF" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<label class="check" style="margin-right:0;margin-top:0;float:right">
 			<button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >
 				Done <i class="fa {{doneCheck}}"></i>
