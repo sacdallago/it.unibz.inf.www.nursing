@@ -154,7 +154,7 @@ Template.reminderItem.helpers({
   },
 
   doneCheck : function() {
-    return (this.done)?'fa-check-square-o':'fa-square-o';
+    return (this.done)?'check circle icon':'radio icon';
   },
 
   isProblem : function(){

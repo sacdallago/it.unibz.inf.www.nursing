@@ -22,13 +22,13 @@
 						{{#if loading}}
 						Loading...
 						{{else}}
-						<ul class="unstyled">
+						<div class="ui list">
 							{{#each reminders}}
 							{{> reminderItem}}
 
 							{{/each}}
 
-						</ul>
+						</div>
 						{{/if}}
 
 					</div>
@@ -82,97 +82,97 @@
 <template name="reminderItem">
 	{{#AnimateWithVelocity}}
 
-	<li class="card  {{#if done}} twitter-grey {{/if}} reminder-items" style="background-color: #FFFFFF" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+	<div class="item card  {{#if done}} twitter-grey {{/if}} reminder-items" style="background-color: #D2EBD1" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 		<label class="check" style="margin-right:0;margin-top:0;float:right">
-			<button class="btn btn-default {{doneStyle}}" name="markdone" type="button" >
-				Done <i class="fa {{doneCheck}}"></i>
-			</button> </label>
+			<div class="ui right labeled icon button " name="markdone">
+				Done <i class=" {{doneCheck}}"></i>
+			</div> 
+		</label>
 
-		<div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:20px">
+		<div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:5px">
+		
+		<label style="margin-left:0;margin-top:0;float:left"><i class="large tasks icon" ></i></label>
+		
+			<div class="ui list">
 
-			<ul class="unstyled inline">
-				<li>
-					<div class="pointer" data-toggle="collapse" data-target=".{{_id}}">
-						<i class="fa fa-angle-down collapse in {{_id}}"></i>
-						<i class="fa fa-angle-right collapse {{_id}}"></i>
-					</div>
-				</li>
-				<li>
-					<ul class="unstyled inline">
-						<li>
+				<div class="item">
+					<div class="ui list">
+
+						<div class="item">
+							<div class="ui large label">
+								<i class="user icon"></i><strong>{{patientName}}</strong> &nbsp; {{roomNumber}}{{bed}}					
+							</div>
+						</div>
+						<div class="item">
+						<div class="ui message">
 							{{#if editing}}
-							<div class="edit">
+							<p><div class="edit">
 								<input id="reminder-input" type="text" value="{{message}}" />
-							</div>
+							</div></p>
 							{{else}}
-							<div class="display">
+							<p><div class="display">
 								<span class="reminder-text">{{message}}</span>
-							</div>
+							</div></p>
 							{{/if}}
-						</li>
-						<li>
-							<strong>{{patientName}}</strong>
-						</li>
-						<li>
-							{{roomNumber}}{{bed}}
-						</li>
-						<li>
-							<button class="btn btn-default" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">
+						</div>	
+						</div>					
+						<div class="item">
+							<div class="ui button" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">
 								<strong>{{niceDue}}</strong>
-							</button>
-						</li>
-					</ul>
-				</li>
-			</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="offset1 collapse submenu postponesubmenu{{_id}}">
-			<ul class="unstyled inline">
-				<li>
+			<div class="ui list">
+				<div class="item">
 					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					postpone by:
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					<button class="btn btn-default postpone1">
 						<i class="fa fa-repeat"> 1 day</i>
 					</button>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					<button class="btn btn-default postpone2">
 						<i class="fa fa-repeat"> 2 days</i>
 					</button>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					<button class="btn btn-default postpone3">
 						<i class="fa fa-repeat"> 3 days</i>
 					</button>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</div>
 
 		<div class="offset1 collapse submenu {{_id}}">
-			<ul class="unstyled inline">
-				<li>
+			<div class="ui list">
+				<div class="item">
 					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 
 					{{#if problemSubject}}
-					<ul class="unstyled inline">
-						<li>
+					<div class="ui list">
+						<div class="item">
 							<i class="fa fa-warning"></i>
-						</li>
-						<li>
+						</div>
+						<div class="item">
 							<label class="label label-important"><strong>{{problemSubject}}</strong></label>
-						</li>
-						<li>
+						</div>
+						<div class="item">
 							<button class="btn btn-default twitter-red detach">
 								<i class="fa fa-times"> detach problem</i>
 							</button>
-						</li>
-					</ul>
+						</div>
+					</div>
 					{{else}}
 					<select class="label label-important form-control" >
 						<option data-problemId="" value="">Attach to a problem</option>
@@ -182,43 +182,43 @@
 					</select>
 					{{/if}}
 
-				</li>
-			</ul>
+				</div>
+			</div>
 		</div>
 
 		<div class="offset1 collapse submenu {{_id}}">
 
-			<ul class="unstyled inline ">
-				<li>
+			<div class="ui list">
+				<div class="item">
 					<i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					<button class="btn btn-inverse {{#unless done}} invisible {{/unless}}">
 						<i class="fa fa-times delete"> delete</i>
 					</button>
-				</li>
-			</ul>
+				</div>
+			</div>
 
 		</div>
 
 		<div class="reminder-item-footer">
-			<ul class="unstyled inline" >
-				<li>
+			<div class="ui list">
+				<div class="item">
 					<div>
 						<i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i>
 					</div>
-				</li>
-				<li>
+				</div>
+				<div class="item">
 					<div>
 						<button type="button" class="btn btn-default pointer category {{selected}}">
 							{{category}}
 						</button>
 					</div>
-				</li>
-			</ul>
+				</div>
+			</div>
 		</div>
 
-	</li>
+	</div>
 
 	{{/AnimateWithVelocity}}
 </template>
