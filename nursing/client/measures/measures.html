@@ -14,7 +14,7 @@
 	</div>
 </template>
 
-<template name="chart">
+<template name="chart"> <!--change ul and li-->
 	<li style="{{#unless display}} display: none; {{/unless}}" class="card" data-animate data-property="opacity" data-duration="500" data-from-value="0" data-to-value="1">
 		<div class="card-heading pointer">
 			<div class="card-heading-header">
@@ -35,22 +35,22 @@
 		<div class="card-heading pointer" data-toggle="collapse" data-target=".tagcollapse">
 			<div class="card-heading-header">
 				<div class="active title">
-					<p style="font-size: 22.75px; padding-left:20px;">
+					<p style="font-size: 2em;">
 						<strong><i class="fa fa-tags"></i> Measures</strong>
 					</p>
 				</div>
 			</div>
 		</div>
-		<div class="card-body in collapse tagcollapse" style="text-align: left; padding-left:20px; padding-top:15px; padding-bottom:15px">
+		<div class="card-body in collapse tagcollapse" style="text-align: left;">
 			<div class="active title" style="font-size:10pt">
 				<div class="ui green labels">
 					{{#each tags}}
 					{{#if type}}
-					<a class="label label-sea tag {{active}}" style="border-radius:3px; padding:2px">
+					<a class="label label-sea tag {{active}}" style="border-radius:3px; padding:0.2em">
 						{{type}}&nbsp;({{count}})
 					</a>
 					{{else}}
-					<a class="label label-sea tag {{active}}" style="border-radius:3px; padding:2px">
+					<a class="label label-sea tag {{active}}" style="border-radius:3px; padding:0.2em">
 						All&nbsp;({{count}})
 					</a>
 					{{/if}}

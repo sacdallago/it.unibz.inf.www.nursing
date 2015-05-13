@@ -42,7 +42,7 @@
 
 <div id="categories" class="ui grid">
 <div class="row">
-	<div class="column">
+	<div class="column"><!--insert card div-->
 	<div class="ui green labels">
 		<div type="button" id="all-categories" class="label category pointer {{allSelected}}" style="width:fit-content">
 			<strong>All</strong> ({{totalReminders}})
@@ -51,9 +51,9 @@
 	</div>
 
 		{{#each categories}}
-		<div class="column">
+		<div class="column"><!--insert card div-->
 		<div class="ui green labels">
-		{{#if editing}}
+		{{#if editing}}<!--delete, also in the .js-->
 
 		<div class="edit">
 			<input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
@@ -91,7 +91,7 @@
 
 		<div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:5px">
 		
-		<label style="margin-left:0;margin-top:0;float:left"><i class="large tasks icon" ></i></label>
+		<label style="magrin-left:0;margin-top:0;float:left"><i class="large tasks icon" ></i></label><!--segments-->
 		
 			<div class="ui list">
 
@@ -105,7 +105,7 @@
 						</div>
 						<div class="item">
 						<div class="ui message">
-							{{#if editing}}
+							{{#if editing}}<!--nope, delete-->
 							<p><div class="edit">
 								<input id="reminder-input" type="text" value="{{message}}" />
 							</div></p>
@@ -192,7 +192,7 @@
 				<div class="item">
 					<i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
 				</div>
-				<div class="item">
+				<div class="item"><!--add function-->
 					<button class="btn btn-inverse {{#unless done}} invisible {{/unless}}">
 						<i class="fa fa-times delete"> delete</i>
 					</button>

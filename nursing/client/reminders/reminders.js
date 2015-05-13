@@ -111,7 +111,7 @@ Template.reminders.helpers({
       element.date = dateFormatter(element.timestamp);
       element.niceDue = dateFormatter(element.dueDate);
       return element;
-    });
+    }); 
   },
   destroyed : function(){
     delete Session.keys['categoryName'];
@@ -162,7 +162,7 @@ Template.reminderItem.helpers({
     return isProblem;
   },
 
-  editing : function () {
+  editing : function () {//delete
   return Session.equals('editing_reminderName', this._id);
   },
 
@@ -260,12 +260,12 @@ Template.reminderItem.events({
     });
   },
 
-  'dblclick .display .reminder-text': function (evt, tmpl) {
+  'dblclick .display .reminder-text': function (evt, tmpl) {//delete
     Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
   },
-  'taphold .display .reminder-text': function (evt, tmpl) {
+  'taphold .display .reminder-text': function (evt, tmpl) {//delete
     Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
