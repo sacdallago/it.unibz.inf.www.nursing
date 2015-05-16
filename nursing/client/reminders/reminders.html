@@ -1,224 +1,129 @@
 <template name="reminders">
-
-
-					<!--<div class="card-body in collapse tagcollapse" style="text-align: left;">
-
-						{{>categories}}
-
-					</div> -->
-
-							{{>categories}}
-
-
-
-
-	<div class="ui grid">
-		<div class="row">
-			<div class="column">
-				<div class="span8 offset2">
-
-					<div id="items-view">
-
-						{{#if loading}}
-						Loading...
-						{{else}}
-						<div class="ui list">
-							{{#each reminders}}
-							{{> reminderItem}}
-
-							{{/each}}
-
-						</div>
-						{{/if}}
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    {{>categories}}
+    <div class="ui grid">
+        <div class="row">
+            <div class="column">
+                <div class="span8 offset2">
+                    <div id="items-view">
+                        {{#if loading}}
+                        Loading...
+                        {{else}}
+                        <div class="ui list" style="margin-bottom:2.1em">
+                            {{#each reminders}}
+                            {{> reminderItem}}
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="categories">
-
-<div id="categories" class="ui grid">
-<div class="row">
-	<div class="column"><!--insert card div-->
-	<div class="ui green labels">
-		<div type="button" id="all-categories" class="label category pointer {{allSelected}}" style="width:fit-content">
-			<strong>All</strong> ({{totalReminders}})
-		</div>
-		</div>
-	</div>
-
-		{{#each categories}}
-		<div class="column"><!--insert card div-->
-		<div class="ui green labels">
-		{{#if editing}}<!--delete, also in the .js-->
-
-		<div class="edit">
-			<input class="category-name-input" id="category-name-input" type="text" value="{{name}}" />
-		</div>
-
-		{{else}}
-
-		<div type="button" class="ui label pointer category {{selected}}" style="width:fit-content">
-			{{name}} <div class="detail">{{count}}</div>
-		</div>
-
-		{{/if}}
-		</div>
-		</div>
-		{{/each}}
-
-		<div id="createCategory" class="invisible">
-			<input type="text" id="new-category" placeholder="New category" />
-		</div>
-
-</div>
-	</div>
-
+    <div id="categories">
+        <div class="ui grid">
+            <div class="ui labels">
+                <div type="button" id="all-categories" class="ui twitter-blue label pointer category {{allSelected}}" style="width:fit-content; background-color:#b2ebf2">
+                    <strong>All</strong> 
+                    <div class="detail">{{totalReminders}}</div>
+                </div>
+                {{#each categories}}
+                <div type="button" class="ui twitter-blue label pointer category {{selected}}" style="width:fit-content; background-color:#b2ebf2">
+                    <strong>{{name}}</strong>
+                    <div class="detail">{{count}}</div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="reminderItem">
-	{{#AnimateWithVelocity}}
+    {{#AnimateWithVelocity}}
+    <div class="ui segment {{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange {{/if}}{{/if}} {{#if done}} twitter-green {{/if}} reminder-items" style="background-color: #5BC0DE; color:#000000" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+        <div class="ui segment">
+            <label class="check" style="margin-right:0;margin-top:0;float:right">
+                <div class="ui right labeled icon button " name="markdone">Done <i class="{{doneCheck}}"></i>
+                </div>
+            </label>
+            <div style="padding:0.2em">
+                <label style="float:left"><i class="large tasks icon" ></i></label><!--segments-->
+                <div class="ui segment" style="margin-top:3.5em">
+                    <div class="ui vertical segment">
+                        <i class="user icon"></i>
+                        <strong>{{patientName}}</strong> &nbsp; {{roomNumber}}{{bed}}
+                        <div class="ui label" style="float:right; background-color:#b2ebf2">
+                            <strong>Due date: {{niceDue}}</strong>
+                        </div>
+                    </div>
+                    <div class="ui vertical segment">
+                        <p><div class="display">
+                            <span class="reminder-text">{{message}}</span>
+                        </div></p>
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
+                <div class="ui vertical segment">
+                    Postpone by:&nbsp;&nbsp;
+                    <div class="ui button postpone1" style="background-color:#555555; color:#FFFFFF;margin-bottom:0.25em">
+                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;1 day
+                    </div>
+                    <div class="ui button postpone2" style="background-color:#555555; color:#FFFFFF;margin-bottom:0.25em">
+                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;2 days
+                    </div>
+                    <div class="ui button postpone3" style="background-color:#555555; color:#FFFFFF">
+                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;3 days
+                    </div>
+                </div>
+                <div class="ui vertical segment">
+                    <div class="ui list">
+                        {{#if problemSubject}}
+                        <div class="item">
+                            <i class="fa fa-warning">
+                            </i>
+                            <label class="label label-important">
+                                <strong>{{problemSubject}}</strong>
+                            </label>
+                        </div>
+                        <div class="item">
+                            <div class="ui button twitter-orange detach" style="font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;">
+                                <i class="fa fa-times"></i>&nbsp;Detach problem
+                            </div>
+                        </div>
 
-	<div class="item card  {{#if done}} twitter-grey {{/if}} reminder-items" style="background-color: #D2EBD1" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<label class="check" style="margin-right:0;margin-top:0;float:right">
-			<div class="ui right labeled icon button " name="markdone">
-				Done <i class=" {{doneCheck}}"></i>
-			</div> 
-		</label>
-
-		<div class="{{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange  {{/if}}{{/if}}" style="padding:5px">
-		
-		<label style="magrin-left:0;margin-top:0;float:left"><i class="large tasks icon" ></i></label><!--segments-->
-		
-			<div class="ui list">
-
-				<div class="item">
-					<div class="ui list">
-
-						<div class="item">
-							<div class="ui large label">
-								<i class="user icon"></i><strong>{{patientName}}</strong> &nbsp; {{roomNumber}}{{bed}}					
-							</div>
-						</div>
-						<div class="item">
-						<div class="ui message">
-							{{#if editing}}<!--nope, delete-->
-							<p><div class="edit">
-								<input id="reminder-input" type="text" value="{{message}}" />
-							</div></p>
-							{{else}}
-							<p><div class="display">
-								<span class="reminder-text">{{message}}</span>
-							</div></p>
-							{{/if}}
-						</div>	
-						</div>					
-						<div class="item">
-							<div class="ui button" data-toggle="collapse" data-target=".postponesubmenu{{_id}}">
-								<strong>{{niceDue}}</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="offset1 collapse submenu postponesubmenu{{_id}}">
-			<div class="ui list">
-				<div class="item">
-					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".postponesubmenu{{_id}}" ></i>
-				</div>
-				<div class="item">
-					postpone by:
-				</div>
-				<div class="item">
-					<button class="btn btn-default postpone1">
-						<i class="fa fa-repeat"> 1 day</i>
-					</button>
-				</div>
-				<div class="item">
-					<button class="btn btn-default postpone2">
-						<i class="fa fa-repeat"> 2 days</i>
-					</button>
-				</div>
-				<div class="item">
-					<button class="btn btn-default postpone3">
-						<i class="fa fa-repeat"> 3 days</i>
-					</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="offset1 collapse submenu {{_id}}">
-			<div class="ui list">
-				<div class="item">
-					<i class="fa fa-angle-up" data-toggle="collapse" data-target=".{{_id}}" ></i>
-				</div>
-				<div class="item">
-
-					{{#if problemSubject}}
-					<div class="ui list">
-						<div class="item">
-							<i class="fa fa-warning"></i>
-						</div>
-						<div class="item">
-							<label class="label label-important"><strong>{{problemSubject}}</strong></label>
-						</div>
-						<div class="item">
-							<button class="btn btn-default twitter-red detach">
-								<i class="fa fa-times"> detach problem</i>
-							</button>
-						</div>
-					</div>
-					{{else}}
-					<select class="label label-important form-control" >
-						<option data-problemId="" value="">Attach to a problem</option>
-						{{#each problems}}
-						<option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-						{{/each}}
-					</select>
-					{{/if}}
-
-				</div>
-			</div>
-		</div>
-
-		<div class="offset1 collapse submenu {{_id}}">
-
-			<div class="ui list">
-				<div class="item">
-					<i class="fa fa-angle-up {{#unless done}} invisible {{/unless}}" data-toggle="collapse" data-target=".{{_id}}" ></i>
-				</div>
-				<div class="item"><!--add function-->
-					<button class="btn btn-inverse {{#unless done}} invisible {{/unless}}">
-						<i class="fa fa-times delete"> delete</i>
-					</button>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="reminder-item-footer">
-			<div class="ui list">
-				<div class="item">
-					<div>
-						<i style="opacity: 0.5;" class="fa fa-clock-o"> created at: {{date}}, by: {{nurseName}}</i>
-					</div>
-				</div>
-				<div class="item">
-					<div>
-						<button type="button" class="btn btn-default pointer category {{selected}}">
-							{{category}}
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	{{/AnimateWithVelocity}}
+                        {{else}}
+                        <select data-native-menu="false" style="color:#000000">
+                            <option data-problemId="" value="">Attach to a problem</option>
+                            {{#each problems}}
+                            <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+                            {{/each}}
+                        </select>
+                        {{/if}}
+                        {{#if done}}
+                            <div class="ui button twitter-red delete">
+                                <i class="fa fa-times delete"> </i>Delete
+                            </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="reminder-item-footer">
+                <div class="ui list">
+                    <div class="item">
+                        <span style="opacity: 0.5">
+                            <i class="fa fa-plus-square"></i>&nbsp;{{nurseName}}&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-clock-o"></i>&nbsp;{{date}}&nbsp;&nbsp;
+                        </span>
+                        <div type="button" class="ui label pointer category {{selected}}" style="width:fit-content; background-color:#b2ebf2">
+                            <strong>{{category}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/AnimateWithVelocity}}
 </template>
