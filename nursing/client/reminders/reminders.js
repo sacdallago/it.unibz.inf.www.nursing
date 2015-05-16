@@ -3,10 +3,6 @@ Categories = new Meteor.Collection("categories");
 
 // ID of currently selected category
 Session.setDefault('categoryName', null);
-// When editing a category name, ID of the category
-Session.setDefault('editing_categoryName', null);
-// When editing reminder text, ID of the reminder
-Session.setDefault('editing_reminderName', null);
 
 remindersHandle = Meteor.subscribe('reminders');
 
@@ -162,10 +158,6 @@ Template.reminderItem.helpers({
     return isProblem;
   },
 
-  editing : function () {//delete
-  return Session.equals('editing_reminderName', this._id);
-  },
-
   problems : function() {
     var sel = {};
     var patientFilter = Session.get('patientFilter');
@@ -261,12 +253,10 @@ Template.reminderItem.events({
   },
 
   'dblclick .display .reminder-text': function (evt, tmpl) {//delete
-    Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
   },
   'taphold .display .reminder-text': function (evt, tmpl) {//delete
-    Session.set('editing_reminderName', this._id);
     Deps.flush(); // update DOM before focus
     activateInput(tmpl.find("#reminder-input"));
   },
@@ -295,11 +285,7 @@ Template.reminderItem.events(okCancelEvents(
         Notifications.success("", "Reminder successfully updated!");
       }
     });
-      Session.set('editing_reminderName', null);
     },
-    cancel: function () {
-      Session.set('editing_reminderName', null);
-    }
   }));
 
 //Categories
@@ -324,9 +310,6 @@ Template.categories.helpers({
   selected : function () {
     return Session.equals('categoryName', this.name) ? 'label-info' : '';
   },  
-  editing : function () {
-    return Session.equals('editing_categoryName', this.name);
-  },
   allSelected : function (){
     return (!Session.get('categoryName'))?'label-info':'';
   },
@@ -357,14 +340,6 @@ Template.categories.events({
       Session.set('categoryName', this.name);
     }
   },
-  'dblclick .category': function (evt, tmpl) { // start editing category name
-    
-    if (!this.name){
-      Session.set('editing_categoryName', this.name);
-      Deps.flush(); // force DOM redraw, so we can focus the edit field
-      activateInput(tmpl.find("#category-name-input"));
-    }
-  }
 });
 
 // Attach events to keydown, keyup, and blur on "New category" input box.
@@ -395,9 +370,5 @@ Template.categories.events(okCancelEvents(
         Notifications.success("", "Category successfully updated!");
       }
     });
-      Session.set('editing_categoryName', null);
     },
-    cancel: function () {
-      Session.set('editing_categoryName', null);
-    }
   }));
