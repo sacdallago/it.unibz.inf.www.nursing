@@ -3,11 +3,11 @@
 		<div class="sixteen wide column">
 			{{#if patient}}
 			<ul class="span7 offset3 unstyled">
-				{{> patientCard}}
+				{{> patientCard}}<!--if married add name of partner && privacy issue (is family callable?)-->
 				{{#if hasHospitalization}}
 				{{> bedCard}}
 				{{/if}}
-				{{> hospitalizationCard}}
+				{{> hospitalizationCard}}<!--add IDK option-->
 				<ul class="unstyled">
 					{{#each reminders}}
 					{{> reminderItem}}

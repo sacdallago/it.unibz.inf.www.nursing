@@ -174,21 +174,16 @@ Deps.autorun(function(c) {
 
 //Accordion management
 Template.measuresAccordion.onCreated(function(){
-  // you'll need to meteor add reactive-var to use this
   this.opened = new ReactiveVar(false);
 });
 
 Template.measuresAccordion.onRendered(function(){
-  // store a reference to the template instance to use it later
-  // in functions where the this keyword will be bound to something else
   var template = this;
   this.$(".ui.accordion").accordion({
     onOpen:function(){
-      // here, the this keyword is bound to the currently opened item
       template.opened.set(true);
     },
     onClose:function(){
-      // modify the reactive var accordingly
       template.opened.set(false);
     }
   });
@@ -196,8 +191,6 @@ Template.measuresAccordion.onRendered(function(){
 
 Template.measuresAccordion.helpers({
   opened:function(){
-    // Template.instance().opened is a reactive data source
-    // this helper will get re-executed whenever its value is modified
     return Template.instance().opened.get();
   }
 });
@@ -309,6 +302,12 @@ Template.measureTags.helpers({
 	destroyed : function() {
 	delete Session.keys['measureFilter'];
 	},
+	selected : function () {
+    return Session.equals('measureFilter', this.type) ? 'label-info' : '';
+  	},  
+  	allSelected : function (){
+    return (!Session.get('measureFilter'))?'label-info':'';
+  	},
 	tags : function() {
 	var tag_infos = [];
 	var total_count = 0;
@@ -347,7 +346,7 @@ Template.measureTags.helpers({
 });
 
 Template.measureTags.events({
-	'click .tag' : function(event) {
+	'click .tagFilter' : function(event) {
 		var now = Session.get('measureFilter');
 		if (now == this.type) {
 			Session.set('measureFilter', null);

@@ -1,9 +1,9 @@
 <template name="journal">
 	<div class="row">
 		<div class="sixteen wide column">
-				{{#each journals}}
-					{{> journalItems}}
-				{{/each}}
+			{{#each journals}}
+			{{> journalItems}}
+			{{/each}}
 		</div>
 	</div>
 	{{> space}}
@@ -11,72 +11,75 @@
 
 <template name="journalItems">
 	{{#AnimateWithVelocity}}
-	<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div class="row twitter" style="border-bottom:1px solid #e5e5e5;">
-			<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px;">
-				<div class="ui list">
-					{{#if problemSubject}}
-					<div class="item" style="font-size: 12pt;">
-						<i class="fa fa-book"></i> <strong>Diario</strong>
-					</div>
-					<div class="item" style="font-size: 12pt;">
-						<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
-					</div>
-					{{else}}
-					{{#if subject}}
-					<div class="item">
-						<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
-					</div>
-					{{else}}
-					<div class="item" style="font-size: 12pt;">
-						<i class="fa fa-book"></i> <strong>Diario</strong>
-					</div>
-					{{/if}}
-					{{/if}}
-					{{#if attachment.isImage}}
-					<div class="item">
-						<i class="fa fa-file-image-o" style="font-size: 16pt;"></i>
-					</div>
-					{{else}}
-					{{#if attachment}}
-					<div class="item">
-						<i class="fa fa-file-archive-o" style="font-size: 16pt;"></i>
-					</div>
-					{{/if}}
-					{{/if}}
-					<div class="item">
-						{{> journalAccordion}}
-					</div>
-				</div>
-			</div>
-			<div class="twitter-right">
-				<div  style="padding-bottom: 10px; font-size: 12pt">
-					<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
-				</div>
-				{{#if attachment.isImage}}
-					{{#if opened}}
-						<div style="padding-bottom: 10px;">
-							<p style="text-align: center;">
-								<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
-							</p>
+	<div class="ui segment twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="background-color: #5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.5em">
+		<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+			<div class="row twitter">
+				<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px; padding-right:1em;">
+					<div class="ui list">
+						{{#if problemSubject}}
+						<div class="item" style="font-size: 12pt;">
+							<i class="fa fa-book"></i> <strong>Diario</strong>
 						</div>
-					{{/if}}
-				{{else}}
-					{{#if attachment}}
-						{{#if opened}}
-							<div style="padding-bottom: 10px;">
-								<p style="text-align: center;">
-									<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
-								</p>
-							</div>
+						<div class="item" style="font-size: 12pt;">
+							<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
+						</div>
+						{{else}}
+						{{#if subject}}
+						<div class="item">
+							<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
+						</div>
+						{{else}}
+						<div class="item" style="font-size: 12pt;">
+							<i class="fa fa-book"></i> <strong>Diario</strong>
+						</div>
 						{{/if}}
+						{{/if}}
+						{{#if attachment.isImage}}
+						<div class="item">
+							<i class="fa fa-file-image-o" style="font-size: 16pt;"></i>
+						</div>
+						{{else}}
+						{{#if attachment}}
+						<div class="item">
+							<i class="fa fa-file-archive-o" style="font-size: 16pt;"></i>
+						</div>
+						{{/if}}
+						{{/if}}
+						<div class="item">
+							{{> journalAccordion}}
+						</div>
+					</div>
+				</div>
+				<div class="twitter-right" style="position:relative; padding:1em">
+					<div  style="padding-bottom: 10px; font-size: 12pt">
+						<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
+					</div>
+					{{#if attachment.isImage}}
+					{{#if opened}}
+					<div style="padding-bottom: 10px;">
+						<p style="text-align: center;">
+							<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
+						</p>
+					</div>
 					{{/if}}
-				{{/if}}
-				<div style=" opacity: 0.5;text-align: right; font-size: 12pt">
-					{{#if noPatientSelected}}
-					<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					{{else}}
+					{{#if attachment}}
+					{{#if opened}}
+					<div style="padding-bottom: 10px;">
+						<p style="text-align: center;">
+							<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+						</p>
+					</div>
 					{{/if}}
-					<i class="fa fa-clock-o"></i> {{date}}
+					{{/if}}
+					{{/if}}
+					<div style=" opacity: 0.5;text-align: right; font-size: 12pt; position:absolute; border-left:1em; border-top:1em; bottom:0.5em; right:0.5em">
+						{{#if noPatientSelected}}
+						<i class="fa fa-user"></i>
+						<strong> {{patientName}}</strong> {{bed}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						{{/if}}
+						<i class="fa fa-clock-o"></i> {{date}}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -98,7 +101,7 @@
 		<div class="content" style="padding-bottom: 10px;">
 			{{#unless problemSubject}}
 			{{#unless subject}}
-			<select data-native-menu="false" style="color:#000000">
+			<select data-native-menu="false" style="color:#000000; margin-bottom:0.5em">
 				<option data-problemId="" value="">Seleziona...</option>
 				{{#each problems}}
 				<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
@@ -109,108 +112,19 @@
 			<div class="item">
 				{{#if subject}}
 				{{#if solved}}
-				<div class="ui button unsolved">
+				<div class="ui inverted twitter-orange button unsolved" style="margin-bottom:0.5em">
 					<i class="fa fa-check"></i> Non Risolto
 				</div>
 				{{else}}
-				<div class="ui button solved">
+				<div class="ui inverted twitter-green button solved" style="margin-bottom:0.5em">
 					<i class="fa fa-check"></i> Risolto
 				</div>
 				{{/if}}
 				{{/if}}
-				<div class="ui button delete">
+				<div class="ui inverted twitter-red button delete">
 					<i class="fa fa-times"></i> Elimina
 				</div>
 			</div>
 		</div>
 	</div>
-</template>
-
-<template name="journalItems2">
-	{{#AnimateWithVelocity}}
-	{{#each journals}}
-	<li data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-		<div class="card">
-			<div class="card-heading" style="{{#if subject}} background-color: #dd4b39;color:white; {{/if}}" >
-				<div class="card-heading-header">
-					<div style="text-align: center;" class="pointer" data-toggle="collapse" data-target=".{{_id}}">
-						<ul class="unstyled">
-							{{#if subject}}
-							<li>
-								<strong>{{subject}}</strong>
-							</li>
-							{{/if}}
-							{{#if problemSubject}}
-							<li>
-								<label class="label label-important"><strong>{{problemSubject}}</strong></label>
-							</li>
-							{{/if}}
-							{{#if noPatientSelected}}
-							<li>
-								<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
-							</li>
-							{{/if}}
-						</ul>
-					</div>
-					<div class="collapse {{_id}}">
-						<table class="table journalTableView">
-							<tbody>
-								<tr>
-									<td>
-									<ul class="unstyled">
-										{{#unless noPatientSelected}}
-										<li>
-											<i class="fa fa-user"></i><strong> {{patientName}}</strong> {{bed}}
-										</li>
-										{{/unless}}
-										<li>
-											<i class="fa fa-plus-square"></i> {{nurseName}}
-										</li>
-										{{#if attachment}}
-										<li>
-											<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
-										</li>
-										{{/if}}
-									</ul></td>
-									<td>
-									<ul class="unstyled">
-										<li>
-											<i class="fa fa-warning"></i> {{#if problemSubject}} <label class="label label-important"><strong>{{problemSubject}}</strong></label><label style="border-left: 1px solid black" class="label label-important"><i class="fa fa-times"></i></label>
-											{{else}}
-											{{#if subject}}
-											<label class="label label-important"><strong>{{subject}}</strong></label>
-											{{else}}
-											<select class="label label-important form-control" >
-												<option data-problemId="" value="">Select...</option>
-												{{#each problems}}
-												<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-												{{/each}}
-											</select>
-											{{/if}}
-											{{/if}}
-										</li>
-									</ul></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="card-body">
-				<p>
-					{{message}}
-				</p>
-				{{#if attachment.isImage}}
-				<p class="{{attachment._id}} collapse pointer" data-toggle="collapse" data-target=".{{attachment._id}}" style="display: inherit; text-align: center; padding-bottom: 50px;">
-					<img  src="{{attachment.url}}" alt="attachment">
-				</p>
-				{{/if}}
-				<p style="text-align: right; opacity: 0.7;">
-					<i class="fa fa-clock-o"></i> {{date}}
-				</p>
-			</div>
-		</div>
-	</li>
-	{{/each}}
-	{{/AnimateWithVelocity}}
 </template>

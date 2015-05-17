@@ -10,7 +10,7 @@
                         {{else}}
                         <div class="ui list" style="margin-bottom:2.1em">
                             {{#each reminders}}
-                            {{> reminderItem}}
+                                {{> reminderItem}}
                             {{/each}}
                         </div>
                         {{/if}}
@@ -42,14 +42,14 @@
 
 <template name="reminderItem">
     {{#AnimateWithVelocity}}
-    <div class="ui segment {{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange {{/if}}{{/if}} {{#if done}} twitter-green {{/if}} reminder-items" style="background-color: #5BC0DE; color:#000000" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
+    <div class="ui segment {{#if problemSubject}} {{#if solved}} twitter-blue {{else}}twitter-orange {{/if}}{{/if}} {{#if done}} twitter-green {{/if}} reminder-items" style="background-color: #5BC0DE; color:#000000; margin:0em; margin-top:0.5em" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <div class="ui segment">
             <label class="check" style="margin-right:0;margin-top:0;float:right">
                 <div class="ui right labeled icon button " name="markdone">Done <i class="{{doneCheck}}"></i>
                 </div>
             </label>
             <div style="padding:0.2em">
-                <label style="float:left"><i class="large tasks icon" ></i></label><!--segments-->
+                <label style="float:left"><i class="large tasks icon" ></i></label>
                 <div class="ui segment" style="margin-top:3.5em">
                     <div class="ui vertical segment">
                         <i class="user icon"></i>
@@ -89,7 +89,7 @@
                             </label>
                         </div>
                         <div class="item">
-                            <div class="ui button twitter-orange detach" style="font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;">
+                            <div class="ui inverted button twitter-orange detach" style="font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;">
                                 <i class="fa fa-times"></i>&nbsp;Detach problem
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         </select>
                         {{/if}}
                         {{#if done}}
-                            <div class="ui button twitter-red delete">
+                            <div class="ui inverted twitter-red button  delete">
                                 <i class="fa fa-times delete"> </i>Delete
                             </div>
                         {{/if}}
