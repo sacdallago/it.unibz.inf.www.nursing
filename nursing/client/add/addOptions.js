@@ -13,9 +13,11 @@ Template.newEntries.events({
 	},
 	'click .reminderModal' : function() {
 		$('#newReminderModal').modal('show');
+		$("#transity2").transition('hide');
 	},
 	'click .journalModal' : function() {
 		$('#newJournalModal').modal('show');
+		$("#transity").transition('hide');
 	}
 });
 

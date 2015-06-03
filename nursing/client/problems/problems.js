@@ -7,8 +7,9 @@ Template.problems.helpers({
 			subject: {$exists:true},
 			$or: [{solved:{$exists:false}}, {solved:false}]
 		};
-		if(patientId)
+		if(patientId){
 			filter.patientId = patientId;
+		}
 		var list = Journal.find(filter);
 		return list;
 	},
@@ -32,7 +33,6 @@ Template.problems.helpers({
 		 problem = Journal.find( filter).map(function(element){
 			var patient = Patients.findOne(element.patientId);
 			element.patientName = niceName(patient.first, patient.last);
-
 			var room = Rooms.findOne({
 				'patientId' : element.patientId
 			});
@@ -41,14 +41,10 @@ Template.problems.helpers({
 			} else {
 				element.bed = "NO BED ASSIGNED";
 			}
-
 			element.date = dateFormatter(element.timestamp);
-
 			element.subject ? (element.subject = ((String)(element.subject)).capitalize()) : null;
-
 			var nurse = Meteor.users.findOne(element.nurseId);
 			element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-
 			element.attachment = JournalDocuments.findOne(element.attachment);
 			return element;
 		});
@@ -65,37 +61,30 @@ Template.problems.helpers({
 		var problemId = Session.get('problemFilter');
 		filter.journalId = problemId;
 		if(problemId){
-
 			Reminders.find(filter, {sort: {timestamp:1}}).map(function(element) {
 		      var patient = Patients.findOne({
 		        _id : element.patientId
 		      });
-
 		      var room = Rooms.findOne({
 		        patientId : element.patientId
 		      });
-
 		      var nurse = Meteor.users.findOne({
 		        _id : element.nurseId
 		      });
-		      
 		      if (element.journalId){
 		        var journalentry = Journal.findOne(element.journalId);
 		        element.problemSubject = journalentry.subject;
 		        if (journalentry.solved){
 		          element.solved = journalentry.solved;
 		        }
-		      }
-		      
+		      }		      
 		      if (patient) {
 		        element.patientName = niceName(patient.first, patient.last);
 		      }
-
 		      if (room) {
 		        element.roomNumber = room.number;
 		        element.bed = room.bed;
 		      }
-
 		      if (nurse) {
 		        element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
 		      }
@@ -106,44 +95,31 @@ Template.problems.helpers({
 		      element.itemClass = "reminder";
 		      entries.push(element);
 		    });
-
-			
 			Measures.find(filter).map(function(element) {
-
 				var patient = Patients.findOne(element.patientId);
 				element.patientName = niceName(patient.first, patient.last);
-
 				var room = Rooms.findOne({
 					'patientId' : element.patientId
 				});
 				element.bed = room.number + "" + room.bed;
-
 				element.date = dateFormatter(element.timestamp);
-
 				if (element.journalId) {
 					element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
 				}
-
 				_.each(element.fields, function(field) {
 					if (!field.unit) {
 						field.checkbox = field.value == 0 ? "No" : "Yes";
 					}
 				});
-
 				element.type = element.type.capitalize();
-
 				var nurse = Meteor.users.findOne(element.nurseId);
 				element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
 				element.itemClass = "measure"
 				entries.push(element);
 			});
-		
-
 			Journal.find(filter).forEach(function(element) {
-
 				var patient = Patients.findOne(element.patientId);
 				element.patientName = niceName(patient.first, patient.last);
-
 				var room = Rooms.findOne({
 					'patientId' : element.patientId
 				});
@@ -152,18 +128,13 @@ Template.problems.helpers({
 				} else {
 					element.bed = "NO BED ASSIGNED";
 				}
-
 				element.date = dateFormatter(element.timestamp);
-
 				if (element.journalId) {
 					element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
 				}
-
 				element.subject ? (element.subject = ((String)(element.subject)).capitalize()) : null;
-
 				var nurse = Meteor.users.findOne(element.nurseId);
 				element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-
 				element.attachment = JournalDocuments.findOne(element.attachment);
 				element.itemClass = "journal";
 				entries.push(element);
@@ -176,7 +147,6 @@ Template.problems.helpers({
 				}
 				return 0;
 			});
-
 			return entries;
 		}
 	},
@@ -184,8 +154,11 @@ Template.problems.helpers({
 		return !Session.equals('problemFilter',null);
 	},
 	destroyed : function(){
-	delete Session.keys['problemFilter'];
-	}
+		delete Session.keys['problemFilter'];
+	},
+	allSelected : function (){
+    	return (!Session.get('problemFilter'))?'label-info':'';
+  	}
 });
 
 Template.problems.events({});
@@ -193,7 +166,10 @@ Template.problems.events({});
 Template.subject.helpers({
 	selected: function(){
 		return Session.equals('problemFilter', this._id) ? 'label-info' : '';
-	}
+	},
+	allSelected : function (){
+    	return (!Session.get('problemFilter'))?'label-info':'';
+  	}
 });
 Template.subject.events({
 	'click .subject' : function(event){

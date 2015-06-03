@@ -41,17 +41,17 @@
 		</div>
 		<div class="ui labels" style="font-size:10pt;margin-top:1.5em">
 			{{#each tags}}
-			{{#if type}}
-			<div type="button" class="ui twitter-blue label pointer tagFilter {{selected}} {{active}}" style="width:fit-content; background-color:#b2ebf2">
-				<strong>{{type}}</strong>
-				<div class="detail">{{count}}</div>
-			</div>
-			{{else}}
-			<div type="button" class="ui twitter-blue label pointer tagFilter {{allSelected}} {{active}}" style="width:fit-content; background-color:#b2ebf2">
-				<strong>All</strong>
-				<div class="detail">{{count}}</div>
-			</div>
-			{{/if}}
+				{{#if type}}
+					<div type="button" class="ui twitter-blue label pointer tagFilter {{selected}} {{active}}" style="width:fit-content; background-color:#b2ebf2">
+						<strong>{{type}}</strong>
+						<div class="detail">{{count}}</div>
+					</div>
+				{{else}}
+					<div type="button" class="ui twitter-blue label pointer tagFilter {{allSelected}} {{active}}" style="width:fit-content; background-color:#b2ebf2">
+						<strong>All</strong>
+						<div class="detail">{{count}}</div>
+					</div>
+				{{/if}}
 			{{/each}}
 		</div>
 	</div>

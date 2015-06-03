@@ -25,7 +25,9 @@ Template.navigation.events({
 		e.preventDefault();
 		var name = Meteor.user().profile.first;
 		Notifications.success('', 'Bye bye ' + name.capitalize() + '.');
-		Router.go('goodbye');
+		setTimeout(function(){
+			location.reload();
+		},1000);
 	}
 });
 

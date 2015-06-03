@@ -24,18 +24,20 @@ Template.journalAccordion.onRendered(function(){
     onOpen:function(){
       // here, the this keyword is bound to the currently opened item
       template.opened.set(true);
+      //template.data.isOpened.isOpened.set("newstring");
     },
     onClose:function(){
       // modify the reactive var accordingly
       template.opened.set(false);
+      //template.data.isOpened.isOpened.set("newstring2");
     }
   });
 });
 
 Template.journalAccordion.helpers({
   opened:function(){
-    // Template.instance().opened is a reactive data source
-    // this helper will get re-executed whenever its value is modified
+  	//console.log(this);
+  	console.log(Template.instance().view.parentView);
     return Template.instance().opened.get();
   }
 });
@@ -82,6 +84,10 @@ Template.journal.helpers({
 	}
 });
 
+Template.journalItems.onCreated(function(){
+	this.data.isOpened= new ReactiveVar("test")
+})
+
 Template.journalItems.helpers({
 	noPatientSelected : function() {
 		return !Session.get('patientFilter');
@@ -94,11 +100,12 @@ Template.journalItems.helpers({
 			patientId: this.patientId,
 			$or: [{ solved: false}, {solved :{$exists: false}}]
 		});
-	}/*,
-	isOpen : function() {
-		var currentState = $('.ui.accordion').currentState();
-		return currentState=='open';
-	}*/
+	},
+	isOpened : function() {
+		return {
+			
+		};
+	}
 });
 
 Template.journalItems.events({

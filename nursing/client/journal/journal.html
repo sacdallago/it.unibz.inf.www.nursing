@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="sixteen wide column">
 			{{#each journals}}
-			{{> journalItems}}
+				{{> journalItems}}
 			{{/each}}
 		</div>
 	</div>
@@ -11,16 +11,16 @@
 
 <template name="journalItems">
 	{{#AnimateWithVelocity}}
-	<div class="ui segment twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="background-color: #5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.5em">
+	<div class="ui segment twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="background-color: #5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.25em;padding:0.5em">
 		<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 			<div class="row twitter">
 				<div class="twitter-left twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="padding-bottom: 0px; padding-right:1em;">
 					<div class="ui list">
 						{{#if problemSubject}}
-						<div class="item" style="font-size: 12pt;">
+						<div class="item" style="font-size: 1em;">
 							<i class="fa fa-book"></i> <strong>Diario</strong>
 						</div>
-						<div class="item" style="font-size: 12pt;">
+						<div class="item" style="font-size: 1em;">
 							<a href="#" class="label"><i class="fa fa-times"></i>&nbsp;<strong>{{problemSubject}}</strong></a>
 						</div>
 						{{else}}
@@ -29,51 +29,52 @@
 							<i class="fa fa-warning"></i>&nbsp;<strong>{{subject}}</strong>
 						</div>
 						{{else}}
-						<div class="item" style="font-size: 12pt;">
+						<div class="item" style="font-size: 1em;">
 							<i class="fa fa-book"></i> <strong>Diario</strong>
 						</div>
 						{{/if}}
 						{{/if}}
 						{{#if attachment.isImage}}
 						<div class="item">
-							<i class="fa fa-file-image-o" style="font-size: 16pt;"></i>
+							<i class="fa fa-file-image-o" style="font-size: 1.25em;"></i>
 						</div>
 						{{else}}
 						{{#if attachment}}
 						<div class="item">
-							<i class="fa fa-file-archive-o" style="font-size: 16pt;"></i>
+							<i class="fa fa-file-archive-o" style="font-size: 1.25em;"></i>
 						</div>
 						{{/if}}
 						{{/if}}
 						<div class="item">
-							{{> journalAccordion}}
+							{{> journalAccordion isOpened}}
 						</div>
 					</div>
 				</div>
 				<div class="twitter-right" style="position:relative; padding:1em">
-					<div  style="padding-bottom: 10px; font-size: 12pt">
+					<div  style="padding-bottom: 10px; font-size: 1em">
 						<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
 					</div>
 					{{#if attachment.isImage}}
-					{{#if opened}}
-					<div style="padding-bottom: 10px;">
-						<p style="text-align: center;">
-							<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
-						</p>
-					</div>
-					{{/if}}
-					{{else}}
-					{{#if attachment}}
-					{{#if opened}}
-					<div style="padding-bottom: 10px;">
-						<p style="text-align: center;">
-							<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
-						</p>
-					</div>
-					{{/if}}
-					{{/if}}
-					{{/if}}
-					<div style=" opacity: 0.5;text-align: right; font-size: 12pt; position:absolute; border-left:1em; border-top:1em; bottom:0.5em; right:0.5em">
+					<!--{{>journalAccordion}}-->
+						{{#if opened}}
+							<div style="padding-bottom: 10px;">
+								<p style="text-align: center;">
+									<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
+								</p>
+							</div>
+						{{/if}}
+						{{else}}
+							{{#if attachment}}
+								{{#if isOpen}}
+									<div style="padding-bottom: 10px;">
+										<p style="text-align: center;">
+											<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+										</p>
+									</div>
+								{{/if}}
+							{{/if}}
+						{{/if}}
+					<div style=" opacity: 0.5;text-align: right; font-size: 1em; position:absolute; border-left:1em; border-top:1em; bottom:0.3em; right:0.5em">
 						{{#if noPatientSelected}}
 						<i class="fa fa-user"></i>
 						<strong> {{patientName}}</strong> {{bed}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -91,11 +92,11 @@
 	<div class="ui accordion">
 		<div class="title">
 			{{#if opened}}
-			<i class="angle double down icon" style="overflow: hidden; white-space: nowrap; align-self:auto; font-size: 17pt; color: #FFFFFF">
-			</i>	
+				<i class="angle double down icon" style="overflow: hidden; white-space: nowrap; align-self:auto; font-size: 1.25em; color: #FFFFFF">
+				</i>	
 			{{else}}
-			<i class="angle double right icon" style="font-size: 17pt; color: #FFFFFF">
-			</i>
+				<i class="angle double right icon" style="font-size: 1.25em; color: #FFFFFF">
+				</i>
 			{{/if}}
 		</div>
 		<div class="content" style="padding-bottom: 10px;">

@@ -107,6 +107,14 @@ Template.newMeasurementContent.helpers({
 });
 
 Template.newJournalContent.events({
+	'click .problem' : function(event){
+		$("#transity").transition({
+			hidden : 'hidden',
+			animation: 'scale',
+			duration: '500ms'
+		});
+	},
+
 	'change #journalFile' : function(event) {
 		document.getElementById('journalFile').value != "" ? Session.set('fileSelected', true) : Session.set('fileSelected', null);
 	},
@@ -119,13 +127,12 @@ Template.newJournalContent.events({
 			}
 		});
 	},
-	'submit' : function(event) {
+	'click .send' : function(event) {		
 		event.preventDefault();
 		var message = document.getElementById('messageText').value;
 		var files = document.getElementById('journalFile').files;
 		var newProblem = document.getElementById("defineProblem").value;
 		var problemId = $("#journalProblemSelector option:selected").attr("data-problemId");
-
 		//create entry with basic data
 		var entry = {
 			patientId : Session.get('patientFilter'),
@@ -192,7 +199,9 @@ Template.newJournalContent.events({
 		}
 
 		//cleanup
-		$('#journal').modal('hide');
+		$('#newJournalModal').modal('hide');
+		$("#transity").transition('hide');
+
 		Meteor.users.update(Meteor.userId(), {
 			$set : {
 				'profile.message.message' : ""
@@ -235,16 +244,43 @@ Template.newJournalContent.helpers({
 	}
 });
 
+
+
+Template.newJournalContent.onRendered(function(){
+	
+	this.$('.ui.dropdown').dropdown();
+	this.$('select.dropdown').dropdown();
+	this.$('#select').dropdown();
+	this.$('.shape').shape();
+});
+
+Template.newReminderContent.onRendered(function(){
+	this.$('.ui.checkbox').checkbox();
+	this.$('.shape').shape();
+});
+
+
+
+
 //newReminder
 
 Template.newReminderContent.events({
+	'click .problem' : function(event){
+		$("#transity2").transition({
+			hidden : 'hidden',
+			animation: 'scale',
+			duration: '500ms'
+		});
+	},
 	'click .category' : function(event) {
 		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
 		event.preventDefault();
 		Session.set('inputCategory', this.name);
+		console.log("category session set!");
 	},
-	'submit' : function(event) {
+	'click .send' : function(event) {
 		event.preventDefault();
+		
 		var patientId = Session.get('patientFilter');
 		var hospitalizationId = Session.get('hospitalizationFilter');
 		var nurseId = Meteor.userId();
@@ -284,7 +320,11 @@ Template.newReminderContent.events({
 		if (problemId) {
 			entry.journalId = problemId;
 		}
-		console.log(entry);
+
+		$('#newReminderModal').modal('hide');
+		$("#transity2").transition('hide');
+		document.getElementById('remindermessage').value="";
+		
 		Reminders.insert(entry, function(error) {
 			if (error) {
 				Notifications.error("Error", "An error occoured. Please try again");
@@ -298,6 +338,10 @@ Template.newReminderContent.events({
 });
 
 Template.newReminderContent.helpers({
+  selected : function () {
+  	
+    return Session.equals('inputCategory', this.name);
+  },  
 	loading : function() {
 		return !categoriesHandle.ready();
 	},

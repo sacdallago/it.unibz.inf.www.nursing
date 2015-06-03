@@ -30,7 +30,7 @@
 	<div id="newReminderModal" class="ui modal">
 		<i class="close icon"></i>
 		<div class="header">
-			New Measurement
+			New Reminder
 		</div>
 		<div class="content">
 			<div class="description">
@@ -90,135 +90,124 @@
 </template>
 
 <template name="newJournalContent">
-	<form>
-		<div class="modal-body">
-			<div class="input-group addmessage">
-				<strong>Message:&nbsp;</strong>
-				<br>
-				<textarea id="messageText" class="input input-block-level" maxlength="180">{{messageData.message}}</textarea>
-				<p style="text-align: right; color: #555;" id="textCounter"></p>
-			</div>
+	<div class="ui form">
+		<div class="field">			
+				<label>Message:</label>
+				<textarea id="messageText" maxlength="180">{{messageData.message}}</textarea>
+				<p style="text-align: right; color: #555;" id="textCounter"></p>			
 		</div>
-		<div class="input-group addmessage">
-			<button class="btn btn-default btn-file">
-				<i class="fa fa-file-archive-o {{fileSelected}}"></i> File
+
+		<div>
+			<div class="ui basic button">
+				<i class="icon upload {{fileSelected}}"></i> File
 				<input id="journalFile" type="file">
-			</button>
-		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-block send">
-				<strong><i class="fa fa-circle-o river"></i></strong> Save
-			</button>
-
-			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".journalProblemCollapse">
-				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
-			</button>
-
-			<div class="collapse journalProblemCollapse">
-				<table class="table">
-					<tbody>
-						<td>
-						<div class="input-group addmessage">
-							<strong>Select an existing problem:&nbsp;</strong>
-							<br>
-							<select id="journalProblemSelector">
-								<option data-problemId="" value="">Select...</option>
-								{{#each problems}}
-								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-								{{/each}}
-							</select>
-						</div></td>
-						<td>
-						<div class="input-group addmessage">
-							<strong>... Or define a new problem:&nbsp;</strong>
-							<br>
-							<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
-						</div></td>
-					</tbody>
-				</table>
 			</div>
 		</div>
-	</form>
+		<br>
+		<div class="modal-footer">
+			<div class="ui basic button send">
+				<strong><i class="add circle icon"></i></strong> Save
+			</div>
+
+			<div class="ui basic button problem">
+				<strong><i class="warning sign icon"></i></strong> Problem&nbsp;
+			</div>
+
+					<div id="transity">
+						<label>Select an existing problem:</label>
+						<select id="journalProblemSelector">
+						
+							<option data-problemId="" value="">Select...</option>
+							{{#each problems}}
+							<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+							{{/each}}
+
+						</select>
+						<strong>... Or define a new problem:&nbsp;</strong>
+						<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
+					</div>
+		</div>
+	</div>
 </template>
 
 <template name="newReminderContent">
-	<form class="form">
-		<div class="modal-body">
-			<div class="input-block">
-				<div class="input-block-title">
-					<strong name="task">Task description</strong>&nbsp;
-					<br/>
+	<div class="ui form">
+		<div class="modal-header">
+		
+			<h4 class="ui header">Insert note</h4>
+		<div class="field">
+			<input placeholder="Insert a brief description of the tast you wish to create a reminder for" id="remindermessage" type="text" name="message" value="" required/>
+		</div>
+			<h4 class="ui header">Pick a category</h4>
+			<br>
+			<div class="field">
+				<div class="ui grid">
+           		    <div class="ui labels">
+					{{#each categories}}
+						<div type="button" class="ui label category" style="width:fit-content; {{#if selected}} background-color: #4495eb{{/if}}background-color:#B2EBF2">
+	                    <strong>{{name}}</strong>                    
+	                	</div>                	
+					{{/each}}
+					</div>
 				</div>
-				<input id="remindermessage" type="text" name="message" value="" required/>
-				<em style="opacity: 0.5;font-size:10px;">Insert a brief description of the task you wish to create a reminder for</em>
-			</div>
-			<div class="input-block">
-				<div class="input-block-title">
-					<strong>Pick a category</strong>
-					<br/>
-				</div>
-				{{#each categories}}
-				<button class="category btn btn-default {{categorySelected}}" id="category{{name}}">
-					{{name}}
-				</button>
-				{{/each}}
 			</div>
 
-			<div class="input-block">
-				<div class="input-block-title">
-					<strong>Pick a due date</strong>
-					<br/>
-				</div>
-				<ul class="unstyled inline">
-					<li>
-						<label class="radio">
-							<input type="radio" name="dueDate" value="today" checked="checked">
-							<em>Today</em> </label>
-					</li>
-					<li>
-						<label class="radio">
-							<input type="radio" name="dueDate" value="tomorrow">
-							<em>Tomorrow</em> </label>
-					</li>
-					<li>
-						<label class="radio">
-							<input type="radio" name="dueDate" value="day after tomorrow">
-							<em>Day after Tomorrow</em> </label>
-					</li>
-					<li>
-						<label class="radio">
-							<input type="radio" name="dueDate" value="other" data-toggle="collapse" data-target=".otherdate">
-							<em>Other</em> </label>
-					</li>
-				</ul>
+			<h4 class="class ui header">				
+				<strong>Pick a due date</strong>
+				<br/>
+			</h4>	
+			<div class="grouped fields">   
+			    <div class="field">
+			      <div class="ui radio checkbox checked">
+			        <input name="dueDate" checked="checked" type="radio" value="today">
+			        <label>Today</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input name="dueDate" type="radio" value="tomorrow">
+			        <label>Tomorrow</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input name="dueDate" type="radio" value="day after tomorrow">
+			        <label>After tomorrow</label>
+			      </div>
+			    </div>
+			    <div class="field">
+			      <div class="ui radio checkbox">
+			        <input name="dueDate" type="radio" value="other" data-toggle="collapse" data-target=".otherdate">
+			        <label>Other</label>
+			      </div>
+			    </div>
+			</div>
 
 				<div class="otherdate collapse offset1" style="padding-top=10px;margin:auto">
 					<label class="offset1">
 						<input type="date" name="otherDueDate">
 					</label>
-
-				</div>
-			</div>
+				</div>		
 		</div>
+
 		<div class="modal-footer">
-			<button type="submit" class="btn btn-block send">
-				<strong><i class="fa fa-circle-o river"></i></strong> Save
-			</button>
-
-			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".reminderProblemCollapse">
-				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
-			</button>
-
-			<div class="input-group collapse reminderProblemCollapse" style="margin-top: 20px;">
-				<strong>Select an existing problem:&nbsp;</strong>
-				<br>
-				<select id="reminderProblemSelector" style="width: 100%">
-					<option data-problemId="" value="">Select...</option>
-					{{#each problems}}
-					<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-					{{/each}}
-				</select>
+			<br>
+			<div class="ui basic button send">
+				<strong><i class="add circle icon"></i></strong> Save
 			</div>
+
+			<div class="ui basic button problem">
+				<strong><i class="warning sign icon"></i></strong> Problem&nbsp;
+			</div>
+						<div id="transity2">
+							<label>Select an existing problem:&nbsp;</label>
+							<select id="reminderProblemSelector">
+								<option data-problemId="" value="">Select...</option>
+								{{#each problems}}
+								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								{{/each}}
+							</select>
+						</div>
 		</div>
-	</form>
+	</div>
 </template>

@@ -49,11 +49,11 @@ function showGraph() {
 	 *		}
 	 *		]  }
 	 */
-	var measure = Measures.findOne(filter);
-	Session.set('graphTitle',measure.type);
-	
-	var labels = [];
-	
+	 var measure = Measures.findOne(filter);
+	 Session.set('graphTitle',measure.type);
+
+	 var labels = [];
+
 	var charts = measure.fields; // Is an array, look above. This is used later to determine how many lines I have to draw
 	
 	var dataset = [];
@@ -174,73 +174,73 @@ Deps.autorun(function(c) {
 
 //Accordion management
 Template.measuresAccordion.onCreated(function(){
-  this.opened = new ReactiveVar(false);
+	this.opened = new ReactiveVar(false);
 });
 
 Template.measuresAccordion.onRendered(function(){
-  var template = this;
-  this.$(".ui.accordion").accordion({
-    onOpen:function(){
-      template.opened.set(true);
-    },
-    onClose:function(){
-      template.opened.set(false);
-    }
-  });
+	var template = this;
+	this.$(".ui.accordion").accordion({
+		onOpen:function(){
+			template.opened.set(true);
+		},
+		onClose:function(){
+			template.opened.set(false);
+		}
+	});
 });
 
 Template.measuresAccordion.helpers({
-  opened:function(){
-    return Template.instance().opened.get();
-  }
+	opened:function(){
+		return Template.instance().opened.get();
+	}
 });
 
 Template.measures.helpers({
 	measures : function() {
-	var filter = {};
-	if (Session.get('patientFilter')) {
-		filter.patientId = Session.get('patientFilter');
-	}
-	if (Session.get('measureFilter')) {
-		filter.type = Session.get('measureFilter');
-	}
-	return Measures.find(filter, {
-		sort : {
-			timestamp : -1
+		var filter = {};
+		if (Session.get('patientFilter')) {
+			filter.patientId = Session.get('patientFilter');
 		}
-	}).map(function(element) {
-
-		var patient = Patients.findOne(element.patientId);
-		element.patientName = niceName(patient.first, patient.last);
-
-		var room = Rooms.findOne({
-			'patientId' : element.patientId
-		});
-		if (room) {
-			element.bed = room.number + "" + room.bed;
-		} else {
-			element.bed = "NO BED ASSIGNED";
+		if (Session.get('measureFilter')) {
+			filter.type = Session.get('measureFilter');
 		}
-
-		element.date = dateFormatter(element.timestamp);
-
-		if (element.journalId) {
-			element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
-		}
-
-		_.each(element.fields, function(field) {
-			if (!field.unit) {
-				field.checkbox = field.value == 0 ? "No" : "Yes";
+		return Measures.find(filter, {
+			sort : {
+				timestamp : -1
 			}
+		}).map(function(element) {
+
+			var patient = Patients.findOne(element.patientId);
+			element.patientName = niceName(patient.first, patient.last);
+
+			var room = Rooms.findOne({
+				'patientId' : element.patientId
+			});
+			if (room) {
+				element.bed = room.number + "" + room.bed;
+			} else {
+				element.bed = "NO BED ASSIGNED";
+			}
+
+			element.date = dateFormatter(element.timestamp);
+
+			if (element.journalId) {
+				element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
+			}
+
+			_.each(element.fields, function(field) {
+				if (!field.unit) {
+					field.checkbox = field.value == 0 ? "No" : "Yes";
+				}
+			});
+
+			element.type = element.type.capitalize();
+
+			var nurse = Meteor.users.findOne(element.nurseId);
+			element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
+
+			return element;
 		});
-
-		element.type = element.type.capitalize();
-
-		var nurse = Meteor.users.findOne(element.nurseId);
-		element.nurseName = niceName(nurse.profile.first, nurse.profile.last);
-
-		return element;
-	});
 	}
 }); 
 
@@ -300,48 +300,42 @@ Template.measureItems.events({
 
 Template.measureTags.helpers({
 	destroyed : function() {
-	delete Session.keys['measureFilter'];
+		delete Session.keys['measureFilter'];
 	},
 	selected : function () {
-    return Session.equals('measureFilter', this.type) ? 'label-info' : '';
-  	},  
-  	allSelected : function (){
-    return (!Session.get('measureFilter'))?'label-info':'';
-  	},
+		return Session.equals('measureFilter', this.type) ? 'label-info' : '';
+	},  
+	allSelected : function (){
+		return (!Session.get('measureFilter'))?'label-info':'';
+	},
 	tags : function() {
-	var tag_infos = [];
-	var total_count = 0;
-
-	var filter = {};
-	if (Session.get('patientFilter')) {
-		filter.patientId = Session.get('patientFilter');
-	}
-
-	Measures.find(filter).forEach(function(measure) {
-		var tag_info = _.find(tag_infos, function(element) {
-			return element.type === measure.type;
-		});
-		if (!tag_info)
-			tag_infos.push({
-				type : measure.type,
-				count : 1
+		var tag_infos = [];
+		var total_count = 0;
+		var filter = {};
+		if (Session.get('patientFilter')) {
+			filter.patientId = Session.get('patientFilter');
+		}
+		Measures.find(filter).forEach(function(measure) {
+			var tag_info = _.find(tag_infos, function(element) {
+				return element.type === measure.type;
 			});
-		else
-			tag_info.count++;
-
-		total_count++;
-	});
-
-	tag_infos = _.sortBy(tag_infos, function(x) {
-		return x.type;
-	});
-
-	tag_infos.unshift({
-		type : null,
-		count : total_count
-	});
-
-	return tag_infos;
+			if (!tag_info)
+				tag_infos.push({
+					type : measure.type,
+					count : 1
+				});
+			else
+				tag_info.count++;
+			total_count++;
+		});
+		tag_infos = _.sortBy(tag_infos, function(x) {
+			return x.type;
+		});
+		tag_infos.unshift({
+			type : null,
+			count : total_count
+		});
+		return tag_infos;
 	}
 });
 
