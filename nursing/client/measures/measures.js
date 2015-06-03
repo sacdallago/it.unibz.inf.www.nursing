@@ -192,6 +192,21 @@ Template.measuresAccordion.onRendered(function(){
 Template.measuresAccordion.helpers({
 	opened:function(){
 		return Template.instance().opened.get();
+	},
+	problems : function() {
+		return Journal.find({
+			subject : {
+				$exists : true
+			},
+			patientId : this.patientId,
+			$or : [{
+				solved : false
+			}, {
+				solved : {
+					$exists : false
+				}
+			}]
+		});
 	}
 });
 
@@ -247,21 +262,6 @@ Template.measures.helpers({
 Template.measureItems.helpers({
 	noPatientSelected : function() {
 		return !Session.get('patientFilter');
-	},
-	problems : function() {
-		return Journal.find({
-			subject : {
-				$exists : true
-			},
-			patientId : this.patientId,
-			$or : [{
-				solved : false
-			}, {
-				solved : {
-					$exists : false
-				}
-			}]
-		});
 	}
 });
 
