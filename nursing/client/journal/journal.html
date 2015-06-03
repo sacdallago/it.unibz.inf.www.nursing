@@ -1,8 +1,13 @@
 <template name="journal">
 	<div class="row">
 		<div class="sixteen wide column">
+			<div class="ui segment">
+				<p style="font-size: 2em;">
+					<strong><i class="fa fa-tags"></i> Journal</strong>
+				</p>
+			</div>
 			{{#each journals}}
-				{{> journalItems}}
+			{{> journalItems}}
 			{{/each}}
 		</div>
 	</div>
@@ -46,7 +51,45 @@
 						{{/if}}
 						{{/if}}
 						<div class="item">
-							{{> journalAccordion isOpened}}
+							<div class="ui accordion">
+								<div class="title">
+									{{#if opened}}
+									<i class="angle double down icon" style="overflow: hidden; white-space: nowrap; align-self:auto; font-size: 1.25em; color: #FFFFFF">
+									</i>	
+									{{else}}
+									<i class="angle double right icon" style="font-size: 1.25em; color: #FFFFFF">
+									</i>
+									{{/if}}
+								</div>
+								<div class="content" style="padding-bottom: 10px;">
+									{{#unless problemSubject}}
+									{{#unless subject}}
+									<select data-native-menu="false" style="color:#000000; margin-bottom:0.5em">
+										<option data-problemId="" value="">Seleziona...</option>
+										{{#each problems}}
+										<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+										{{/each}}
+									</select>
+									{{/unless}}
+									{{/unless}}
+									<div class="item">
+										{{#if subject}}
+										{{#if solved}}
+										<div class="ui inverted twitter-orange button unsolved" style="margin-bottom:0.5em">
+											<i class="fa fa-check"></i> Non Risolto
+										</div>
+										{{else}}
+										<div class="ui inverted twitter-green button solved" style="margin-bottom:0.5em">
+											<i class="fa fa-check"></i> Risolto
+										</div>
+										{{/if}}
+										{{/if}}
+										<div class="ui inverted twitter-red button delete">
+											<i class="fa fa-times"></i> Elimina
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -55,25 +98,24 @@
 						<i class="fa fa-plus-square"></i><strong> {{nurseName}}:</strong> {{message}}
 					</div>
 					{{#if attachment.isImage}}
-					<!--{{>journalAccordion}}-->
-						{{#if opened}}
-							<div style="padding-bottom: 10px;">
-								<p style="text-align: center;">
-									<a href="{{attachment.url}}"><img  src="{{attachment.url}}" alt="attachment"></a>
-								</p>
-							</div>
-						{{/if}}
-						{{else}}
-							{{#if attachment}}
-								{{#if isOpen}}
-									<div style="padding-bottom: 10px;">
-										<p style="text-align: center;">
-											<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
-										</p>
-									</div>
-								{{/if}}
-							{{/if}}
-						{{/if}}
+					{{#if opened}}
+					<div style="padding-bottom: 1em; height:30em">
+						<p style="text-align: left;">
+							<a href="{{attachment.url}}"><img style="max-height:30em; max-width:30em" src="{{attachment.url}}" alt="attachment"></a>
+						</p>
+					</div>
+					{{/if}}
+					{{else}}
+					{{#if attachment}}
+					{{#if opened}}
+					<div style="padding-bottom: 1em;">
+						<p style="text-align: left;">
+							<a href="{{attachment.url}}"><i class="fa fa-file-archive-o"></i> {{attachment.original.name}}</a>
+						</p>
+					</div>
+					{{/if}}
+					{{/if}}
+					{{/if}}
 					<div style=" opacity: 0.5;text-align: right; font-size: 1em; position:absolute; border-left:1em; border-top:1em; bottom:0.3em; right:0.5em">
 						{{#if noPatientSelected}}
 						<i class="fa fa-user"></i>
@@ -86,46 +128,4 @@
 		</div>
 	</div>
 	{{/AnimateWithVelocity}}
-</template>
-
-<template name="journalAccordion">
-	<div class="ui accordion">
-		<div class="title">
-			{{#if opened}}
-				<i class="angle double down icon" style="overflow: hidden; white-space: nowrap; align-self:auto; font-size: 1.25em; color: #FFFFFF">
-				</i>	
-			{{else}}
-				<i class="angle double right icon" style="font-size: 1.25em; color: #FFFFFF">
-				</i>
-			{{/if}}
-		</div>
-		<div class="content" style="padding-bottom: 10px;">
-			{{#unless problemSubject}}
-			{{#unless subject}}
-			<select data-native-menu="false" style="color:#000000; margin-bottom:0.5em">
-				<option data-problemId="" value="">Seleziona...</option>
-				{{#each problems}}
-				<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-				{{/each}}
-			</select>
-			{{/unless}}
-			{{/unless}}
-			<div class="item">
-				{{#if subject}}
-				{{#if solved}}
-				<div class="ui inverted twitter-orange button unsolved" style="margin-bottom:0.5em">
-					<i class="fa fa-check"></i> Non Risolto
-				</div>
-				{{else}}
-				<div class="ui inverted twitter-green button solved" style="margin-bottom:0.5em">
-					<i class="fa fa-check"></i> Risolto
-				</div>
-				{{/if}}
-				{{/if}}
-				<div class="ui inverted twitter-red button delete">
-					<i class="fa fa-times"></i> Elimina
-				</div>
-			</div>
-		</div>
-	</div>
 </template>

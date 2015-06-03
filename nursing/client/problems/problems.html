@@ -1,45 +1,43 @@
 <template name="problems">
-  <div class="ui segment">
-    <div class="ui vertical segment">
-      <p style="font-size: 2em;">
-        <strong><i class="fa fa-tags"></i>Problems</strong>
-      </p>
-    </div>
-    <div class="ui labels" style="font-size:10pt;margin-top:1.5em">
-      <div type="button" class="ui twitter-blue label pointer subject {{allSelected}}" style="width:fit-content; background-color:#b2ebf2">
-        <strong>All</strong>
-        <div class="detail">{{count}}</div>
+  <div class="sixteen wide column">
+    <div class="ui segment">
+      <div class="ui vertical segment">
+        <p style="font-size: 2em;">
+          <strong><i class="fa fa-tags"></i>Problems</strong>
+        </p>
       </div>
-      {{#each subjects}}
+      <div class="ui labels" style="font-size:10pt;margin-top:1.5em">
+        <div type="button" class="ui twitter-blue label pointer subject {{allSelected}}" style="width:fit-content; background-color:#b2ebf2">
+          <strong>All</strong>
+        </div>
+        {{#each subjects}}
         {{>subject}}
+        {{/each}}
+      </div>
+    </div>
+    <div class="row" style="margin-bottom:2.1em">
+      {{#each origin}}
+      {{>journalItems}}
       {{/each}}
+      {{#if problemSelected}}
+      {{#each entries}}
+      {{#if isClass "journal"}}
+      {{>journalItems}}
+      {{/if}}
+      {{#if isClass "measure"}}
+      {{>measureItems}}
+      {{/if}}
+      {{#if isClass "reminder"}}
+      {{>reminderItem}}
+      {{/if}}
+      {{/each}}
+      {{/if}}
     </div>
   </div>
-    <div class="row">
-     <div class="sixteen wide column"> 
-        {{#each origin}}
-          {{>journalItems}}
-        {{/each}}
-        {{#if problemSelected}}
-          {{#each entries}}
-            {{#if isClass "journal"}}
-              {{>journalItems}}
-            {{/if}}
-            {{#if isClass "measure"}}
-              {{>measureItems}}
-            {{/if}}
-            {{#if isClass "reminder"}}
-              {{>reminderItem}}
-            {{/if}}
-          {{/each}}
-        {{/if}}
-      </div>
-    </div>
 </template>
 
 <template name="subject">
   <div type="button" class="ui twitter-blue label pointer subject {{selected}}" style="width:fit-content; background-color:#b2ebf2">
     <strong>{{subject}}</strong>
-    <div class="detail">{{count}}</div>
   </div>
 </template>

@@ -5,42 +5,9 @@ JournalDocuments = new FS.Collection("journalDocuments", {
 
 journalDocumentsHandle = Meteor.subscribe('journalDocuments');
 FS.HTTP.setBaseUrl('/attachments');
-
 //Load Journal at startup
 Journal = new Meteor.Collection("journal");
 journalHandle = Meteor.subscribe('journal',{active:true},{});
-
-//Accordion management
-Template.journalAccordion.onCreated(function(){
-  // you'll need to meteor add reactive-var to use this
-  this.opened = new ReactiveVar(false);
-});
-
-Template.journalAccordion.onRendered(function(){
-  // store a reference to the template instance to use it later
-  // in functions where the this keyword will be bound to something else
-  var template = this;
-  this.$(".ui.accordion").accordion({
-    onOpen:function(){
-      // here, the this keyword is bound to the currently opened item
-      template.opened.set(true);
-      //template.data.isOpened.isOpened.set("newstring");
-    },
-    onClose:function(){
-      // modify the reactive var accordingly
-      template.opened.set(false);
-      //template.data.isOpened.isOpened.set("newstring2");
-    }
-  });
-});
-
-Template.journalAccordion.helpers({
-  opened:function(){
-  	//console.log(this);
-  	console.log(Template.instance().view.parentView);
-    return Template.instance().opened.get();
-  }
-});
 
 //Template logic
 Template.journal.helpers({
@@ -85,26 +52,40 @@ Template.journal.helpers({
 });
 
 Template.journalItems.onCreated(function(){
-	this.data.isOpened= new ReactiveVar("test")
+	this.opened = new ReactiveVar(false);
 })
 
+Template.journalItems.onRendered(function(){
+	var template = this;
+  this.$(".ui.accordion").accordion({
+    onOpen:function(){
+      template.opened.set(true);
+      shit = true;
+    },
+    onClose:function(){
+      shit = false;
+      template.opened.set(false);
+    }
+  });
+});
 Template.journalItems.helpers({
 	noPatientSelected : function() {
 		return !Session.get('patientFilter');
 	},
-	problems : function() {
-		return Journal.find({
-			subject : {
-				$exists : true
-			},
-			patientId: this.patientId,
-			$or: [{ solved: false}, {solved :{$exists: false}}]
-		});
-	},
-	isOpened : function() {
-		return {
-			
-		};
+	opened:function(){
+    	return Template.instance().opened.get();
+  	},
+  	problems : function() {
+  		var sel={};
+  		var patientFilter=Session.get('patientFilter');
+  		if (patientFilter){
+  			sel.patientId=patientFilter;
+  		} else{
+  			sel.patientId=this.patientId;
+  		}
+  		sel.subject={$exists:true};
+  		var problems=Journal.find(sel);
+  		return problems;
 	}
 });
 
@@ -179,6 +160,5 @@ Template.journalItems.events({
 				}
 			});
 		}
-
 	}
 })

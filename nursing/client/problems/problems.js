@@ -157,19 +157,21 @@ Template.problems.helpers({
 		delete Session.keys['problemFilter'];
 	},
 	allSelected : function (){
+		console.log("All selected");
     	return (!Session.get('problemFilter'))?'label-info':'';
   	}
 });
 
-Template.problems.events({});
+Template.problems.events({
+	'click .subject' : function(event){
+		Session.set('problemFilter',this._id);
+	}
+});
 
 Template.subject.helpers({
 	selected: function(){
 		return Session.equals('problemFilter', this._id) ? 'label-info' : '';
-	},
-	allSelected : function (){
-    	return (!Session.get('problemFilter'))?'label-info':'';
-  	}
+	}
 });
 Template.subject.events({
 	'click .subject' : function(event){

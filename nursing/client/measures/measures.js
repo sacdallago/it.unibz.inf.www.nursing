@@ -173,42 +173,6 @@ Deps.autorun(function(c) {
 });
 
 //Accordion management
-Template.measuresAccordion.onCreated(function(){
-	this.opened = new ReactiveVar(false);
-});
-
-Template.measuresAccordion.onRendered(function(){
-	var template = this;
-	this.$(".ui.accordion").accordion({
-		onOpen:function(){
-			template.opened.set(true);
-		},
-		onClose:function(){
-			template.opened.set(false);
-		}
-	});
-});
-
-Template.measuresAccordion.helpers({
-	opened:function(){
-		return Template.instance().opened.get();
-	},
-	problems : function() {
-		return Journal.find({
-			subject : {
-				$exists : true
-			},
-			patientId : this.patientId,
-			$or : [{
-				solved : false
-			}, {
-				solved : {
-					$exists : false
-				}
-			}]
-		});
-	}
-});
 
 Template.measures.helpers({
 	measures : function() {
@@ -257,11 +221,45 @@ Template.measures.helpers({
 			return element;
 		});
 	}
-}); 
+});
+
+Template.measureItems.onCreated(function(){
+	this.opened = new ReactiveVar(false);
+});
+
+Template.measureItems.onRendered(function(){
+	var template = this;
+	this.$(".ui.accordion").accordion({
+		onOpen:function(){
+			template.opened.set(true);
+		},
+		onClose:function(){
+			template.opened.set(false);
+		}
+	});
+});
 
 Template.measureItems.helpers({
 	noPatientSelected : function() {
 		return !Session.get('patientFilter');
+	},
+	opened : function() {
+		return Template.instance().opened.get();
+	},
+	problems : function() {
+		return Journal.find({
+			subject : {
+				$exists : true
+			},
+			patientId : this.patientId,
+			$or : [{
+				solved : false
+			}, {
+				solved : {
+					$exists : false
+				}
+			}]
+		});
 	}
 });
 
