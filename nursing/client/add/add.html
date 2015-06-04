@@ -40,53 +40,50 @@
 	</div>
 </template>
 
-<template name="newMeasurementContent">
-	<form class="form">
-		<div class="modal-body">
-			<strong name="department">Type</strong>&nbsp;
-			<select id="measurementType">
-				<option data-_id="" value="">Select...</option>
+<template name="newMeasurementContent">		
+<div class="ui grid">	
+	<div class="five wide column">
+		<div class="measurementChoice">
+		<label style="font-size:1.2em">Type&nbsp;&nbsp;</label>
+			<select id="measurementType" class="ui search dropdown">
+				<option disabled selected value=null>Select...</option>
 				{{#each units}}
-				<option data-_id="{{_id}}" value="{{type}}">{{name}}</option>
+				<option value="{{_id}}">{{name}}</option>
 				{{/each}}
 			</select>
-			<div >
-				<table class="table measures">
-					<tbody>
-						{{#each measures.fields}}
-						<tr>
-							<td>{{preText}}&nbsp;</td>
-							<td>
-							<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
-							</td>
-							<td>{{unit}}&nbsp;</td>
-						</tr>
-						{{/each}}
-					</tbody>
-				</table>
-			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-block send">
-				<strong><i class="fa fa-circle-o river"></i></strong> Save
-			</button>
-
-			<button type="button" class="btn btn-block" data-toggle="collapse" data-target=".measureProblemCollapse">
-				<strong><i class="fa fa-exclamation alizarin"></i></strong> Problem
-			</button>
-
-			<div class="input-group collapse measureProblemCollapse" style="margin-top: 20px;">
-				<strong>Select an existing problem:&nbsp;</strong>
-				<br>
-				<select id="measurementProblemSelector" style="width: 100%">
-					<option data-problemId="" value="">Select...</option>
-					{{#each problems}}
-					<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-					{{/each}}
-				</select>
+	</div>
+	<div class="eight wide column">
+		{{#each measures.fields}}
+			<label style="font-size:1.2em">{{preText}}&nbsp;</label>
+			<div class="ui input">
+			<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
 			</div>
-		</div>
-	</form>
+			<label style="font-size:1.2em">{{unit}}&nbsp;</label>	
+			<br>
+			<br>	
+		{{/each}}	
+
+	</div>	
+</div>
+	<br>
+	<br>
+	<div class="ui basic button send">
+		<strong><i class="add circle icon"></i></strong> Save
+	</div>
+
+	<div class="ui basic button problem">
+		<strong><i class="warning sign icon"></i></strong> Problem&nbsp;
+	</div>
+	<div id="transity3">
+		<br>
+		<select class="ui search dropdown" id="measurementProblemSelector">
+			<option disabled selected value=null>Select a problem...</option>
+			{{#each problems}}
+			<option value="{{_id}}">{{subject}}</option>
+			{{/each}}
+		</select>
+	</div>			
 </template>
 
 <template name="newJournalContent">
@@ -112,19 +109,30 @@
 			<div class="ui basic button problem">
 				<strong><i class="warning sign icon"></i></strong> Problem&nbsp;
 			</div>
-
+					
 					<div id="transity">
-						<label>Select an existing problem:</label>
-						<select id="journalProblemSelector">
-						
-							<option data-problemId="" value="">Select...</option>
-							{{#each problems}}
-							<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-							{{/each}}
-
-						</select>
-						<strong>... Or define a new problem:&nbsp;</strong>
-						<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" />
+					<br>
+						<div class="ui three column stackable grid">
+							<div class="center aligned four wide column" style="padding-left:0.3em;padding-right:1rem">
+								
+									<!-- <label>Select an existing problem:</label>  -->
+									<select class="ui search dropdown" id="journalProblemSelector" >
+									
+										<option disabled selected value=null >Select a problem...</option>
+										{{#each problems}}
+										<option value="{{_id}}">{{subject}}</option>
+										{{/each}}
+										
+									</select>
+									<!--  -->
+							</div>
+							<div class="center aligned two wide column"><label>or</label></div>
+							<div class="center aligned five wide column">
+									
+									<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" style="width: 15em" placeholder="Enter a new problem..."/>
+								
+							</div>
+						</div>
 					</div>
 		</div>
 	</div>
@@ -177,14 +185,14 @@
 			    </div>
 			    <div class="field">
 			      <div class="ui radio checkbox">
-			        <input name="dueDate" type="radio" value="other" data-toggle="collapse" data-target=".otherdate">
+			        <input name="dueDate" type="radio" value="other" data-target=".otherdate">
 			        <label>Other</label>
 			      </div>
 			    </div>
 			</div>
 
-				<div class="otherdate collapse offset1" style="padding-top=10px;margin:auto">
-					<label class="offset1">
+				<div class="otherdate" style="padding-top=10px;margin:auto" >
+					<label id="offset1">
 						<input type="date" name="otherDueDate">
 					</label>
 				</div>		
@@ -200,14 +208,14 @@
 				<strong><i class="warning sign icon"></i></strong> Problem&nbsp;
 			</div>
 						<div id="transity2">
-							<label>Select an existing problem:&nbsp;</label>
-							<select id="reminderProblemSelector">
-								<option data-problemId="" value="">Select...</option>
+							<br>
+							<select class="ui search dropdown" id="reminderProblemSelector">
+								<option disabled selected value=null>Select a problem...</option>
 								{{#each problems}}
-								<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+								<option value="{{_id}}">{{subject}}</option>
 								{{/each}}
 							</select>
-						</div>
+						</div>					
 		</div>
 	</div>
 </template>

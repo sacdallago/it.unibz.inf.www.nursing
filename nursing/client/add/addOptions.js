@@ -10,12 +10,17 @@ Template.addOptions.helpers({
 Template.newEntries.events({
 	'click .measurementModal' : function() {
 		$('#newMeasurementModal').modal('show');
+		$('.ui.search.dropdown').dropdown();
+		$("#transity3").transition('hide');
+		$('.ui.checkbox').checkbox();
 	},
 	'click .reminderModal' : function() {
 		$('#newReminderModal').modal('show');
 		$("#transity2").transition('hide');
+		$("#offset1").transition('hide');
 	},
 	'click .journalModal' : function() {
+		
 		$('#newJournalModal').modal('show');
 		$("#transity").transition('hide');
 	}

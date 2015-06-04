@@ -43,3 +43,19 @@
         <div class="ui large text loader">Loading</div>
     </div>
 </template>
+
+<template name="footer">
+    {{#if nameSelected}}
+    <div class="item pointer">
+        {{patientName}} <i class="fa fa-times-circle-o alizarin"></i>
+    </div>
+    {{else}}
+    <div class="item">
+        <div class="ui transparent icon input">
+            {{> inputAutocomplete settings=settings type="text" placeholder="Patient name"}}
+            <i class="search link icon"></i>
+        </div>
+    </div>
+    {{/if}}
+    <a class="item addStuff"> <i class="plus icon"></i> </a>
+</template>

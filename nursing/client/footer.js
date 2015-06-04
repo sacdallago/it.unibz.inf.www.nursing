@@ -61,7 +61,7 @@ Template.footer.events({
         Session.set('patientFilter', null);
         Session.set('hospitalizationFilter', null);
     },
-    'click .plus.icon' : function(event) {
+    'click .addStuff' : function(event) {
        $('#addOptions').modal('show');
     },
     "autocompleteselect input": function(event, template, doc) {

@@ -11,13 +11,23 @@ Template.modals.helpers({
 });
 
 Template.newMeasurementContent.events({
-	'change #measurementType' : function(event) {
-		var id = $(event.currentTarget).find(':selected').data("_id");
+
+	'click .problem' : function(event){
+		$("#transity3").transition({
+			hidden : 'hidden',
+			animation: 'scale',
+			duration: '500ms'
+		});
+	},
+	'click .measurementChoice' : function(event) {
+		//var id = $(event.currentTarget).find(':selected').data("_id");
+		var id = $('#measurementType').val();
 		Session.set("measures", Units.findOne(id));
+		
 		//var form = document.getElementsByClassName('form');
 		//form[0].reset();
 	},
-	'submit' : function(event) {
+	'click .send' : function(event) {
 		event.preventDefault();
 		//var type = document.getElementById('measurementType').value;
 		var measures = document.getElementsByClassName('measure');
@@ -39,8 +49,10 @@ Template.newMeasurementContent.events({
 			fields.push(element);
 		}
 
-		var problemId = $("#measurementProblemSelector option:selected").attr("data-problemId");
-
+		var problemId = $("#measurementProblemSelector").val();
+		$("#transity3").transition('hide'); console.log("hid transition");
+		$('#newMeasurementModal').modal('hide');
+		
 		var entry = {
 			patientId : Session.get('patientFilter'),
 			hospitalizationId : Session.get('hospitalizationFilter'),
@@ -54,7 +66,7 @@ Template.newMeasurementContent.events({
 		if (problemId) {
 			entry.journalId = problemId;
 		}
-
+		Session.set("measures",null);
 		if (fields.length > 0) {
 			if (Session.get('patientFilter') && Session.get('hospitalizationFilter')) {
 				Measures.insert(entry, function(error) {
@@ -64,7 +76,7 @@ Template.newMeasurementContent.events({
 						Notifications.info('Confirmation', 'New measurement inserted!');
 					}
 				});
-				$('#measurement').modal('hide');
+				
 				event.target.reset();
 
 			} else {
@@ -72,8 +84,9 @@ Template.newMeasurementContent.events({
 			}
 		} else {
 			Notifications.warn('Wohps', 'Please fill out all fields correctly');
-		}
+		}		
 	}
+	
 });
 
 Template.newMeasurementContent.helpers({
@@ -108,6 +121,7 @@ Template.newMeasurementContent.helpers({
 
 Template.newJournalContent.events({
 	'click .problem' : function(event){
+		$('.ui.search.dropdown').dropdown();
 		$("#transity").transition({
 			hidden : 'hidden',
 			animation: 'scale',
@@ -118,6 +132,7 @@ Template.newJournalContent.events({
 	'change #journalFile' : function(event) {
 		document.getElementById('journalFile').value != "" ? Session.set('fileSelected', true) : Session.set('fileSelected', null);
 	},
+
 	'focusout #messageText' : function(event) {
 		var text = document.getElementById('messageText').value;
 		//Implement regex to filter bad stuff ?
@@ -131,8 +146,9 @@ Template.newJournalContent.events({
 		event.preventDefault();
 		var message = document.getElementById('messageText').value;
 		var files = document.getElementById('journalFile').files;
-		var newProblem = document.getElementById("defineProblem").value;
-		var problemId = $("#journalProblemSelector option:selected").attr("data-problemId");
+		var newProblem = document.getElementById("defineProblem").value; 
+		problemId = $('#journalProblemSelector').val();
+
 		//create entry with basic data
 		var entry = {
 			patientId : Session.get('patientFilter'),
@@ -208,8 +224,9 @@ Template.newJournalContent.events({
 			}
 		});
 		document.getElementById('textCounter').innerHTML = "";
-		event.target.reset();
-		Session.set('fileSelected', null);
+		document.getElementById('defineProblem').value=null;
+		document.getElementById('journalFile').value=null;
+		event.target.reset();		//? this is obsolete, dont know what to do with it
 	},
 	'keydown #messageText' : function(event) {
 		var text = document.getElementById('messageText').value;
@@ -246,37 +263,60 @@ Template.newJournalContent.helpers({
 
 
 
-Template.newJournalContent.onRendered(function(){
-	
-	this.$('.ui.dropdown').dropdown();
-	this.$('select.dropdown').dropdown();
-	this.$('#select').dropdown();
-	this.$('.shape').shape();
-});
 
 Template.newReminderContent.onRendered(function(){
 	this.$('.ui.checkbox').checkbox();
-	this.$('.shape').shape();
+
 });
 
 
 
 
-//newReminder
+//newReminder 
+var shown;
 
 Template.newReminderContent.events({
 	'click .problem' : function(event){
+		$('.ui.search.dropdown').dropdown();
 		$("#transity2").transition({
 			hidden : 'hidden',
 			animation: 'scale',
 			duration: '500ms'
 		});
 	},
+	'click .checkbox' : function(event){
+		if($('input[name="dueDate"]:checked').val()=="other"){
+			$("#offset1").transition({
+				hidden : 'hidden',
+				animation: 'scale',
+				duration: '500ms',
+				onShow: function(){
+					shown=true;
+				},
+				onHide: function(){
+					shown=false;
+				}
+			});
+		}
+		else if(shown){
+			$("#offset1").transition({
+				hidden : 'hidden',
+				animation: 'scale',
+				duration: '500ms',
+				onShow: function(){
+					shown=true;
+				},
+				onHide: function(){
+					shown=false;
+				}
+			});
+		}
+	},
 	'click .category' : function(event) {
 		//TODO MUTUAL EXCLUSIVE SELECTION OF CATEGORIES
 		event.preventDefault();
 		Session.set('inputCategory', this.name);
-		console.log("category session set!");
+
 	},
 	'click .send' : function(event) {
 		event.preventDefault();
@@ -285,7 +325,7 @@ Template.newReminderContent.events({
 		var hospitalizationId = Session.get('hospitalizationFilter');
 		var nurseId = Meteor.userId();
 
-		var problemId = $("#reminderProblemSelector option:selected").attr("data-problemId");
+		var problemId = $('#reminderProblemSelector').val();
 
 		var category = Session.get('inputCategory');
 		var dueDate = $('input[name="dueDate"]:checked').val();
@@ -321,8 +361,8 @@ Template.newReminderContent.events({
 			entry.journalId = problemId;
 		}
 
-		$('#newReminderModal').modal('hide');
-		$("#transity2").transition('hide');
+		$('#newReminderModal').modal('hide'); 
+		$("#transity2").transition('hide'); 
 		document.getElementById('remindermessage').value="";
 		
 		Reminders.insert(entry, function(error) {
@@ -338,6 +378,7 @@ Template.newReminderContent.events({
 });
 
 Template.newReminderContent.helpers({
+
   selected : function () {
   	
     return Session.equals('inputCategory', this.name);
