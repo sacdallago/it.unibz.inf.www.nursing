@@ -3,7 +3,18 @@ hospitalizationsHandle = Meteor.subscribe('hospitalizations', {
 	active : true
 }, {});
 
+
+Template.hospitalizationCard.onRendered(function(){
+	this.$('.ui.checkbox').checkbox();
+	$('.ui.dropdown').dropdown();
+});
+Template.bedCard.onRendered(function(){
+	$('.ui.dropdown').dropdown();
+})
+
+
 Template.patientCard.helpers({
+
 	patient : function() {
 		return Patients.findOne(Session.get('patientFilter'));
 	},
@@ -61,6 +72,7 @@ Template.patientCard.events({
 			//Put a color to
 			e.target.style.color = "#f89406";
 			e.target.disabled = false;
+			console.log("double clicked");
 		}
 	},
 	'keydown input' : function(e) {
@@ -90,8 +102,8 @@ Template.patientCard.events({
 			//Codice per fare l'update sull'ogetto
 			e.target.style.color = "";
 			e.target.disabled = true;
-		}
-	}
+		
+}	}
 });
 
 Template.hospitalizationCard.events({
@@ -153,6 +165,7 @@ Template.hospitalizationCard.events({
 		var update = {};
 
 		if (type == "checkbox") {
+
 			update[field] = checked;
 
 			Hospitalizations.update({
@@ -170,7 +183,7 @@ Template.hospitalizationCard.events({
 		var value = e.target.value;
 		var field = e.target.dataset.field;
 		var update = {};
-
+		console.log("done this");
 		update[field] = value;
 
 		Hospitalizations.update({
@@ -248,7 +261,9 @@ Template.bedCard.helpers({
 
 Template.bedCard.events({
 	'change #roomSelect' : function() {
-		var roomId = $(event.currentTarget).find(':selected').data("_id");
+		console.log("apparently cliked dropdown. value ");
+		var roomId = $('#roomSelect').val();
+		console.log("roomID: "+roomId);
 		var patientId = Session.get('patientFilter');
 		var oldRoomId = Rooms.findOne({
 			patientId : patientId

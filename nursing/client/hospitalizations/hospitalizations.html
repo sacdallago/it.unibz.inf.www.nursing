@@ -1,119 +1,145 @@
 <template name="patientCard">
 	{{#with patient}}
-	<li class="card" style="padding-top: 5px;">
-		<div class="card-body" style="text-align: left;">
-			<h3>Patient Details:</h3>
-			<table class="table table-condensed patientUpdate">
+	<!-- <div class="ui card" style="padding-top: 5px;"> -->
+		<!-- <div class="card-body" style="text-align: left;"> -->
+			<!-- <h3>Patient Details:</h3> -->
+			<table class="ui collapsing tablet stackable table patientUpdate">
+
+				<thead>
+					<th class="center aligned" colspan="2">Patient Details</th>	
+				</thead>
 				<tbody>
 					<tr>
 						<td> First name: </td>
-						<td>
-						<input disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						<td >
+						<div class="ui fluid transparent input">
+							<input  disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Last name: </td>
-						<td>
-						<input disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						<td >
+						<div class="ui fluid transparent input">
+						<input   disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Birthdate: </td>
 						<td>
-						<input disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
+						<div class="ui fluid transparent input">
+						<input   disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Street: </td>
-						<td>
-						<input disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" pattern="[a-zA-Z ]+" required/>
+						<td >
+						<div class="ui fluid transparent input">
+						<input  disabled="true" data-field="residenceAddress" type="text" value="{{residenceAddress}}" pattern="[a-zA-Z ]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Number: </td>
-						<td>
-						<input disabled="true" data-field="residenceNumber" type="text" value="{{residenceNumber}}" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="residenceNumber" type="text" value="{{residenceNumber}}" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> City: </td>
-						<td>
-						<input disabled="true" data-field="residenceCity" type="text" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="residenceCity" type="text" value="{{residenceCity}}" pattern="[a-zA-Z]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Province: </td>
-						<td>
-						<input disabled="true" data-field="residenceProvince" type="text" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="residenceProvince" type="text" value="{{residenceProvince}}" pattern="[a-zA-Z]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Sex: </td>
-						<td>
-						<input disabled="true" data-field="sex" type="text" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="sex" type="text" value="{{sex}}" pattern="[m|f|M|F]" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Height: </td>
-						<td>
-						<input disabled="true" data-field="height" type="number" value="{{height}}" step="any" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="height" type="number" value="{{height}}" step="any" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Marital status: </td>
-						<td>
-						<input disabled="true" data-field="maritalstatus" type="text" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="maritalstatus" type="text" value="{{maritalstatus}}" pattern="[a-zA-Z]+" required/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Reference phone: </td>
-						<td>
-						<input disabled="true" data-field="referencePhone" type="tel" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						<td >
+						<div class="ui transparent input">
+						<input   disabled="true" data-field="referencePhone" type="tel" pattern="[0-9]{9,16}" value="{{referencePhone}}" required/>
+						</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</li>
+		<!-- </div> -->
+	<!-- </div> -->
 	{{/with}}
 </template>
 
 <template name="bedCard">
-	<li class="card" style="padding-top: 5px;">
-		<div class="card-body" style="text-align: left;">
-			<h3>Accomodation Details:</h3>
-			<table class="table table-condensed patientUpdate">
 
+
+
+			<table class="ui collapsing tablet stackable table patientUpdate">
+
+			<thead>
+				<th class="center aligned" colspan="2">Accomodation Details</th>	
+			</thead>
 				<tbody>
 					<tr>
 						<td> Current room: </td>
-						<td> {{getRoomAndBed}} </td>
+						<td class="right aligned"> {{getRoomAndBed}} </td>
 					</tr>
 					<tr>
 						<td> Assign new room: </td>
 						<td>
-						<select class="" id="roomSelect">
+						<select class="ui dropdown" id="roomSelect">
 
 							{{#each rooms}}
-							<option class="{{status}}" data-_id="{{_id}}" value="{{_id}}"><label>{{niceId}} - {{status}} </label></option>
+							<option class="{{status}}" data-_id="{{_id}}" value="{{_id}}">{{niceId}} - {{status}} </option>
 							{{/each}}
 						</select></td>
 					</tr>
 				</tbody>
 			</table>
-		</div>
-	</li>
+
+
 </template>
 
 <template name="hospitalizationCard">
 	{{#with hospitalization}}
-	<li class="card" style="padding-top: 5px;">
-		<div class="card-body" style="text-align: left;">
-			<ul class="unstyled inline" style="width:100%">
-				<li>
+
 					<h3>Hospitalization Details:</h3>
-				</li>
-				<li>
+
+
 					<div >
 						<div data-toggle="collapse" data-target=".dismiss">
 							<button class="btn btn-inverse btn-block">
@@ -126,32 +152,40 @@
 							</button>
 						</div>
 					</div>
-				</li>
-			</ul>
-			<table class="table table-condensed addmessage patientUpdate">
+
+			<table class="ui collapsing tablet stackable table patientUpdate">
+			<thead>
+				<th class="center aligned" colspan="2">Hospitalization Details</th>
+			</thead>
 				<tbody>
 					<tr>
 						<td> Reason: </td>
 						<td>
-						<input data-field="reason" type="text" disabled="true" value="{{reason}}" pattern="[a-zA-Z,. ]+"/>
+						<div class="ui transparent input">
+						<input  data-field="reason" type="text" disabled="true" value="{{reason}}" pattern="[a-zA-Z,. ]+"/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Allergies: </td>
 						<td>
-						<input data-field="allergies" type="text" disabled="true" value="{{allergies}}" pattern="[a-zA-Z,. ]+"/>
+						<div class="ui transparent input">
+						<input  data-field="allergies" type="text" disabled="true" value="{{allergies}}" pattern="[a-zA-Z,. ]+"/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Allergies to drugs: </td>
 						<td>
-						<input data-field="drugAllergies" type="text" disabled="true" value="{{drugAllergies}}" pattern="[a-zA-Z,. ]+"/>
+						<div class="ui transparent input">
+						<input  data-field="drugAllergies" type="text" disabled="true" value="{{drugAllergies}}" pattern="[a-zA-Z,. ]+"/>
+						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Diabetes: </td>
-						<td>
-						<select data-field="diabetes">
+						<td class="center aligned">
+						<select class="ui dropdown" data-field="diabetes">
 							<option value="no" {{findSelected diabetes "no"}}>No</option>
 							<option value="auotonomous" {{findSelected diabetes "autonomous"}}>Autonomous</option>
 							<option value="decompensated" {{findSelected diabetes "decompensated"}}>Decompensated</option>
@@ -160,8 +194,8 @@
 					</tr>
 					<tr>
 						<td> Diet: </td>
-						<td>
-						<select  data-field="diet">
+						<td class="center aligned">
+						<select class="ui dropdown"  data-field="diet">
 							<option value="healthy" {{findSelected diet "healthy"}}>Healthy</option>
 							<option value="unhealthy" {{findSelected diet "unhealthy"}}>Unhealthy</option>
 							{{#unless diet}}<option value="" selected="true">Select..</option>{{/unless}}
@@ -170,8 +204,8 @@
 
 					<tr>
 						<td> Active or sedentary: </td>
-						<td>
-						<select  data-field="lifestyle">
+						<td class="center aligned">
+						<select class="ui dropdown"  data-field="lifestyle">
 							<option value="active" {{findSelected lifestyle "active"}}>Active</option>
 							<option value="sedentary" {{findSelected lifestyle "sedentary"}}>Sedentary</option>
 							{{#unless lifestyle}}<option value="" selected="true">Select..</option>{{/unless}}
@@ -179,135 +213,126 @@
 					</tr>
 					<tr>
 						<td> Lucid: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
-							<input type="checkbox"  data-field="lucid" checked="{{lucid}}" id="lucid" name="" />
-							<label for="lucid">&nbsp;</label>
-						</div></td>
+						<td class="center aligned">
+						{{#if lucid}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox ">
+							<input type="checkbox" name="" data-field="lucid" checked="{{lucid}}" id="lucid">
+							<label>YES</label>
+						</div>
+
+						</td>
 					</tr>
 					<tr>
 						<td> Oriented: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if oriented}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="oriented" checked="{{oriented}}" id="oriented" name="" />
-							<label for="oriented">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td> Cooperative: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if cooperative}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="cooperative" checked="{{cooperative}}" id="cooperative" name="" />
-							<label for="cooperative">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td> Smoker: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if smoker}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="smoker" checked="{{smoker}}" id="smoker" name="" />
-							<label for="smoker">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
+
 					<tr>
 						<td> Problems urinating: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if urinationProblem}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="urinationProblem" checked="{{urinationProblem}}" id="urinationProblem" name="" />
-							<label for="urinationProblem">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td> Wears prosethics: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if prosthetics}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="prosthetics" checked="{{prosthetics}}" id="prosthetics" name="" />
-							<label for="prosthetics">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
+
 					<tr>
 						<td> Carries goods: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if goods}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="goods" checked="{{goods}}" id="goods" name="" />
-							<label for="goods">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
 					<tr>
 						<td> Utilizes a walking aid: </td>
-						<td>
-						<div class="switch">
-							<table style="width: 100%; margin: 0;padding: 0;border: 0; line-height: 0;">
-								<tr>
-									<td style="padding-left: 5px;"><strong>NO</strong></td>
-									<td></td>
-									<td style="text-align: right; padding-right: 3px;"><strong>YES</strong></td>
-								</tr>
-							</table>
+						<td class="center aligned">
+						{{#if walkingAid}}
+						<label style="color:black">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{else}}
+						<label style="color:red">NO&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						{{/if}}
+						<div class="ui toggle checkbox">
 							<input type="checkbox"  data-field="walkingAid" checked="{{walkingAid}}" id="walkingAid" name="" />
-							<label for="walkingAid">&nbsp;</label>
-						</div></td>
+							<label>YES</label>
+						</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
-			<ul class="unstyled inline" style="text-align:right; opacity: 0.7;">
-				<li>
-					Hospitalized by: {{nurseNameFormatter nurseId}}
-				</li>
-				<li>
-					Hospitalized on: {{formatDate timestamp}}
-				</li>
-			</ul>
-		</div>
-	</li>
+
+			<strong style="text-alignment:left">Hospitalized by: {{nurseNameFormatter nurseId}}</strong>
+			<br><br>
+			<strong style="text-alignment:right">Hospitalized on: {{formatDate timestamp}}</strong>
+
+			<br> <br>
 	{{/with}}
 </template>
