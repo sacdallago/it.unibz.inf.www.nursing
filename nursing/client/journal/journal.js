@@ -57,6 +57,7 @@ Template.journalItems.onCreated(function(){
 
 Template.journalItems.onRendered(function(){
 	var template = this;
+	$('.ui.search.dropdown').dropdown();
   this.$(".ui.accordion").accordion({
     onOpen:function(){
       template.opened.set(true);
@@ -91,7 +92,8 @@ Template.journalItems.helpers({
 
 Template.journalItems.events({
 	'change select' : function(event) {
-		var problemId = $(event.currentTarget).find(':selected').data("problemid");
+		//var problemId = $(event.currentTarget).find(':selected').data("problemid");
+		var problemId = $("#journalProblemSelector").val();
 		Journal.update({
 			_id : this._id
 		}, {

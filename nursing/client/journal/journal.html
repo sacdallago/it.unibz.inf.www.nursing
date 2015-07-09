@@ -64,14 +64,17 @@
 								<div class="content" style="padding-bottom: 10px;">
 									{{#unless problemSubject}}
 									{{#unless subject}}
-									<select data-native-menu="false" style="color:#000000; margin-bottom:0.5em">
-										<option data-problemId="" value="">Seleziona...</option>
+									<div class="journalProblemSelector">
+									<select class="ui search dropdown" data-native-menu="false" style="color:#000000; margin-bottom:0.5em" id="journalProblemSelector">
+										<option disabled selected value=null>Seleziona...</option>
 										{{#each problems}}
-										<option data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+										<option value="{{_id}}">{{subject}}</option>
 										{{/each}}
 									</select>
+									</div>
 									{{/unless}}
 									{{/unless}}
+									<br>
 									<div class="item">
 										{{#if subject}}
 										{{#if solved}}

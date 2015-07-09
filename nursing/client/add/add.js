@@ -90,6 +90,7 @@ Template.newMeasurementContent.events({
 });
 
 Template.newMeasurementContent.helpers({
+
 	units : function() {
 		return Units.find().map(function(element) {
 			element.name = element.type.capitalize();
@@ -269,6 +270,10 @@ Template.newReminderContent.onRendered(function(){
 
 });
 
+Template.newMeasurementContent.onRendered(function(){
+	this.$('.ui.checkbox').checkbox();
+
+});
 
 
 

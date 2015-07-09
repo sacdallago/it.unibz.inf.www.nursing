@@ -7,6 +7,7 @@ hospitalizationsHandle = Meteor.subscribe('hospitalizations', {
 Template.hospitalizationCard.onRendered(function(){
 	this.$('.ui.checkbox').checkbox();
 	$('.ui.dropdown').dropdown();
+	$(".dismiss").transition('hide');
 });
 Template.bedCard.onRendered(function(){
 	$('.ui.dropdown').dropdown();
@@ -203,6 +204,14 @@ Template.hospitalizationCard.events({
 				delete Session.keys['hospitalizationFilter'];
 				Notifications.success('Success','Dismissed patient!');
 			}
+		});
+	},
+
+	'click .transity' : function(e){
+		$(".dismiss").transition({
+			hidden : 'hidden',
+			animation: 'scale',
+			duration: '500ms'
 		});
 	}
 });

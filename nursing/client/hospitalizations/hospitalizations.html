@@ -21,7 +21,7 @@
 						<td> Last name: </td>
 						<td >
 						<div class="ui fluid transparent input">
-						<input   disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
+						<input disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</div>
 						</td>
 					</tr>
@@ -29,7 +29,7 @@
 						<td> Birthdate: </td>
 						<td>
 						<div class="ui fluid transparent input">
-						<input   disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
+						<input style="" disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
 						</div>
 						</td>
 					</tr>
@@ -136,22 +136,6 @@
 
 <template name="hospitalizationCard">
 	{{#with hospitalization}}
-
-					<h3>Hospitalization Details:</h3>
-
-
-					<div >
-						<div data-toggle="collapse" data-target=".dismiss">
-							<button class="btn btn-inverse btn-block">
-								Dismiss
-							</button>
-						</div>
-						<div class="collapse dismiss">
-							<button class="btn btn-danger btn-block">
-								Sure you want to dismiss?
-							</button>
-						</div>
-					</div>
 
 			<table class="ui collapsing tablet stackable table patientUpdate">
 			<thead>
@@ -329,6 +313,17 @@
 				</tbody>
 			</table>
 
+			<h3>Hospitalization Details:</h3>
+				
+					<button class="ui red button transity">
+						Dismiss
+					</button>
+				
+					<br><br>
+					<button class="ui black button dismiss">
+						Sure you want to dismiss?
+					</button>
+					<br><br>		
 			<strong style="text-alignment:left">Hospitalized by: {{nurseNameFormatter nurseId}}</strong>
 			<br><br>
 			<strong style="text-alignment:right">Hospitalized on: {{formatDate timestamp}}</strong>

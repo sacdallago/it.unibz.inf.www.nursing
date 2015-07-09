@@ -204,6 +204,7 @@ Template.measures.helpers({
 			element.date = dateFormatter(element.timestamp);
 
 			if (element.journalId) {
+				console.log("something here happening");
 				element.problemSubject = Journal.findOne(element.journalId).subject.capitalize();
 			}
 
@@ -225,10 +226,13 @@ Template.measures.helpers({
 
 Template.measureItems.onCreated(function(){
 	this.opened = new ReactiveVar(false);
+
 });
 
 Template.measureItems.onRendered(function(){
 	var template = this;
+	console.log("rendered something");
+	$('.ui.search.dropdown').dropdown();
 	this.$(".ui.accordion").accordion({
 		onOpen:function(){
 			template.opened.set(true);
@@ -265,7 +269,7 @@ Template.measureItems.helpers({
 
 Template.measureItems.events({
 	'change select' : function(event) {
-		var problemId = $(event.currentTarget).find(':selected').data("problemid");
+		var problemId = $("#measureProblemSelector").val();
 		Measures.update({
 			_id : this._id
 		}, {

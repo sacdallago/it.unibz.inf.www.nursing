@@ -2,18 +2,18 @@
 	<div class="row">
 		<div class="sixteen wide column">
 			{{#if patient}}
-			<ul class="span7 offset3 unstyled">
+			<div class="ui list">
 				{{> patientCard}}<!--if married add name of partner && privacy issue (is family callable?)-->
 				{{#if hasHospitalization}}
 				{{> bedCard}}
 				{{/if}}
 				{{> hospitalizationCard}}<!--add IDK option-->
-				<ul class="unstyled">
+				<div class="item">
 					{{#each reminders}}
 					{{> reminderItem}}
 					{{/each}}
-				</ul>
-				<li style="margin-bottom: 20px;"></li>
+				</div>
+				<div class="item" style="margin-bottom: 20px;"></div>
 				{{#each entry}}
 				{{#if fields}}
 				{{> measureItems}}
@@ -21,7 +21,7 @@
 				{{> journalItems}}
 				{{/if}}
 				{{/each}}
-			</ul>
+			</div>
 			{{else}}
 			{{> patientItemList}}
 			{{/if}}

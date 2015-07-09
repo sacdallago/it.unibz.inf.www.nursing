@@ -55,13 +55,17 @@
 	</div>
 	<div class="eight wide column">
 		{{#each measures.fields}}
+
 			<label style="font-size:1.2em">{{preText}}&nbsp;</label>
 			<div class="ui input">
 			<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
-			</div>
+    		</div> 
+
 			<label style="font-size:1.2em">{{unit}}&nbsp;</label>	
 			<br>
 			<br>	
+
+
 		{{/each}}	
 
 	</div>	
