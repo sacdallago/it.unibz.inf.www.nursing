@@ -1,16 +1,25 @@
 <template name="reminders">
-    {{>categories}}
     <div class="ui grid">
-        <div class="row">
+        <div class="row" style="padding-top:0em">
             <div class="column">
+                <div class="ui segment">
+                    <div class="ui vertical segment">
+                        <p style="font-size: 2em;">
+                            <strong><i class="fa fa-tags"></i> Reminders</strong>
+                        </p>
+                    </div>
+                    <div class="ui vertical segment" style="margin-top:0.8em">
+                        {{>categories}}
+                    </div>
+                </div>
                 <div class="span8 offset2">
                     <div id="items-view">
                         {{#if loading}}
                         Loading...
                         {{else}}
-                        <div class="ui list" style="margin-bottom:2.1em">
+                        <div class="ui list" style="margin-bottom:2em">
                             {{#each reminders}}
-                                {{> reminderItem}}
+                            {{> reminderItem}}
                             {{/each}}
                         </div>
                         {{/if}}
@@ -43,83 +52,98 @@
 <template name="reminderItem">
     {{#AnimateWithVelocity}}
     <div class="ui segment {{#if problemSubject}} {{#if solved}} twitter-orange {{else}}twitter-orange {{/if}}{{/if}} {{#if done}} twitter-green {{/if}} reminder-items" style="background-color: #5BC0DE; color:#000000; margin:0em; margin-bottom:0.25em;padding:0.5em" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
-        <div class="ui segment">
+        <div class="ui segment" style="padding:0.5em">
             <label class="check" style="margin-right:0;margin-top:0;float:right">
                 <div class="ui right labeled icon button " name="markdone">Done <i class="{{doneCheck}}"></i>
                 </div>
             </label>
-            <div style="padding:0.2em">
-                <label style="float:left"><i class="large tasks icon" ></i></label>
-                <div class="ui segment" style="margin-top:3.5em">
-                    <div class="ui vertical segment">
-                        <i class="user icon"></i>
-                        <strong>{{patientName}}</strong> &nbsp; {{roomNumber}}{{bed}}
-                        <div class="ui label" style="float:right; background-color:#b2ebf2">
-                            <strong>Due date: {{niceDue}}</strong>
-                        </div>
+            <label style="float:left"><i class="large tasks icon" ></i></label>
+            <div class="ui segment" style="margin-top:3.1em; margin-bottom:0.2em; padding:0.5em">
+                <div class="ui vertical segment" style="padding:0em; padding-bottom:0.5em">
+                    <i class="user icon"></i>
+                    <strong>{{patientName}}</strong> &nbsp; {{roomNumber}}{{bed}}
+                    <div class="ui label" style="float:right; ">
+                        <strong>Due date: {{niceDue}}</strong>
                     </div>
-                    <div class="ui vertical segment">
-                        <p><div class="display">
+                </div>
+                <div class="ui vertical segment" style="padding:0em; padding-top:0.5em">
+                    <p>
+                        <div class="display">
                             <span class="reminder-text">{{message}}</span>
-                        </div></p>
-                    </div>
+                        </div>
+                    </p>
                 </div>
             </div>
-            <div class="ui segment">
-                <div class="ui vertical segment">
-                    Postpone by:&nbsp;&nbsp;
-                    <div class="ui button postpone1" style="background-color:#555555; color:#FFFFFF;margin-bottom:0.25em">
-                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;1 day
-                    </div>
-                    <div class="ui button postpone2" style="background-color:#555555; color:#FFFFFF;margin-bottom:0.25em">
-                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;2 days
-                    </div>
-                    <div class="ui button postpone3" style="background-color:#555555; color:#FFFFFF">
-                        <i class="fa fa-repeat"></i>&nbsp;&nbsp;3 days
-                    </div>
+            <div class="ui accordion">
+                <div class="title" style="padding:0em;">
+                    {{#if opened}}
+                    <i class="angle double down icon">
+                    </i>    
+                    {{else}}
+                    <i class="angle double right icon">
+                    </i>
+                    {{/if}}Actions
                 </div>
-                <div class="ui vertical segment">
-                    <div class="ui list">
-                        {{#if problemSubject}}
-                        <div class="item">
-                            <i class="fa fa-warning">
-                            </i>
-                            <label class="label label-important">
-                                <strong>{{problemSubject}}</strong>
-                            </label>
-                        </div>
-                        <div class="item">
-                            <div class="ui inverted button twitter-orange detach" style="font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;">
-                                <i class="fa fa-times"></i>&nbsp;Detach problem
+                <div class="content" style="padding-top:0.2em">
+                    <div class="ui segment" style="padding:0.5em">
+                        <div class="ui vertical segment" style="padding-bottom:0.5em">
+                            Postpone by:&nbsp;&nbsp;
+                            <div class="ui button postpone1" style="background-color:#555555; color:#FFFFFF">
+                                <i class="fa fa-repeat"></i>&nbsp;&nbsp;1 day
+                            </div>
+                            <div class="ui button postpone2" style="background-color:#555555; color:#FFFFFF">
+                                <i class="fa fa-repeat"></i>&nbsp;&nbsp;2 days
+                            </div>
+                            <div class="ui button postpone3" style="background-color:#555555; color:#FFFFFF">
+                                <i class="fa fa-repeat"></i>&nbsp;&nbsp;3 days
                             </div>
                         </div>
+                        <div class="ui vertical segment" style="padding-top:0.5em">
+                            <div class="ui list" style="padding:0em">
+                                {{#if problemSubject}}
+                                <div class="item" style="padding-bottom:0em; padding-left:0.2em">
+                                    <i class="fa fa-warning">
+                                    </i>
+                                    <label class="label label-important">
+                                        <strong>{{problemSubject}}</strong>
+                                    </label>
+                                </div>
+                                <div class="item" style="padding-bottom:0em">
+                                    <div class="ui inverted button twitter-orange detach" style="font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif; margin:0em">
+                                        <i class="fa fa-times"></i>&nbsp;Detach problem
+                                    </div>
+                                </div>
 
-                        {{else}}
-                        <select data-native-menu="false" style="color:#000000">
-                            <option data-problemId="" value="">Attach to a problem</option>
-                            {{#each problems}}
-                            <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
-                            {{/each}}
-                        </select>
-                        {{/if}}
-                        {{#if done}}
-                            <div class="ui inverted twitter-red button  delete">
-                                <i class="fa fa-times delete"> </i>Delete
+                                {{else}}
+                                <select data-native-menu="false" style="color:#000000">
+                                    <option data-problemId="" value="">Attach to a problem</option>
+                                    {{#each problems}}
+                                    <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+                                    {{/each}}
+                                </select>
+                                {{/if}}
+                                {{#if done}}
+                                <div class="item" style="padding-top:0.2em">
+                                    <div class="ui inverted twitter-red button delete">
+                                        <i class="fa fa-times delete"> </i>Delete
+                                    </div>
+                                </div>
+                                {{/if}}
                             </div>
-                        {{/if}}
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="reminder-item-footer">
-                <div class="ui list">
+                <div class="ui list" style="padding-top:0.5em">
                     <div class="item">
                         <span style="opacity: 0.5">
                             <i class="fa fa-plus-square"></i>&nbsp;{{nurseName}}&nbsp;&nbsp;&nbsp;
                             <i class="fa fa-clock-o"></i>&nbsp;{{date}}&nbsp;&nbsp;
                         </span>
-                        <div type="button" class="ui label pointer category {{selected}}" style="width:fit-content; background-color:#b2ebf2">
+                        <a type="button" class="ui label pointer category {{selected}}" style="width:fit-content; background-color:#b2ebf2">
                             <strong>{{category}}</strong>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -61,10 +61,8 @@ Template.journalItems.onRendered(function(){
   this.$(".ui.accordion").accordion({
     onOpen:function(){
       template.opened.set(true);
-      shit = true;
     },
     onClose:function(){
-      shit = false;
       template.opened.set(false);
     }
   });

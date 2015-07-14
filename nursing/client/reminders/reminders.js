@@ -142,6 +142,22 @@ Template.reminders.events(okCancelEvents(
     }
   }));
  
+Template.reminderItem.onCreated(function(){
+  this.opened = new ReactiveVar(false);
+})
+
+Template.reminderItem.onRendered(function(){
+  var template = this;
+  $('.ui.search.dropdown').dropdown();
+  this.$(".ui.accordion").accordion({
+    onOpen:function(){
+      template.opened.set(true);
+    },
+    onClose:function(){
+      template.opened.set(false);
+    }
+  });
+});
 
 Template.reminderItem.helpers({
   doneStyle: function () {
@@ -157,7 +173,9 @@ Template.reminderItem.helpers({
     var isProblem = (this.journalId)?true:false;
     return isProblem;
   },
-
+  opened:function(){
+    return Template.instance().opened.get();
+  },
   problems : function() {
     var sel = {};
     var patientFilter = Session.get('patientFilter');

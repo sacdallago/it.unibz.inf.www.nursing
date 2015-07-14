@@ -1,5 +1,5 @@
 <template name="measures">
-	<div class="row">
+	<div class="row" style="padding-top:0em">
 		<div class="sixteen wide column" style="padding-bottom:1em">
 			<div class="ui list" style="margin-bottom:1em">
 				{{> measureTags}}
@@ -62,7 +62,7 @@
 	<div class="ui segment {{#if problemSubject}} twitter-orange {{else}} twitter-blue {{/if}}" style="background-color:#5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.25em;padding:0.5em">
 		<div class="item" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="padding:0">
 			<div class="twitter" style="margin:auto">
-				<div class="twitter-left twitter-blue {{#if problemSubject}} twitter-orange {{/if}}">
+				<div class="twitter-left twitter-blue {{#if problemSubject}} twitter-orange {{/if}}" style="padding-bottom:0em;">
 					<div class="ui list" style="padding:0em; padding-right:1em">
 						<div class="item" style="font-size: 12pt">
 							<i class="fa fa-bar-chart-o"></i> <strong>{{type}}</strong>
