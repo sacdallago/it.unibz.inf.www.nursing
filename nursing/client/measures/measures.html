@@ -3,9 +3,7 @@
 		<div class="sixteen wide column" style="padding-bottom:1em">
 			<div class="ui list" style="margin-bottom:1em">
 				{{> measureTags}}
-				{{#AnimateWithVelocity}}
 				{{> chart}}
-				{{/AnimateWithVelocity}}
 				{{#each measures}}
 				{{> measureItems}}
 				{{/each}}
@@ -58,7 +56,6 @@
 </template>
 
 <template name="measureItems">
-	{{#AnimateWithVelocity}}
 	<div class="ui segment {{#if problemSubject}} twitter-orange {{else}} twitter-blue {{/if}}" style="background-color:#5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.25em;padding:0.5em">
 		<div class="item" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0" style="padding:0">
 			<div class="twitter" style="margin:auto">
@@ -127,5 +124,4 @@
 			</div>
 		</div>
 	</div>
-	{{/AnimateWithVelocity}}
 </template>

@@ -17,6 +17,12 @@ Template.patientItemList.helpers({
 	}
 });
 
+Template.patientElement.events({
+	'click .selectPatient' : function(){
+        Session.set('patientFilter', this._id);
+    }
+});
+
 Template.patientElement.helpers({
 	hospitalization : function() {
 		return Hospitalizations.findOne({

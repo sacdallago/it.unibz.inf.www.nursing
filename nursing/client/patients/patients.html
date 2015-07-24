@@ -7,7 +7,7 @@
 </template>
 
 <template name="patientElement">
-    <div class="card">
+    <a class="card selectPatient">
         <div class="content">
             <div class="header">{{capitalize first}} {{capitalize last}}</div>
             <div class="meta">
@@ -33,7 +33,7 @@
             </div>
             {{/if}}
         </div>
-    </div> 
+    </a> 
 </template>
 
 <template name="hospitalizedPatientItemList">

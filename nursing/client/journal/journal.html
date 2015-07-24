@@ -14,7 +14,6 @@
 </template>
 
 <template name="journalItems">
-	{{#AnimateWithVelocity}}
 	<div class="ui segment twitter-blue {{#if subject}} twitter-red {{/if}} {{#if problemSubject}} twitter-orange {{/if}} {{#if solved}} twitter-green {{/if}}" style="background-color: #5BC0DE; color:#000000; margin-top:0em;margin-bottom:0.25em;padding:0.5em">
 		<div data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
 			<div class="row twitter">
@@ -129,5 +128,4 @@
 			</div>
 		</div>
 	</div>
-	{{/AnimateWithVelocity}}
 </template>

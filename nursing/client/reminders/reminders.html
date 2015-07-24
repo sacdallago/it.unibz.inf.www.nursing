@@ -50,7 +50,6 @@
 </template>
 
 <template name="reminderItem">
-    {{#AnimateWithVelocity}}
     <div class="ui segment {{#if problemSubject}} {{#if solved}} twitter-orange {{else}}twitter-orange {{/if}}{{/if}} {{#if done}} twitter-green {{/if}} reminder-items" style="background-color: #5BC0DE; color:#000000; margin:0em; margin-bottom:0.25em;padding:0.5em" data-animate data-property="opacity, translateY" data-duration="500" data-from-value="0,-200px" data-to-value="1,0">
         <div class="ui segment" style="padding:0.5em">
             <label class="check" style="margin-right:0;margin-top:0;float:right">
@@ -149,5 +148,4 @@
             </div>
         </div>
     </div>
-    {{/AnimateWithVelocity}}
 </template>
