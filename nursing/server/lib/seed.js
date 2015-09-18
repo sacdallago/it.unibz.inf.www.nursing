@@ -42,6 +42,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'weight',
 			fields : [{
+				classAttrib: "input",
 				preText: "Weight in kg",
 				type: "number",
 				step: "any",
@@ -52,6 +53,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'pressure',
 			fields : [{
+				classAttrib: "input",
 				preText: "Maximum pressure",
 				type: "number",
 				step: "any",
@@ -59,7 +61,8 @@ Meteor.startup(function() {
 				required: "required"
 			},
 			{
-				preText: "Minimum pressure",
+				classAttrib: "input",
+				preText: "Minimum pressure ",
 				type: "number",
 				step: "any",
 				unit: "mmHg",
@@ -70,6 +73,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'temperature',
 			fields : [{
+				classAttrib: "input",
 				preText: "Temperature in Celsius",
 				type: "number",
 				step: "any",
@@ -80,6 +84,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'edema',
 			fields : [{
+				classAttrib: "input",
 				preText: "Size of edema",
 				type: "number",
 				step: "any",
@@ -87,14 +92,19 @@ Meteor.startup(function() {
 				required: "required"
 			},
 			{
+				classAttrib: "checkbox",
 				preText: "Is foveal?",
-				type: "checkbox"
+				type: "checkbox",
+				step: "",
+				unit: "",
+				required: ""
 			}
 			]
 		});
 		Units.insert({
 			type : 'glucose',
 			fields : [{
+				classAttrib: "input",
 				preText: "Level of glucose",
 				type: "number",
 				step: "any",
@@ -105,6 +115,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'heart rate',
 			fields : [{
+				classAttrib: "input",
 				preText: "Heart rate in bpm",
 				type: "number",
 				step: "any",
@@ -115,6 +126,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'evacuated',
 			fields : [{
+				classAttrib: "checkbox",
 				preText: "Has patient evacuated?",
 				type: "checkbox"
 			}]
@@ -122,6 +134,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'pain',
 			fields : [{
+				classAttrib: "input",
 				preText: "Pain from 0 to 10",
 				type: "number",
 				step: "1",
@@ -134,6 +147,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'respiratory difficulties',
 			fields : [{
+				classAttrib: "checkbox",
 				preText: "Has the patient problems breathing?",
 				type: "checkbox"
 			}]
@@ -141,6 +155,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'urine',
 			fields : [{
+				classAttrib: "input",
 				preText: "Ml of urine produced",
 				type: "number",
 				step: "any",
@@ -151,6 +166,7 @@ Meteor.startup(function() {
 		Units.insert({
 			type : 'Intaken liquids',
 			fields : [{
+				classAttrib: "input",
 				preText: "Ml of liquids taken in",
 				type: "number",
 				step: "any",

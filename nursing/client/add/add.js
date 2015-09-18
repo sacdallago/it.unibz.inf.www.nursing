@@ -117,7 +117,16 @@ Template.newMeasurementContent.helpers({
 	},
 	destroyed : function() {
 		delete Session.keys['measures'];
-	}
+	}/*,
+	measureAttribute : function(){
+	    if (Session.get('measures').fields.length == 2)
+			{
+				if(Session.get('measures').fields[1].type == "checkbox")
+					return "checkbox"
+			}
+		else
+			return "input";
+	}*/
 });
 
 Template.newJournalContent.events({

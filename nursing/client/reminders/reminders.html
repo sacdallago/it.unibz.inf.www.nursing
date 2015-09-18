@@ -114,14 +114,17 @@
                                 </div>
 
                                 {{else}}
-                                <select data-native-menu="false" style="color:#000000">
-                                    <option data-problemId="" value="">Attach to a problem</option>
+                                <div class="reminderProblemSelector">
+                                <select class="ui search dropdown" data-native-menu="false" style="color:#000000" id="reminderProblemSelector">
+                                    <option disabled selected value=null>Attach to a problem</option>
                                     {{#each problems}}
-                                    <option  data-problemId="{{_id}}" value="{{subject}}">{{subject}}</option>
+                                    <option  value="{{_id}}">{{subject}}</option>
                                     {{/each}}
                                 </select>
+                                </div>
                                 {{/if}}
                                 {{#if done}}
+                                
                                 <div class="item" style="padding-top:0.2em">
                                     <div class="ui inverted twitter-red button delete">
                                         <i class="fa fa-times delete"> </i>Delete

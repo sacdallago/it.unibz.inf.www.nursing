@@ -280,8 +280,7 @@ Template.reminderItem.events({
   },
 
   'change select' : function(event){
-    var problemId = $(event.currentTarget).find(':selected').data("problemid");
-   
+    var problemId = $("#reminderProblemSelector").val();
     Reminders.update(this._id,{$set:{journalId:problemId}},function(error) {
       if (error) {
         Notifications.error("Error", "An error occoured. Please try again");

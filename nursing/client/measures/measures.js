@@ -231,7 +231,7 @@ Template.measureItems.onCreated(function(){
 
 Template.measureItems.onRendered(function(){
 	var template = this;
-	console.log("rendered something");
+
 	$('.ui.search.dropdown').dropdown();
 	this.$(".ui.accordion").accordion({
 		onOpen:function(){

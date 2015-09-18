@@ -42,7 +42,7 @@
 
 <template name="newMeasurementContent">		
 <div class="ui grid">	
-	<div class="five wide column">
+	<div class="six wide column">
 		<div class="measurementChoice">
 		<label style="font-size:1.2em">Type&nbsp;&nbsp;</label>
 			<select id="measurementType" class="ui search dropdown">
@@ -57,10 +57,11 @@
 		{{#each measures.fields}}
 
 			<label style="font-size:1.2em">{{preText}}&nbsp;</label>
-			<div class="ui input">
+			<div class="ui {{classAttrib}}"> 
+			{{classAttrib}}&nbsp;{{type}}
 			<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
-    		</div> 
-
+    		</div>  
+    		
 			<label style="font-size:1.2em">{{unit}}&nbsp;</label>	
 			<br>
 			<br>	
