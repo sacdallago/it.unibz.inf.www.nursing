@@ -1,8 +1,10 @@
 Template.addOptions.helpers({
 	patientFilter : function() {
+		
 		return Session.get('patientFilter');
 	},
 	hospitalizationFilter : function() {
+		
 		return Session.get('hospitalizationFilter');
 	},
 });
@@ -37,13 +39,17 @@ Template.newHospitalizationOption.events({
 		Hospitalizations.insert({
 			active : true,
 			patientId : Session.get('patientFilter'),
+			
 			timestamp : Date.now(),
 			nurseId : Meteor.userId()
 		}, function(error, object) {
 			if (!error) {
+				console.log("object as below: "+object);
+				console.log("Get session? : "+ Session.get('hospitalizationFilter'));
 				Meteor.call('updateProblems', Session.get('patientFilter'), object, function(err) {
 					if (!err) {
 						Notifications.success('Success', 'Created a new hospitalization! Fill it out in the home!');
+						console.log("session set return: " + Session.set('hospitalizationFilter', object));
 						Session.set('hospitalizationFilter', object);
 					}
 				});

@@ -3,7 +3,7 @@
 	<!-- <div class="ui card" style="padding-top: 5px;"> -->
 		<!-- <div class="card-body" style="text-align: left;"> -->
 			<!-- <h3>Patient Details:</h3> -->
-			<table class="ui collapsing tablet stackable table patientUpdate">
+			<table class="ui collapsing tablet stackable table patientUpdate" style="width:50%; ">
 
 				<thead>
 					<th class="center aligned" colspan="2">Patient Details</th>	
@@ -13,13 +13,13 @@
 						<td> First name: </td>
 						<td >
 						<div class="ui fluid transparent input">
-							<input  disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
+							<input align="center" disabled="true" data-field="first" type="text" value="{{capitalize first}}" pattern="[a-zA-Z]+" required/>
 						</div>
 						</td>
 					</tr>
 					<tr>
 						<td> Last name: </td>
-						<td >
+						<td class="center aligned">
 						<div class="ui fluid transparent input">
 						<input disabled="true" data-field="last" type="text" value="{{capitalize last}}" pattern="[a-zA-Z]+" required/>
 						</div>
@@ -29,7 +29,7 @@
 						<td> Birthdate: </td>
 						<td>
 						<div class="ui fluid transparent input">
-						<input style="" disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthdate}}" required/>
+						<input style="" disabled="true" data-field="birthdate" type="date" value="{{htmlDate birthday}}" required/>
 						</div>
 						</td>
 					</tr>
@@ -108,7 +108,7 @@
 
 
 
-			<table class="ui collapsing tablet stackable table patientUpdate">
+			<table class="ui collapsing tablet stackable table patientUpdate" style="width:50%; ">
 
 			<thead>
 				<th class="center aligned" colspan="2">Accomodation Details</th>	
@@ -116,11 +116,11 @@
 				<tbody>
 					<tr>
 						<td> Current room: </td>
-						<td class="right aligned"> {{getRoomAndBed}} </td>
+						<td class="center aligned"> {{getRoomAndBed}} </td>
 					</tr>
 					<tr>
 						<td> Assign new room: </td>
-						<td>
+						<td class="center aligned">
 						<select class="ui dropdown" id="roomSelect">
 
 							{{#each rooms}}
@@ -134,17 +134,17 @@
 
 </template>
 
-<template name="hospitalizationCard">
+<template name="hospitalizationCard" style="width:50%; margin-left:auto; margin-right:auto">
 	{{#with hospitalization}}
 
-			<table class="ui collapsing tablet stackable table patientUpdate">
+			<table class="ui collapsing tablet stackable table patientUpdate" style="width:50%; ">
 			<thead>
 				<th class="center aligned" colspan="2">Hospitalization Details</th>
 			</thead>
 				<tbody>
 					<tr>
 						<td> Reason: </td>
-						<td>
+						<td class="center aligned">
 						<div class="ui transparent input">
 						<input  data-field="reason" type="text" disabled="true" value="{{reason}}" pattern="[a-zA-Z,. ]+"/>
 						</div>

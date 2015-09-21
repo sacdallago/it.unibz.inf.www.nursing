@@ -92,12 +92,12 @@ Meteor.startup(function() {
 				required: "required"
 			},
 			{
-				classAttrib: "checkbox",
+				classAttrib: "slider checkbox",
 				preText: "Is foveal?",
 				type: "checkbox",
 				step: "",
 				unit: "",
-				required: ""
+				required: "required"
 			}
 			]
 		});

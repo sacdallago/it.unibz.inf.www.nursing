@@ -85,6 +85,7 @@ Template.newPatient.rendered = function() {
 				last : last.value,
 				birthday : birthday.value
 			};
+			
 			Patients.insert(patient, function(error, newDataId) {
 				if (!error) {
 					Notifications.success('Success', 'Patient inserted!');

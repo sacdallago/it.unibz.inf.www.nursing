@@ -57,15 +57,13 @@
 		{{#each measures.fields}}
 
 			<label style="font-size:1.2em">{{preText}}&nbsp;</label>
-			<div class="ui {{classAttrib}}"> 
-			{{classAttrib}}&nbsp;{{type}}
+			<div class="ui {{classAttrib}}"> 			
 			<input data-pretext="{{preText}}" class="measure" type="{{type}}" step="{{step}}" min="{{min}}" max="{{max}}" placeholder="{{unit}}" value="" {{required}}>
     		</div>  
     		
 			<label style="font-size:1.2em">{{unit}}&nbsp;</label>	
 			<br>
 			<br>	
-
 
 		{{/each}}	
 
@@ -131,7 +129,7 @@
 									</select>
 									<!--  -->
 							</div>
-							<div class="center aligned two wide column"><label>or</label></div>
+							<div class="center aligned two wide column" style="padding-top: 1.5em"><label >or</label></div>
 							<div class="center aligned five wide column">
 									
 									<input id="defineProblem" type="text" maxlength="15" pattern="^\b[a-zA-Z]{2,15}\b" style="width: 15em" placeholder="Enter a new problem..."/>

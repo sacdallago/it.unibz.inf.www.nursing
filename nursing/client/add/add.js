@@ -50,7 +50,7 @@ Template.newMeasurementContent.events({
 		}
 
 		var problemId = $("#measurementProblemSelector").val();
-		$("#transity3").transition('hide'); console.log("hid transition");
+		$("#transity3").transition('hide'); 
 		$('#newMeasurementModal').modal('hide');
 		
 		var entry = {
