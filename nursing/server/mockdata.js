@@ -41,8 +41,8 @@ Meteor.startup(function() {
 			username : 'test1',
 			profile : {
 				department : "cardiology",
-				first : "cazzo",
-				last : "culo",
+				first : "firstName",
+				last : "LastName",
 				message : {
 					message : "",
 					data : [{
@@ -63,7 +63,7 @@ Meteor.startup(function() {
 			first : "hanna",
 			last : "montana",
 			birthdate : (new Date(1982, 11, 7).getTime()),
-			residenceAddress : "via culoculo",
+			residenceAddress : "via something",
 			residenceNumber : "67",
 			residenceCity : "Bolzano",
 			residenceProvince : "BZ",
@@ -94,7 +94,7 @@ Meteor.startup(function() {
 			prosthetics : false,
 			goods : true,
 			walkingAid : false,
-			reason : "She fucking continuously shits herself, goddamnit"
+			reason : "Some random reason"
 		};
 
 		var hid = Hospitalizations.insert(hospitalizationData);
@@ -221,7 +221,7 @@ Meteor.startup(function() {
 			first : "without",
 			last : "hospitalization",
 			birthdate : (new Date(1920, 5, 7).getTime()),
-			residenceAddress : "via culoculo",
+			residenceAddress : "via somenew street name",
 			residenceNumber : "67",
 			residenceCity : "Bolzano",
 			residenceProvince : "BZ",
@@ -252,7 +252,7 @@ Meteor.startup(function() {
 			prosthetics : false,
 			goods : true,
 			walkingAid : false,
-			reason : "She fucking continuously shits herself, goddamnit"
+			reason : "Some other misterious reason"
 		};
 
 		var hid3 = Hospitalizations.insert(hospitalizationData3);
