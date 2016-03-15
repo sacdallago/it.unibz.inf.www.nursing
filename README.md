@@ -13,7 +13,7 @@ Please find the full text of the related Bachelor Thesis [here](http://pro.unibz
 
 
 ## Authors
-Christian Dallago <code@dallago.us>
+[Christian Dallago](code@dallago.us)
 Riccardo Buttarelli
 
 Copyright:
